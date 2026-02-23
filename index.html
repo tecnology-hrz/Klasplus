@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klasplus - Escuelas Seguras</title>
+    <link rel="icon" type="image/webp" href="./public/img/icon2.webp">
+    <link rel="stylesheet" href="./public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Barra azul superior con redes sociales -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú principal blanco -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <img src="./public/img/logo.webp" alt="Klasplus Logo">
+                </div>
+                
+                <button class="menu-toggle" aria-label="Abrir menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-menu">
+                    <li><a href="#inicio" class="active">INICIO</a></li>
+                    <li><a href="#objetivos">OBJETIVOS</a></li>
+                    <li><a href="#programas">PROGRAMAS</a></li>
+                    <li><a href="./public/pages/campus.html">CAMPUS VIRTUAL</a></li>
+                    <li><a href="./public/pages/normatividad.html">NORMATIVIDAD</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Carrusel de imágenes -->
+    <section class="carousel" id="inicio">
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <img src="./public/img/Banner-1.webp" alt="Banner 1">
+                <div class="carousel-content">
+                    <h2 class="carousel-title">Sabías que...</h2>
+                    <p class="carousel-text">El 90% de los accidentes escolares ocurren en el descanso, el intercambio de clases y a la hora de llegada y salida del plantel.</p>
+                    <p class="carousel-subtitle">Con nosotros tienes un plan de Seguridad adicional para tu Institución</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="./public/img/Banner-2.webp" alt="Banner 2">
+                <div class="carousel-content">
+                    <h2 class="carousel-title">Los estudiantes son lo más valioso. ¡Sabemos cómo protegerlos!</h2>
+                    <p class="carousel-text">Al adquirir el SEGURO ESTUDIANTIL, tu institución educativa participa del programa KLASPLUS SEGURA.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="./public/img/Banner-3.webp" alt="Banner 3">
+                <div class="carousel-content">
+                    <h2 class="carousel-title">¿Está tu institución preparada para lo inesperado?</h2>
+                    <p class="carousel-text">El programa KLASPLUS SEGURA, te ayuda a reducir los accidentes estudiantiles en tu institución educativa.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="./public/img/Banner-4.webp" alt="Banner 4">
+                <div class="carousel-content">
+                    <h2 class="carousel-title">El cuidado del medio ambiente es fundamental para todos los estudiantes</h2>
+                    <p class="carousel-text">El plan de gestión de riesgo escolar te ayuda a cumplir con la normatividad vigente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flechas de navegación -->
+        <button class="carousel-arrow prev" aria-label="Anterior">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-arrow next" aria-label="Siguiente">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Puntos indicadores -->
+        <div class="carousel-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+        </div>
+    </section>
+
+    <!-- Sección de Objetivos -->
+    <section class="objectives-section" id="objetivos">
+        <div class="container">
+            <div class="objectives-content">
+                <div class="objectives-left">
+                    <h2 class="objective-main-title">OBJETIVO GENERAL</h2>
+                    <p class="objective-main-text">Reducir los accidentes escolares en las instituciones educativas</p>
+                    
+                    <h3 class="objective-sub-title">OBJETIVOS ESPECÍFICOS</h3>
+                    
+                    <div class="objective-item">
+                        <div class="objective-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <p>Capacitar a estudiantes y docentes, sobre la accidentalidad escolar para reducir sus riesgos.</p>
+                    </div>
+                    
+                    <div class="objective-item">
+                        <div class="objective-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <p>Dar cumplimiento a la normatividad vigente en seguridad escolar.</p>
+                    </div>
+                    
+                    <div class="objective-item">
+                        <div class="objective-icon">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <p>Disminuir el impacto económico de los accidentes escolares.</p>
+                    </div>
+                    
+                    <div class="objective-item">
+                        <div class="objective-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <p>Fomentar el autocuidado y el respeto por el medio ambiente entre la comunidad educativa.</p>
+                    </div>
+                </div>
+                
+                <div class="objectives-right">
+                    <img src="./public/img/Objetivo-general.webp" alt="Objetivo General">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section class="contact-banner">
+        <div class="contact-overlay"></div>
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-text">
+                    <h3>¿Tienes alguna pregunta?</h3>
+                    <p>¡Contáctanos!</p>
+                </div>
+                <div class="contact-phone">
+                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://wa.me/573188042578" target="_blank">+57 318 804 2578</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Programas y Beneficios -->
+    <section class="programs-section" id="programas">
+        <div class="container">
+            <h2 class="programs-title">PROGRAMAS Y BENEFICIOS</h2>
+            
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-overlay"></div>
+                    <img src="./public/img/Banner-1.webp" alt="Capacitación en Seguridad Escolar">
+                    <div class="program-content">
+                        <h3>CAPACITACIÓN EN SEGURIDAD ESCOLAR ON-LINE</h3>
+                    </div>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-overlay"></div>
+                    <img src="./public/img/Banner-2.webp" alt="Perfil de Riesgo">
+                    <div class="program-content">
+                        <h3>PERFIL DE RIESGO DE CADA INSTITUCIÓN</h3>
+                    </div>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-overlay"></div>
+                    <img src="./public/img/Banner-3.webp" alt="Encuentro Anual">
+                    <div class="program-content">
+                        <h3>ENCUENTRO ANUAL DE BRIGADAS ESTUDIANTILES</h3>
+                    </div>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-overlay"></div>
+                    <img src="./public/img/Banner-4.webp" alt="Atención Médica Virtual">
+                    <div class="program-content">
+                        <h3>ATENCIÓN MÉDICA VIRTUAL AL ESTUDIANTE Y PERSONAL DOCENTE ADMINISTRATIVO DE LA INSTITUCIÓN</h3>
+                    </div>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-overlay"></div>
+                    <img src="./public/img/Banner-1.webp" alt="Educación Ambiental">
+                    <div class="program-content">
+                        <h3>EDUCACIÓN Y CAPACITACIÓN AMBIENTAL</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-content">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-left">
+                        <img src="./public/img/Klasplus-blanco.webp" alt="Klasplus Escuelas Seguras" class="footer-logo">
+                        
+                        <div class="footer-contact">
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Avenida Roosevelt No. 26 - 69 Sáo, Piso</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>Call Center 022 653 4163</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Asesoría 315 287 0463 - 317 315 5002</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <span>Chat en línea: 315 287 0463 - 317 315 5002</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Cali - Valle del Cauca - Colombia - Sur América</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-center">
+                        <h3>OTROS TEMAS DE INTERÉS:</h3>
+                        <ul class="footer-links">
+                            <li><a href="#objetivos"><i class="fas fa-chevron-right"></i> Objetivos</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Biblioteca</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Telemedicina</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Otros cursos ON-LINE</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-right">
+                        <h3>CONTINUAR NAVEGANDO</h3>
+                        <ul class="footer-links">
+                            <li><a href="#inicio"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                            <li><a href="#objetivos"><i class="fas fa-chevron-right"></i> Objetivos</a></li>
+                            <li><a href="#programas"><i class="fas fa-chevron-right"></i> Programas y beneficios</a></li>
+                            <li><a href="./public/pages/normatividad.html"><i class="fas fa-chevron-right"></i> Normatividad vigente</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Perfil de riesgo</a></li>
+                            <li><a href="./public/pages/campus.html"><i class="fas fa-chevron-right"></i> Campus virtual</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Normatividad</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="copyright-content">
+                    <p>Todos los derechos reservados Klasplus © 2026 | Desarrollado por</p>
+                    <img src="./public/img/logo-ElBandoCreativo.webp" alt="El Bando Creativo" class="creative-logo">
+                </div>
+            </div>
+        </div>
+        
+        <a href="https://wa.me/573188042578" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </footer>
+
+    <!-- Menú móvil desplegable -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <img src="./public/img/logo.webp" alt="Klasplus Logo">
+            <button class="close-menu" aria-label="Cerrar menú">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="mobile-nav-menu">
+            <li><a href="#objetivos"><i class="fas fa-bullseye"></i> OBJETIVOS</a></li>
+            <li><a href="#programas"><i class="fas fa-folder-open"></i> PROGRAMAS</a></li>
+            <li><a href="./public/pages/campus.html"><i class="fas fa-graduation-cap"></i> CAMPUS VIRTUAL</a></li>
+            <li><a href="./public/pages/normatividad.html"><i class="fas fa-file-alt"></i> NORMATIVIDAD</a></li>
+        </ul>
+    </div>
+
+    <script src="./public/js/menu.js"></script>
+</body>
+</html>

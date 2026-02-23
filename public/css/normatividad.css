@@ -1,0 +1,119 @@
+/* Sección de Normatividad */
+.normatividad-section {
+    padding: 150px 0 80px 0;
+    background-color: #ffffff;
+    min-height: 60vh;
+}
+
+.normatividad-title {
+    color: #FF5722;
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.normatividad-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-subtitle {
+    color: #FF5722;
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.normatividad-content p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.seguir-leyendo {
+    color: #333;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.link-text {
+    color: #0047AB;
+    font-size: 14px;
+    word-break: break-all;
+    margin-bottom: 10px;
+}
+
+.decreto-title {
+    color: #666;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.capitulo-title {
+    color: #666;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.normatividad-content strong {
+    color: #333;
+    font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .normatividad-section {
+        padding: 120px 0 60px 0;
+    }
+
+    .normatividad-title {
+        font-size: 28px;
+        margin-bottom: 35px;
+    }
+
+    .section-subtitle {
+        font-size: 18px;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    .normatividad-content p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .seguir-leyendo {
+        font-size: 15px;
+        margin-top: 20px;
+    }
+
+    .link-text {
+        font-size: 13px;
+    }
+
+    .decreto-title {
+        font-size: 15px;
+        margin-top: 25px;
+    }
+
+    .capitulo-title {
+        font-size: 14px;
+        margin-top: 20px;
+    }
+}
