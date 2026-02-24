@@ -184,3 +184,59 @@ togglePassword.addEventListener('click', () => {
         passwordInput.type = 'password';
     }
 });
+
+// Verificar si el usuario está logueado
+function checkUserSession() {
+    const userSession = localStorage.getItem('userSession');
+    const authButtons = document.getElementById('authButtons');
+    const userDropdown = document.getElementById('userDropdown');
+    
+    if (userSession) {
+        const userData = JSON.parse(userSession);
+        
+        // Ocultar botones de auth y mostrar menú de usuario
+        authButtons.style.display = 'none';
+        userDropdown.style.display = 'flex';
+        
+        // Actualizar nombre y rol del usuario
+        document.getElementById('userName').textContent = userData.nombre || 'Usuario';
+        document.getElementById('userRole').textContent = userData.tipoUsuario || 'Estudiante';
+    } else {
+        // Mostrar botones de auth y ocultar menú de usuario
+        authButtons.style.display = 'flex';
+        userDropdown.style.display = 'none';
+    }
+}
+
+// Toggle del menú desplegable de usuario
+const userDropdownElement = document.getElementById('userDropdown');
+const dropdownMenu = document.getElementById('dropdownMenu');
+
+if (userDropdownElement) {
+    userDropdownElement.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+    });
+}
+
+// Cerrar el menú al hacer clic fuera
+document.addEventListener('click', (e) => {
+    if (userDropdownElement && !userDropdownElement.contains(e.target)) {
+        dropdownMenu.classList.remove('show');
+    }
+});
+
+// Cerrar sesión
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+            localStorage.removeItem('userSession');
+            window.location.reload();
+        }
+    });
+}
+
+// Verificar sesión al cargar la página
+checkUserSession();

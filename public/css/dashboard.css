@@ -17,7 +17,7 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
-    width: 280px;
+    width: 320px;
     background: #ffffff;
     border-right: 1px solid #e5e7eb;
     display: flex;
@@ -30,6 +30,15 @@ body {
 .logo-container {
     padding: 24px 20px;
     border-bottom: 1px solid #e5e7eb;
+}
+
+.logo-container a {
+    display: block;
+    transition: opacity 0.2s;
+}
+
+.logo-container a:hover {
+    opacity: 0.8;
 }
 
 .logo {
@@ -65,9 +74,10 @@ body {
 }
 
 .nav-icon {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     margin-right: 12px;
+    stroke-width: 2.2;
 }
 
 .nav-item span {
@@ -87,9 +97,24 @@ body {
     cursor: pointer;
 }
 
+.nav-item.expandable .expand-icon {
+    transition: transform 0.3s ease;
+}
+
+.nav-item.expandable.active .expand-icon {
+    transform: rotate(180deg);
+}
+
 .submenu {
     background: #f9fafb;
     padding: 8px 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.submenu.show {
+    max-height: 200px;
 }
 
 .submenu-item {
@@ -118,7 +143,7 @@ body {
 /* Main Content */
 .main-content {
     flex: 1;
-    margin-left: 280px;
+    margin-left: 320px;
     display: flex;
     flex-direction: column;
 }
@@ -161,6 +186,23 @@ body {
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.user-avatar-default {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.user-avatar-default svg {
+    width: 24px;
+    height: 24px;
+    stroke: #9ca3af;
 }
 
 .user-details {
@@ -587,6 +629,25 @@ body {
     height: 14px;
 }
 
+/* Overlay para sidebar móvil */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
 /* Responsive */
 @media (max-width: 1400px) {
     .stats-grid {
@@ -601,11 +662,14 @@ body {
 @media (max-width: 768px) {
     .sidebar {
         transform: translateX(-100%);
-        transition: transform 0.3s;
+        transition: transform 0.3s ease;
+        z-index: 999;
+        box-shadow: none;
     }
     
-    .sidebar.open {
+    .sidebar.active {
         transform: translateX(0);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
     }
     
     .main-content {
@@ -616,8 +680,13 @@ body {
         display: block;
     }
     
+    .header {
+        padding: 12px 16px;
+    }
+    
     .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
     }
     
     .activity-grid {
@@ -626,5 +695,199 @@ body {
     
     .dashboard-content {
         padding: 16px;
+    }
+    
+    .stat-card {
+        padding: 16px;
+    }
+    
+    .stat-chart {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .chart-percentage {
+        font-size: 24px;
+    }
+    
+    .stat-card-small {
+        padding: 16px;
+    }
+    
+    .stat-card-small h4 {
+        font-size: 12px;
+    }
+    
+    .value-number {
+        font-size: 24px;
+    }
+    
+    .chart-container {
+        padding: 16px;
+    }
+    
+    .chart-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    
+    .chart-header h3 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .header {
+        padding: 10px 12px;
+    }
+    
+    .dashboard-content {
+        padding: 12px;
+    }
+    
+    .stat-header h3 {
+        font-size: 14px;
+    }
+    
+    .stat-filter {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+}
+
+/* User Dropdown Menu */
+.user-info {
+    position: relative;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.user-info:hover {
+    background: #f3f4f6;
+}
+
+.dropdown-arrow {
+    width: 16px;
+    height: 16px;
+    stroke: #6b7280;
+    transition: transform 0.3s;
+}
+
+.user-info:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    min-width: 240px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.user-dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+    border-radius: 8px;
+    margin: 4px 8px;
+}
+
+.dropdown-item:first-child {
+    margin-top: 8px;
+}
+
+.dropdown-item:last-child {
+    margin-bottom: 8px;
+}
+
+.dropdown-item:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.dropdown-item.logout {
+    color: #ef4444;
+}
+
+.dropdown-item.logout:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.dropdown-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 8px 12px;
+}
+
+/* Animación del avatar al abrir menú */
+.user-info.active .user-avatar,
+.user-info.active .user-avatar-default {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Responsive para el dropdown */
+@media (max-width: 768px) {
+    .user-dropdown-menu {
+        right: -12px;
+        min-width: 200px;
+    }
+    
+    .user-details {
+        display: none;
+    }
+    
+    .user-info {
+        padding: 6px 8px;
+    }
+    
+    .dropdown-arrow {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-dropdown-menu {
+        right: -8px;
+        min-width: 180px;
+    }
+    
+    .dropdown-item {
+        padding: 10px 12px;
+        font-size: 13px;
     }
 }

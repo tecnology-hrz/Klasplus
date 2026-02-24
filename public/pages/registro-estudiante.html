@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regístrate - Klasplus</title>
+    <title>Registro Estudiante - Klasplus</title>
     <link rel="icon" type="image/webp" href="../img/icon2.webp">
-    <link rel="stylesheet" href="../css/lista-usuarios.css">
+    <link rel="stylesheet" href="../css/registro.css">
     <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body>
@@ -30,7 +30,7 @@
         </div>
         <div class="header-buttons">
             <button class="btn-login">Iniciar sesión</button>
-            <button class="btn-register">Regístrate</button>
+            <button class="btn-register" onclick="window.location.href='lista-usuarios.html'">Regístrate</button>
         </div>
     </header>
 
@@ -45,7 +45,7 @@
                 </svg>
                 <span>Inicio</span>
             </a>
-            <a href="campus.html" class="nav-item" data-section="cursos">
+            <a href="campus.html" class="nav-item">
                 <div class="nav-indicator"></div>
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
@@ -53,7 +53,7 @@
                 </svg>
                 <span>Cursos</span>
             </a>
-            <a href="campus.html" class="nav-item" data-section="material">
+            <a href="campus.html" class="nav-item">
                 <div class="nav-indicator"></div>
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -72,32 +72,95 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="registro-container">
-            <div class="registro-header">
-                <h1>Regístrate</h1>
-                <p>Bienvenidos a Klasplus, Escuela Segura. Regístrese para acceder a los programas de formación en el área de seguridad escolar.</p>
-            </div>
-
-            <div class="usuarios-grid">
-                <!-- Acudiente -->
-                <div class="usuario-card" data-tipo="acudiente">
-                    <div class="usuario-image">
-                        <img src="../img/acudiente.webp" alt="Acudiente">
-                    </div>
-                </div>
-
-                <!-- Estudiante -->
-                <div class="usuario-card" data-tipo="estudiante">
-                    <div class="usuario-image">
+        <div class="registro-layout">
+            <!-- Columna Izquierda - Información -->
+            <div class="info-column">
+                <div class="info-card">
+                    <h1>¿Eres estudiante?</h1>
+                    <p>Te invitamos a registrarte y hacer parte de la primera plataforma tecnológica para la prevención del riesgo en ambientes escolares.</p>
+                    <div class="info-image">
                         <img src="../img/estudiante.webp" alt="Estudiante">
                     </div>
                 </div>
+            </div>
 
-                <!-- Institución -->
-                <div class="usuario-card" data-tipo="institucion">
-                    <div class="usuario-image">
-                        <img src="../img/institucion.webp" alt="Institución">
-                    </div>
+            <!-- Columna Derecha - Formulario -->
+            <div class="form-column">
+                <div class="form-card">
+                    <h2 class="section-title">Información Personal</h2>
+                    
+                    <form class="registro-form">
+                        <div class="form-group">
+                            <label>Nombres</label>
+                            <input type="text" placeholder="Por favor ingresar tu nombre" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Apellidos</label>
+                            <input type="text" placeholder="Por favor ingresar tu apellido" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Teléfono/Whatsapp</label>
+                            <input type="tel" placeholder="Por favor ingresar tu número de teléfono" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo de documento</label>
+                            <select required>
+                                <option value="">Selecciona tu tipo de documento</option>
+                                <option value="cc">Cédula de ciudadanía</option>
+                                <option value="ce">Cédula de extranjería</option>
+                                <option value="ti">Tarjeta de identidad</option>
+                                <option value="ci">Cédula de identidad</option>
+                                <option value="pasaporte">Pasaporte</option>
+                                <option value="pep">PEP</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Número de documento</label>
+                            <input type="text" placeholder="Por favor ingresar tu número de documento" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sexo</label>
+                            <select required>
+                                <option value="">Selecciona tu sexo</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="femenino">Femenino</option>
+                                <option value="otro">Sin Especificar</option>
+                            </select>
+                        </div>
+
+                        <h2 class="section-title">Información de Seguridad</h2>
+
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" placeholder="Por favor ingresar tu correo electrónico" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" placeholder="Por favor ingresa tu contraseña" required>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="terminos" required>
+                            <label for="terminos">
+                                Autorizo Expresamente a <strong>Klasplus</strong> para utilizar mi información personal en trámite de esta petición. 
+                                <a href="#">Políticas de tratamiento de datos personales</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            FINALIZAR REGISTRO
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -140,14 +203,15 @@
                 <button type="submit" class="btn-submit">Iniciar sesión</button>
                 
                 <div class="modal-footer">
-                    <p>¿Aún no tienes cuenta? <a href="#" class="link-register">Regístrate</a></p>
+                    <p>¿Aún no tienes cuenta? <a href="lista-usuarios.html" class="link-register">Regístrate</a></p>
                     <a href="#" class="link-forgot">Olvidé mi contraseña</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="../js/lista-usuarios.js"></script>
+    <script src="../js/registro.js"></script>
+    <script type="module" src="../js/auth-registro.js"></script>
     <script type="module" src="../js/auth-login.js"></script>
 </body>
 </html>

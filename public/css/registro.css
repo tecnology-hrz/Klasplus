@@ -10,7 +10,7 @@ body {
     background: #f5f5f5;
 }
 
-/* Header */
+/* Header - Igual que campus.css */
 .header {
     position: fixed;
     top: 0;
@@ -210,83 +210,382 @@ body {
     margin-top: 110px;
     min-height: calc(100vh - 110px);
     transition: margin-left 0.3s ease;
-    padding: 60px 80px;
+    padding: 40px 60px;
 }
 
 .main-content.expanded {
     margin-left: 80px;
 }
 
-.registro-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.registro-header {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.registro-header h1 {
-    color: #0088cc;
-    font-size: 48px;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-.registro-header p {
-    color: #0088cc;
-    font-size: 18px;
-    line-height: 1.6;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.usuarios-grid {
+.registro-layout {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 50px;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-.usuario-card {
+/* Columna Izquierda - Información */
+.info-column {
+    position: sticky;
+    top: 150px;
+    height: fit-content;
+}
+
+.info-card {
     background: white;
     border-radius: 20px;
-    padding: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.usuario-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+.info-card h1 {
+    color: #0088cc;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
 }
 
-.usuario-image {
+.info-card p {
+    color: #0088cc;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.info-image {
     width: 100%;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-image img {
+    width: 150%;
+    max-width: 525px;
+    height: auto;
+}
+
+/* Columna Derecha - Formulario */
+.form-column {
+    position: relative;
+}
+
+.form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+    color: #6b6b6b;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.registro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group label {
+    color: #0088cc;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    padding: 14px 18px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #6b6b6b;
+    transition: border-color 0.3s ease;
+    background: white;
+}
+
+.form-group input::placeholder,
+.form-group select option:first-child {
+    color: #b0b0b0;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #0088cc;
+}
+
+.checkbox-group {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-group label {
+    color: #6b6b6b;
+    font-size: 13px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.checkbox-group label strong {
+    color: #0088cc;
+    font-weight: 600;
+}
+
+.checkbox-group label a {
+    color: #6b6b6b;
+    text-decoration: underline;
+}
+
+.checkbox-group label a:hover {
+    color: #0088cc;
+}
+
+.btn-submit {
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
 }
 
-.usuario-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.btn-submit svg {
+    width: 20px;
+    height: 20px;
 }
 
-.usuario-card h3 {
-    color: #0088cc;
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+.btn-submit:hover {
+    background: #16a34a;
+    transform: translateY(-2px);
 }
 
-/* Modal */
+/* Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+    }
+
+    .registro-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .info-column {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 0 15px;
+        height: 70px;
+    }
+
+    .header-left {
+        gap: 15px;
+    }
+
+    .logo .logo-full {
+        height: 50px;
+    }
+
+    .logo .logo-icon {
+        height: 45px;
+    }
+
+    .menu-toggle {
+        width: 44px;
+        height: 44px;
+    }
+
+    .menu-toggle svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .header-buttons {
+        gap: 8px;
+    }
+
+    .btn-login,
+    .btn-register {
+        padding: 10px 18px;
+        font-size: 13px;
+        border-radius: 22px;
+    }
+
+    .sidebar {
+        top: 70px;
+        height: calc(100vh - 70px);
+        width: 280px;
+    }
+
+    .main-content {
+        margin-top: 70px;
+        min-height: calc(100vh - 70px);
+        padding: 30px 20px;
+    }
+
+    .info-card,
+    .form-card {
+        padding: 30px 25px;
+    }
+
+    .info-card h1 {
+        font-size: 26px;
+    }
+
+    .info-card p {
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    .info-image img {
+        width: 100%;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 0 12px;
+        height: 65px;
+    }
+
+    .header-left {
+        gap: 10px;
+    }
+
+    .logo .logo-full {
+        height: 45px;
+    }
+
+    .logo .logo-icon {
+        height: 40px;
+    }
+
+    .menu-toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .menu-toggle svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .header-buttons {
+        gap: 6px;
+    }
+
+    .btn-login,
+    .btn-register {
+        padding: 8px 14px;
+        font-size: 12px;
+        border-radius: 20px;
+    }
+
+    .sidebar {
+        top: 65px;
+        height: calc(100vh - 65px);
+        width: 260px;
+    }
+
+    .main-content {
+        margin-top: 65px;
+        min-height: calc(100vh - 65px);
+        padding: 20px 15px;
+    }
+
+    .info-card,
+    .form-card {
+        padding: 25px 20px;
+        border-radius: 16px;
+    }
+
+    .info-card h1 {
+        font-size: 22px;
+    }
+
+    .info-card p {
+        font-size: 13px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .checkbox-group label {
+        font-size: 12px;
+    }
+
+    .btn-submit {
+        padding: 14px 28px;
+        font-size: 14px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Modal de Login */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -373,31 +672,6 @@ body {
     gap: 25px;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.form-group label {
-    color: #7a7a7a;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.form-group input {
-    padding: 15px 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 15px;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #0088cc;
-}
-
 .password-input {
     position: relative;
 }
@@ -434,23 +708,6 @@ body {
     stroke: #666;
 }
 
-.btn-submit {
-    background: #22c55e;
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    margin-top: 10px;
-}
-
-.btn-submit:hover {
-    background: #16a34a;
-}
-
 .modal-footer {
     text-align: center;
     margin-top: 20px;
@@ -481,177 +738,4 @@ body {
 
 .link-forgot:hover {
     text-decoration: underline;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .sidebar {
-        transform: translateX(-100%);
-        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .sidebar.active {
-        transform: translateX(0);
-    }
-
-    .main-content {
-        margin-left: 0 !important;
-    }
-
-    .usuarios-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-}
-
-@media (max-width: 768px) {
-    .header {
-        padding: 0 15px;
-        height: 70px;
-    }
-
-    .header-left {
-        gap: 15px;
-    }
-
-    .logo .logo-full {
-        height: 50px;
-    }
-
-    .logo .logo-icon {
-        height: 45px;
-    }
-
-    .menu-toggle {
-        width: 44px;
-        height: 44px;
-    }
-
-    .menu-toggle svg {
-        width: 28px;
-        height: 28px;
-    }
-
-    .header-buttons {
-        gap: 8px;
-    }
-
-    .btn-login,
-    .btn-register {
-        padding: 10px 18px;
-        font-size: 13px;
-        border-radius: 22px;
-    }
-
-    .sidebar {
-        top: 70px;
-        height: calc(100vh - 70px);
-        width: 280px;
-    }
-
-    .main-content {
-        margin-top: 70px;
-        min-height: calc(100vh - 70px);
-        padding: 40px 30px;
-    }
-
-    .registro-header h1 {
-        font-size: 36px;
-    }
-
-    .registro-header p {
-        font-size: 16px;
-    }
-
-    .usuarios-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        max-width: 400px;
-    }
-
-    .usuario-card {
-        padding: 8px;
-    }
-
-    .usuario-image {
-        height: auto;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        padding: 0 12px;
-        height: 65px;
-    }
-
-    .header-left {
-        gap: 10px;
-    }
-
-    .logo .logo-full {
-        height: 45px;
-    }
-
-    .logo .logo-icon {
-        height: 40px;
-    }
-
-    .menu-toggle {
-        width: 40px;
-        height: 40px;
-    }
-
-    .menu-toggle svg {
-        width: 24px;
-        height: 24px;
-    }
-
-    .header-buttons {
-        gap: 6px;
-    }
-
-    .btn-login,
-    .btn-register {
-        padding: 8px 14px;
-        font-size: 12px;
-        border-radius: 20px;
-    }
-
-    .sidebar {
-        top: 65px;
-        height: calc(100vh - 65px);
-        width: 260px;
-    }
-
-    .main-content {
-        margin-top: 65px;
-        min-height: calc(100vh - 65px);
-        padding: 30px 20px;
-    }
-
-    .registro-header {
-        margin-bottom: 40px;
-    }
-
-    .registro-header h1 {
-        font-size: 28px;
-        margin-bottom: 15px;
-    }
-
-    .registro-header p {
-        font-size: 14px;
-    }
-
-    .usuarios-grid {
-        gap: 20px;
-    }
-
-    .usuario-card {
-        padding: 6px;
-        border-radius: 16px;
-    }
-
-    .usuario-image {
-        height: auto;
-    }
 }

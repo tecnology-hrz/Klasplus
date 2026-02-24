@@ -98,24 +98,16 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Click en tarjetas de usuario
-const usuarioCards = document.querySelectorAll('.usuario-card');
+// Manejar envío del formulario
+const registroForm = document.querySelector('.registro-form');
 
-usuarioCards.forEach(card => {
-    card.addEventListener('click', () => {
-        const tipo = card.getAttribute('data-tipo');
-        console.log(`Usuario seleccionado: ${tipo}`);
-        
-        // Redirigir a la página de registro correspondiente
-        if (tipo === 'acudiente') {
-            window.location.href = 'registro-acudiente.html';
-        } else if (tipo === 'estudiante') {
-            window.location.href = 'registro-estudiante.html';
-        } else if (tipo === 'institucion') {
-            window.location.href = 'registro-institucion.html';
-        }
+if (registroForm) {
+    registroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        console.log('Formulario enviado');
+        // El formulario es manejado por auth-registro.js
     });
-});
+}
 
 // Modal de inicio de sesión
 const loginModal = document.getElementById('loginModal');
@@ -125,27 +117,39 @@ const togglePassword = document.getElementById('togglePassword');
 const passwordInput = document.getElementById('passwordInput');
 
 // Abrir modal
-btnLogin.addEventListener('click', () => {
-    loginModal.classList.add('active');
-});
+if (btnLogin) {
+    btnLogin.addEventListener('click', () => {
+        if (loginModal) {
+            loginModal.classList.add('active');
+        }
+    });
+}
 
 // Cerrar modal
-closeModal.addEventListener('click', () => {
-    loginModal.classList.remove('active');
-});
+if (closeModal) {
+    closeModal.addEventListener('click', () => {
+        if (loginModal) {
+            loginModal.classList.remove('active');
+        }
+    });
+}
 
 // Cerrar modal al hacer clic fuera
-loginModal.addEventListener('click', (e) => {
-    if (e.target === loginModal) {
-        loginModal.classList.remove('active');
-    }
-});
+if (loginModal) {
+    loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+            loginModal.classList.remove('active');
+        }
+    });
+}
 
 // Toggle mostrar/ocultar contraseña
-togglePassword.addEventListener('click', () => {
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-    } else {
-        passwordInput.type = 'password';
-    }
-});
+if (togglePassword && passwordInput) {
+    togglePassword.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
+}
