@@ -113,9 +113,11 @@ window.addEventListener('load', () => {
 
 // Cambiar entre secciones
 const navItems = document.querySelectorAll('.nav-item');
-const contentSections = document.querySelectorAll('.content-section');
+const inicioSection = document.getElementById('inicioSection');
+const cursosSection = document.getElementById('cursosSection');
+const materialApoyoSection = document.getElementById('materialApoyoSection');
 
-navItems.forEach(item => {
+navItems.forEach((item, index) => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         
@@ -125,14 +127,28 @@ navItems.forEach(item => {
         // Agregar active al item clickeado
         item.classList.add('active');
         
-        // Obtener la sección a mostrar
-        const sectionId = item.getAttribute('data-section');
+        // Mostrar la sección correspondiente
+        if (index === 0) {
+            // Inicio
+            inicioSection.style.display = 'block';
+            cursosSection.style.display = 'none';
+            materialApoyoSection.style.display = 'none';
+        } else if (index === 1) {
+            // Cursos
+            inicioSection.style.display = 'none';
+            cursosSection.style.display = 'block';
+            materialApoyoSection.style.display = 'none';
+        } else if (index === 2) {
+            // Material de Apoyo
+            inicioSection.style.display = 'none';
+            cursosSection.style.display = 'none';
+            materialApoyoSection.style.display = 'block';
+        }
         
-        // Ocultar todas las secciones
-        contentSections.forEach(section => section.classList.remove('active'));
-        
-        // Mostrar la sección seleccionada
-        document.getElementById(sectionId).classList.add('active');
+        // Cerrar sidebar en móvil después de seleccionar
+        if (window.innerWidth <= 1024) {
+            sidebar.style.transform = 'translateX(-100%)';
+        }
     });
 });
 

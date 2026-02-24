@@ -29,7 +29,7 @@
         </div>
         <div class="header-buttons">
             <button class="btn-login">Iniciar sesión</button>
-            <button class="btn-register">Regístrate</button>
+            <button class="btn-register" onclick="window.location.href='lista-usuarios.html'">Regístrate</button>
         </div>
     </header>
 
@@ -52,6 +52,17 @@
                 </svg>
                 <span>Cursos</span>
             </a>
+            <a href="#" class="nav-item">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>Material de Apoyo</span>
+            </a>
         </nav>
         <div class="sidebar-footer">
             <p>Copyright © Todos los derechos reservados Klasplus 2026</p>
@@ -60,12 +71,75 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="hero-section">
+        <!-- Hero Section (Inicio) -->
+        <div class="hero-section" id="inicioSection">
             <div class="hero-overlay"></div>
             <img src="../img/fondo-campus.webp" alt="Background" class="hero-image">
             <div class="hero-content">
                 <h1>La seguridad escolar también depende de ti</h1>
                 <button class="btn-primary">Conoce más</button>
+            </div>
+        </div>
+
+        <!-- Cursos Section -->
+        <div class="cursos-section" id="cursosSection" style="display: none;">
+            <!-- Contenedor Banner y Categorías -->
+            <div class="top-container">
+                <!-- Banner Publicidad -->
+                <div class="banner-publicidad">
+                    <img src="../img/banner-cursos.jpg" alt="Publicidad">
+                </div>
+
+                <!-- Sidebar Categorías -->
+                <div class="categorias-sidebar">
+                    <h2>CATEGORÍAS</h2>
+                </div>
+            </div>
+
+            <!-- Grid de Cursos -->
+            <div class="cursos-grid">
+                <!-- Curso 1 -->
+                <div class="curso-card">
+                    <div class="curso-image">
+                        <img src="../img/curso1.jpg" alt="Gestión y Prevención del Riesgo">
+                    </div>
+                    <div class="curso-info">
+                        <h3>GESTIÓN Y PREVENCIÓN DEL RIESGO</h3>
+                        <p class="instructor"><strong>Instructor:</strong> Katherine Volverás Pimiento</p>
+                        <button class="btn-ver-mas">VER MÁS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Material de Apoyo Section -->
+        <div class="cursos-section" id="materialApoyoSection" style="display: none;">
+            <!-- Contenedor Banner y Categorías -->
+            <div class="top-container">
+                <!-- Banner Publicidad -->
+                <div class="banner-publicidad">
+                    <img src="../img/banner-cursos.jpg" alt="Publicidad">
+                </div>
+
+                <!-- Sidebar Categorías -->
+                <div class="categorias-sidebar">
+                    <h2>CATEGORÍAS</h2>
+                </div>
+            </div>
+
+            <!-- Grid de Cursos -->
+            <div class="cursos-grid">
+                <!-- Curso 2 -->
+                <div class="curso-card">
+                    <div class="curso-image">
+                        <img src="../img/curso2.jpg" alt="¡A Salvo en el Recreo / Descanso!">
+                    </div>
+                    <div class="curso-info">
+                        <h3>¡A SALVO EN EL RECREO / DESCANSO!</h3>
+                        <p class="instructor"><strong>Instructor:</strong> Jennifer Mora Echeverry</p>
+                        <button class="btn-ver-mas">VER MÁS</button>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

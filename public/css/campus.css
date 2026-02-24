@@ -295,43 +295,64 @@ body {
 
 @media (max-width: 768px) {
     .header {
-        padding: 0 20px;
+        padding: 0 15px;
         height: 70px;
     }
 
-    .logo img {
+    .header-left {
+        gap: 15px;
+    }
+
+    .logo .logo-full {
+        height: 50px;
+    }
+
+    .logo .logo-icon {
         height: 45px;
     }
 
+    .menu-toggle {
+        width: 44px;
+        height: 44px;
+    }
+
+    .menu-toggle svg {
+        width: 28px;
+        height: 28px;
+    }
+
     .header-buttons {
-        gap: 10px;
+        gap: 8px;
     }
 
     .btn-login,
     .btn-register {
-        padding: 9px 20px;
+        padding: 10px 18px;
         font-size: 13px;
+        border-radius: 22px;
     }
 
     .hero-content {
         left: 25px;
         right: 25px;
+        top: 80px;
         max-width: none;
     }
 
     .hero-content h1 {
-        font-size: 36px;
-        margin-bottom: 25px;
+        font-size: 32px;
+        margin-bottom: 20px;
     }
 
     .btn-primary {
-        padding: 12px 28px;
-        font-size: 14px;
+        padding: 13px 30px;
+        font-size: 15px;
     }
 
     .sidebar {
         top: 70px;
         height: calc(100vh - 70px);
+        width: 280px;
     }
 
     .main-content {
@@ -342,35 +363,42 @@ body {
     .hero-section {
         height: calc(100vh - 70px);
     }
+
+    .cursos-section {
+        padding: 25px 15px;
+    }
+
+    .top-container {
+        margin-bottom: 25px;
+    }
+
+    .cursos-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
 
 @media (max-width: 480px) {
     .header {
-        padding: 0 15px;
+        padding: 0 12px;
         height: 65px;
     }
 
-    .logo img {
+    .header-left {
+        gap: 10px;
+    }
+
+    .logo .logo-full {
+        height: 45px;
+    }
+
+    .logo .logo-icon {
         height: 40px;
     }
 
-    .header-left {
-        gap: 15px;
-    }
-
-    .header-buttons {
-        gap: 8px;
-    }
-
-    .btn-login,
-    .btn-register {
-        padding: 8px 16px;
-        font-size: 12px;
-    }
-
     .menu-toggle {
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
     }
 
     .menu-toggle svg {
@@ -378,20 +406,32 @@ body {
         height: 24px;
     }
 
+    .header-buttons {
+        gap: 6px;
+    }
+
+    .btn-login,
+    .btn-register {
+        padding: 8px 14px;
+        font-size: 12px;
+        border-radius: 20px;
+    }
+
     .hero-content {
         left: 20px;
         right: 20px;
+        top: 60px;
     }
 
     .hero-content h1 {
-        font-size: 28px;
-        line-height: 1.2;
-        margin-bottom: 20px;
+        font-size: 26px;
+        line-height: 1.3;
+        margin-bottom: 18px;
     }
 
     .btn-primary {
-        padding: 11px 24px;
-        font-size: 13px;
+        padding: 12px 26px;
+        font-size: 14px;
     }
 
     .sidebar {
@@ -407,6 +447,81 @@ body {
 
     .hero-section {
         height: calc(100vh - 65px);
+    }
+
+    .cursos-section {
+        padding: 20px 12px;
+    }
+
+    .curso-info {
+        padding: 16px 18px 18px 18px;
+    }
+
+    .curso-info h3 {
+        font-size: 12px;
+    }
+
+    .instructor {
+        font-size: 11px;
+    }
+
+    .btn-ver-mas {
+        padding: 8px 20px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 360px) {
+    .header {
+        padding: 0 10px;
+        height: 60px;
+    }
+
+    .logo .logo-full {
+        height: 40px;
+    }
+
+    .logo .logo-icon {
+        height: 35px;
+    }
+
+    .menu-toggle {
+        width: 36px;
+        height: 36px;
+    }
+
+    .menu-toggle svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .btn-login,
+    .btn-register {
+        padding: 7px 12px;
+        font-size: 11px;
+    }
+
+    .hero-content h1 {
+        font-size: 22px;
+    }
+
+    .btn-primary {
+        padding: 10px 22px;
+        font-size: 13px;
+    }
+
+    .sidebar {
+        top: 60px;
+        height: calc(100vh - 60px);
+    }
+
+    .main-content {
+        margin-top: 60px;
+        min-height: calc(100vh - 60px);
+    }
+
+    .hero-section {
+        height: calc(100vh - 60px);
     }
 }
 
@@ -606,4 +721,301 @@ body {
 
 .link-forgot:hover {
     text-decoration: underline;
+}
+
+/* Cursos Section */
+.cursos-section {
+    padding: 40px 60px;
+    background: #f5f5f5;
+    min-height: calc(100vh - 110px);
+}
+
+.top-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.banner-publicidad {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.banner-publicidad img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.categorias-sidebar {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    height: fit-content;
+}
+
+.categorias-sidebar h2 {
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.cursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+}
+
+.curso-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 380px;
+}
+
+.curso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.curso-image {
+    width: 100%;
+    height: auto;
+    min-height: 180px;
+    max-height: 220px;
+    overflow: hidden;
+    position: relative;
+    background: white;
+    display: flex;
+    align-items: flex-start;
+}
+
+.curso-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0.85) 100%);
+    pointer-events: none;
+}
+
+.curso-image img {
+    width: 100%;
+    height: auto;
+    max-height: 220px;
+    object-fit: contain;
+    object-position: center top;
+    display: block;
+}
+
+.curso-info {
+    padding: 18px 20px 20px 20px;
+}
+
+.curso-info h3 {
+    color: #6b6b6b;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    letter-spacing: 0.3px;
+}
+
+.instructor {
+    color: #6b6b6b;
+    font-size: 12px;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.instructor strong {
+    font-weight: 700;
+    color: #4a4a4a;
+}
+
+.btn-ver-mas {
+    background: #0088cc;
+    color: white;
+    border: none;
+    padding: 9px 22px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: auto;
+    display: inline-block;
+}
+
+.btn-ver-mas:hover {
+    background: #0077b3;
+}
+
+/* Responsive Cursos */
+@media (max-width: 1200px) {
+    .top-container {
+        grid-template-columns: 1fr;
+    }
+
+    .categorias-sidebar {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .cursos-section {
+        padding: 30px 20px;
+    }
+
+    .cursos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .top-container {
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .banner-publicidad {
+        border-radius: 10px;
+    }
+
+    .categorias-sidebar {
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .categorias-sidebar h2 {
+        font-size: 18px;
+    }
+
+    .curso-card {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .cursos-section {
+        padding: 20px 15px;
+    }
+
+    .top-container {
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .banner-publicidad {
+        border-radius: 8px;
+    }
+
+    .categorias-sidebar {
+        padding: 16px;
+        border-radius: 8px;
+    }
+
+    .categorias-sidebar h2 {
+        font-size: 16px;
+    }
+
+    .curso-card {
+        border-radius: 12px;
+    }
+
+    .curso-image {
+        height: 200px;
+        min-height: 200px;
+        max-height: 200px;
+    }
+
+    .curso-image img {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: cover;
+        object-position: center top;
+    }
+
+    .curso-info {
+        padding: 16px 18px 18px 18px;
+    }
+
+    .curso-info h3 {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .instructor {
+        font-size: 11px;
+        margin-bottom: 14px;
+    }
+
+    .btn-ver-mas {
+        padding: 8px 20px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 360px) {
+    .cursos-section {
+        padding: 15px 10px;
+    }
+
+    .top-container {
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+
+    .categorias-sidebar {
+        padding: 14px;
+    }
+
+    .categorias-sidebar h2 {
+        font-size: 15px;
+    }
+
+    .curso-card {
+        border-radius: 10px;
+    }
+
+    .curso-image {
+        height: 180px;
+        min-height: 180px;
+        max-height: 180px;
+    }
+
+    .curso-image img {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: cover;
+        object-position: center top;
+    }
+
+    .curso-info {
+        padding: 14px 16px 16px 16px;
+    }
+
+    .curso-info h3 {
+        font-size: 11px;
+    }
+
+    .instructor {
+        font-size: 10px;
+        margin-bottom: 12px;
+    }
+
+    .btn-ver-mas {
+        padding: 7px 18px;
+        font-size: 10px;
+    }
 }

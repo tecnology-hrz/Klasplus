@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regístrate - Klasplus</title>
+    <link rel="icon" type="image/webp" href="../img/icon2.webp">
+    <link rel="stylesheet" href="../css/lista-usuarios.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="../../index.html" class="logo">
+                <img src="../img/logo-text.webp" alt="Klasplus Logo" class="logo-full" id="logoFull">
+                <img src="../img/icon.webp" alt="Klasplus Icon" class="logo-icon" id="logoIcon" style="display: none;">
+            </a>
+            <button class="menu-toggle" id="menuToggle">
+                <svg class="icon-hamburger" id="iconHamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon-arrow" id="iconArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+        <div class="header-buttons">
+            <button class="btn-login">Iniciar sesión</button>
+            <button class="btn-register">Regístrate</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="campus.html" class="nav-item">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Inicio</span>
+            </a>
+            <a href="campus.html" class="nav-item" data-section="cursos">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Cursos</span>
+            </a>
+            <a href="campus.html" class="nav-item" data-section="material">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>Material de Apoyo</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <p>Copyright © Todos los derechos reservados Klasplus 2026</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="registro-container">
+            <div class="registro-header">
+                <h1>Regístrate</h1>
+                <p>Bienvenidos a Klasplus, Escuela Segura. Regístrese para acceder a los programas de formación en el área de seguridad escolar.</p>
+            </div>
+
+            <div class="usuarios-grid">
+                <!-- Acudiente -->
+                <div class="usuario-card" data-tipo="acudiente">
+                    <div class="usuario-image">
+                        <img src="../img/acudiente.webp" alt="Acudiente">
+                    </div>
+                </div>
+
+                <!-- Estudiante -->
+                <div class="usuario-card" data-tipo="estudiante">
+                    <div class="usuario-image">
+                        <img src="../img/estudiante.webp" alt="Estudiante">
+                    </div>
+                </div>
+
+                <!-- Institución -->
+                <div class="usuario-card" data-tipo="institucion">
+                    <div class="usuario-image">
+                        <img src="../img/institucion.webp" alt="Institución">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Inicio de Sesión -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <h2>¡Bienvenid@ de vuelta!</h2>
+                <p>Que bueno verte de nuevo.</p>
+            </div>
+            
+            <form class="login-form">
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Contraseña *</label>
+                    <div class="password-input">
+                        <input type="password" id="passwordInput" placeholder="Ingresa tu contraseña" required>
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">Iniciar sesión</button>
+                
+                <div class="modal-footer">
+                    <p>¿Aún no tienes cuenta? <a href="#" class="link-register">Regístrate</a></p>
+                    <a href="#" class="link-forgot">Olvidé mi contraseña</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/lista-usuarios.js"></script>
+</body>
+</html>
