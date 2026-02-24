@@ -54,10 +54,17 @@
     margin-top: -60px;
 }
 
-.perfil-avatar-large svg {
+.perfil-avatar-large svg.avatar-placeholder {
     width: 60px;
     height: 60px;
     stroke: #9ca3af;
+}
+
+.perfil-avatar-large .avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .perfil-info {

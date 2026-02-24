@@ -18,7 +18,7 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href="dashboard-estudiante.html" class="nav-item">
+                <a href="#" class="nav-item" id="linkDashboard">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
@@ -83,11 +83,12 @@
                     </svg>
                 </button>
                 <div class="user-info" id="userDropdown">
-                    <div class="user-avatar-default">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div class="user-avatar-default" id="headerAvatarContainer">
+                        <svg class="avatar-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
+                        <img class="avatar-img-small" id="headerAvatarImg" src="" alt="Avatar" style="display: none;">
                     </div>
                     <div class="user-details">
                         <span class="user-name">Cargando...</span>
@@ -146,18 +147,20 @@
                     <img src="../img/Banner-perfil.jpg" alt="Banner" class="banner-image">
                     <div class="banner-overlay"></div>
                     <div class="banner-content">
-                        <div class="perfil-avatar-large">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <div class="perfil-avatar-large" id="perfilAvatarLarge">
+                            <svg class="avatar-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
+                            <img class="avatar-img" id="perfilAvatarImg" src="" alt="Avatar" style="display: none;">
                         </div>
                         <div class="perfil-info">
                             <h1 class="perfil-nombre" id="perfilNombre">Cargando...</h1>
                             <p class="perfil-documento">Documento: <span id="perfilDocumento">...</span></p>
                         </div>
                         <div class="perfil-actions">
-                            <button class="btn-subir-foto">
+                            <input type="file" id="inputFotoPerfil" accept="image/*" style="display: none;">
+                            <button class="btn-subir-foto" id="btnSubirFoto">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                     <polyline points="17 8 12 3 7 8"></polyline>
@@ -279,8 +282,10 @@
                                         <select id="inputTipoDoc">
                                             <option value="Cédula de identidad">Cédula de identidad</option>
                                             <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                                            <option value="Cédula de extranjería">Cédula de extranjería</option>
                                             <option value="Pasaporte">Pasaporte</option>
                                             <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+                                            <option value="PEP">PEP</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -301,6 +306,43 @@
                                     <div class="form-group">
                                         <label>Fecha de nacimiento</label>
                                         <input type="date" id="inputFechaNac">
+                                    </div>
+                                </div>
+
+                                <div id="seccionInstitucion" style="display: none;">
+                                    <h2 class="section-title">Información de la Institución</h2>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Nombre de la institución</label>
+                                            <input type="text" placeholder="Nombre de la institución" id="inputInstNombre">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>NIT</label>
+                                            <input type="text" placeholder="NIT de la institución" id="inputInstNit">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Teléfono de la institución</label>
+                                            <input type="tel" placeholder="Teléfono de la institución" id="inputInstTelefono">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Dirección</label>
+                                            <input type="text" placeholder="Dirección de la institución" id="inputInstDireccion">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Ciudad</label>
+                                            <input type="text" placeholder="Ciudad" id="inputInstCiudad">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Departamento</label>
+                                            <input type="text" placeholder="Departamento" id="inputInstDepartamento">
+                                        </div>
                                     </div>
                                 </div>
 

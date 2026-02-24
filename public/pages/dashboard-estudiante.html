@@ -81,11 +81,12 @@
                     </svg>
                 </button>
                 <div class="user-info" id="userDropdown">
-                    <div class="user-avatar-default">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div class="user-avatar-default" id="headerAvatarContainer">
+                        <svg class="avatar-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
+                        <img class="avatar-img-small" id="headerAvatarImg" src="" alt="Avatar" style="display: none;">
                     </div>
                     <div class="user-details">
                         <span class="user-name">Cargando...</span>
@@ -292,12 +293,27 @@
                     const nombreCompleto = datosDB.nombre || datosDB.nombreCompleto || 'Usuario';
                     const tipoUsuario = datosDB.tipoUsuario || 'Estudiante';
                     
-                    // Actualizar nombre en el header
                     const nombreElemento = document.querySelector('.user-name');
                     const rolElemento = document.querySelector('.user-role');
                     
                     if (nombreElemento) nombreElemento.textContent = nombreCompleto;
                     if (rolElemento) rolElemento.textContent = tipoUsuario.charAt(0).toUpperCase() + tipoUsuario.slice(1);
+                    
+                    // Cargar foto de perfil
+                    const fotoPerfil = datosDB.fotoPerfil;
+                    if (fotoPerfil) {
+                        const headerImg = document.getElementById('headerAvatarImg');
+                        const headerPlaceholder = document.querySelector('#headerAvatarContainer .avatar-placeholder');
+                        if (headerImg) {
+                            headerImg.src = fotoPerfil;
+                            headerImg.style.display = 'block';
+                            if (headerPlaceholder) headerPlaceholder.style.display = 'none';
+                        }
+                        // Actualizar localStorage con la foto
+                        const sesion = JSON.parse(sesionUsuario);
+                        sesion.fotoPerfil = fotoPerfil;
+                        localStorage.setItem('userSession', JSON.stringify(sesion));
+                    }
                 }
             } catch (error) {
                 console.error('Error al cargar datos del usuario:', error);

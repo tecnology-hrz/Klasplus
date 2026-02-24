@@ -2,6 +2,8 @@ import { db, collection, getDocs, query, where } from './firebase-config.js';
 import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { showSuccessNotification, showErrorNotification, showLoading, hideLoading } from './notifications.js';
 
+const IMGBB_API_KEY = 'cecb7463734f9b0b470426456e4be69d';
+
 // ==========================================
 // SIDEBAR Y MENÚ MÓVIL
 // ==========================================
@@ -9,28 +11,23 @@ import { showSuccessNotification, showErrorNotification, showLoading, hideLoadin
 const sidebar = document.querySelector('.sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-// Función para abrir/cerrar sidebar con overlay
 const toggleSidebar = () => {
     sidebar.classList.toggle('active');
     if (sidebarOverlay) sidebarOverlay.classList.toggle('active');
     document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
 };
 
-// Botón hamburguesa para abrir sidebar
 const menuToggle = document.querySelector('.menu-toggle');
 if (menuToggle) {
     menuToggle.addEventListener('click', toggleSidebar);
 }
 
-// Cerrar sidebar al hacer clic en el overlay
 if (sidebarOverlay) {
     sidebarOverlay.addEventListener('click', toggleSidebar);
 }
 
-// Cerrar sidebar al hacer clic en un enlace (móvil)
 document.querySelectorAll('.sidebar .nav-item:not(.expandable)').forEach(enlace => {
     enlace.addEventListener('click', (e) => {
-        // Verificar si es el enlace de Certificados
         if (enlace.querySelector('span') && enlace.querySelector('span').textContent === 'Certificados') {
             e.preventDefault();
             showErrorNotification('En desarrollo', 'Esta sección estará disponible próximamente');
@@ -57,14 +54,12 @@ if (userDropdown) {
     });
 }
 
-// Cerrar el menú al hacer clic fuera
 document.addEventListener('click', (e) => {
     if (userDropdown && !userDropdown.contains(e.target)) {
         dropdownMenu.classList.remove('show');
     }
 });
 
-// Cerrar sesión
 const logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
     logoutBtn.addEventListener('click', (e) => {
@@ -98,12 +93,8 @@ const tabContents = document.querySelectorAll('.tab-content');
 tabButtons.forEach(button => {
     button.addEventListener('click', () => {
         const targetTab = button.getAttribute('data-tab');
-        
-        // Remover active de todos los botones y contenidos
         tabButtons.forEach(btn => btn.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
-        
-        // Agregar active al botón clickeado y su contenido
         button.classList.add('active');
         document.getElementById(`tab-${targetTab}`).classList.add('active');
     });
@@ -113,6 +104,133 @@ tabButtons.forEach(button => {
 // VARIABLE GLOBAL PARA EL ID DEL DOCUMENTO
 // ==========================================
 let documentoIdUsuario = null;
+
+// ==========================================
+// FUNCIONES DE AVATAR
+// ==========================================
+
+function mostrarAvatar(urlImagen) {
+    if (!urlImagen) return;
+    
+    // Avatar grande del banner
+    const avatarImg = document.getElementById('perfilAvatarImg');
+    const avatarPlaceholder = document.querySelector('#perfilAvatarLarge .avatar-placeholder');
+    if (avatarImg) {
+        avatarImg.src = urlImagen;
+        avatarImg.style.display = 'block';
+        if (avatarPlaceholder) avatarPlaceholder.style.display = 'none';
+    }
+    
+    // Cambiar texto del botón a "Cambiar foto"
+    const btnSubir = document.getElementById('btnSubirFoto');
+    if (btnSubir) {
+        btnSubir.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            Cambiar foto`;
+    }
+    
+    // Avatar pequeño del header
+    const headerImg = document.getElementById('headerAvatarImg');
+    const headerPlaceholder = document.querySelector('#headerAvatarContainer .avatar-placeholder');
+    if (headerImg) {
+        headerImg.src = urlImagen;
+        headerImg.style.display = 'block';
+        if (headerPlaceholder) headerPlaceholder.style.display = 'none';
+    }
+    
+    // Guardar en localStorage para otras páginas
+    const sesion = localStorage.getItem('userSession');
+    if (sesion) {
+        const datos = JSON.parse(sesion);
+        datos.fotoPerfil = urlImagen;
+        localStorage.setItem('userSession', JSON.stringify(datos));
+    }
+}
+
+async function subirImagenImgBB(archivo) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = async () => {
+            try {
+                const base64 = reader.result.split(',')[1];
+                const formData = new FormData();
+                formData.append('key', IMGBB_API_KEY);
+                formData.append('image', base64);
+                
+                const respuesta = await fetch('https://api.imgbb.com/1/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const resultado = await respuesta.json();
+                
+                if (resultado.success) {
+                    resolve(resultado.data.display_url);
+                } else {
+                    reject(new Error(resultado.error?.message || 'Error al subir imagen'));
+                }
+            } catch (error) {
+                reject(error);
+            }
+        };
+        reader.onerror = () => reject(new Error('Error al leer el archivo'));
+        reader.readAsDataURL(archivo);
+    });
+}
+
+// ==========================================
+// EVENTO DE SUBIR FOTO
+// ==========================================
+
+const btnSubirFoto = document.getElementById('btnSubirFoto');
+const inputFotoPerfil = document.getElementById('inputFotoPerfil');
+
+if (btnSubirFoto && inputFotoPerfil) {
+    btnSubirFoto.addEventListener('click', () => {
+        inputFotoPerfil.click();
+    });
+    
+    inputFotoPerfil.addEventListener('change', async (e) => {
+        const archivo = e.target.files[0];
+        if (!archivo) return;
+        
+        if (!archivo.type.startsWith('image/')) {
+            showErrorNotification('Error', 'Por favor selecciona un archivo de imagen válido.');
+            return;
+        }
+        
+        if (archivo.size > 5 * 1024 * 1024) {
+            showErrorNotification('Error', 'La imagen no debe superar los 5 MB.');
+            return;
+        }
+        
+        showLoading();
+        
+        try {
+            const urlImagen = await subirImagenImgBB(archivo);
+            
+            // Guardar URL en Firebase
+            if (documentoIdUsuario) {
+                const referenciaDoc = doc(db, 'usuarios', documentoIdUsuario);
+                await updateDoc(referenciaDoc, { fotoPerfil: urlImagen });
+            }
+            
+            mostrarAvatar(urlImagen);
+            
+            hideLoading();
+            showSuccessNotification('¡Foto actualizada!', 'Tu foto de perfil se ha actualizado correctamente.');
+        } catch (error) {
+            console.error('Error al subir foto:', error);
+            hideLoading();
+            showErrorNotification('Error', 'No se pudo subir la foto. Intenta nuevamente.');
+        }
+        
+        inputFotoPerfil.value = '';
+    });
+}
 
 // ==========================================
 // CARGAR DATOS DEL USUARIO DESDE FIREBASE
@@ -129,7 +247,6 @@ async function cargarDatosUsuario() {
     const datosUsuario = JSON.parse(sesionUsuario);
     
     try {
-        // Buscar el usuario en Firebase por email
         const q = query(collection(db, 'usuarios'), where('email', '==', datosUsuario.email));
         const resultado = await getDocs(q);
         
@@ -137,14 +254,12 @@ async function cargarDatosUsuario() {
             const documentoUsuario = resultado.docs[0];
             const datosDB = documentoUsuario.data();
             
-            // Guardar el ID del documento para usarlo al actualizar
             documentoIdUsuario = documentoUsuario.id;
             
-            // Nombre completo del usuario
             const nombreCompleto = datosDB.nombre || datosDB.nombreCompleto || 'Usuario';
             const primerNombre = nombreCompleto.split(' ')[0];
             
-            // Actualizar nombre en el header
+            // Header: nombre y rol
             const nombreElemento = document.querySelector('.user-name');
             const rolElemento = document.querySelector('.user-role');
             
@@ -154,30 +269,29 @@ async function cargarDatosUsuario() {
                 rolElemento.textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1);
             }
             
-            // Actualizar información en el banner
+            // Banner: nombre
             const perfilNombre = document.getElementById('perfilNombre');
-            const perfilDocumento = document.getElementById('perfilDocumento');
-            
             if (perfilNombre) perfilNombre.textContent = nombreCompleto;
-            if (perfilDocumento) {
-                const numDoc = datosDB.numeroDocumento || datosDB.documento || 'N/A';
-                perfilDocumento.textContent = numDoc;
-            }
             
-            // Actualizar documento tipo en el banner
+            // Banner: solo número de documento
             const perfilDocLabel = document.querySelector('.perfil-documento');
-            if (perfilDocLabel && datosDB.tipoDocumento) {
-                const abrevTipoDoc = obtenerAbreviaturaTipoDoc(datosDB.tipoDocumento);
-                perfilDocLabel.innerHTML = `Documento: ${abrevTipoDoc} <span id="perfilDocumento">${datosDB.numeroDocumento || datosDB.documento || 'N/A'}</span>`;
+            const numDoc = datosDB.numeroDocumento || datosDB.documento || '';
+            if (perfilDocLabel && numDoc) {
+                perfilDocLabel.innerHTML = `Documento: <span id="perfilDocumento">${numDoc}</span>`;
+            } else if (perfilDocLabel) {
+                perfilDocLabel.innerHTML = `Documento: <span id="perfilDocumento">N/A</span>`;
             }
             
-            // Actualizar mensaje de bienvenida
+            // Bienvenida
             const highlight = document.querySelector('.welcome-message .highlight');
-            if (highlight) {
-                highlight.textContent = primerNombre;
+            if (highlight) highlight.textContent = primerNombre;
+            
+            // Foto de perfil
+            if (datosDB.fotoPerfil) {
+                mostrarAvatar(datosDB.fotoPerfil);
             }
             
-            // Actualizar formulario de configuración
+            // Formulario de configuración
             const inputNombres = document.getElementById('inputNombres');
             const inputApellidos = document.getElementById('inputApellidos');
             
@@ -186,11 +300,9 @@ async function cargarDatosUsuario() {
                     inputNombres.value = datosDB.nombres;
                 } else {
                     const partes = nombreCompleto.split(' ');
-                    if (partes.length >= 2) {
-                        inputNombres.value = partes.slice(0, Math.ceil(partes.length / 2)).join(' ');
-                    } else {
-                        inputNombres.value = nombreCompleto;
-                    }
+                    inputNombres.value = partes.length >= 2
+                        ? partes.slice(0, Math.ceil(partes.length / 2)).join(' ')
+                        : nombreCompleto;
                 }
             }
             
@@ -199,17 +311,14 @@ async function cargarDatosUsuario() {
                     inputApellidos.value = datosDB.apellidos;
                 } else {
                     const partes = nombreCompleto.split(' ');
-                    if (partes.length >= 2) {
-                        inputApellidos.value = partes.slice(Math.ceil(partes.length / 2)).join(' ');
-                    } else {
-                        inputApellidos.value = '';
-                    }
+                    inputApellidos.value = partes.length >= 2
+                        ? partes.slice(Math.ceil(partes.length / 2)).join(' ')
+                        : '';
                 }
             }
             
             const inputTipoDoc = document.getElementById('inputTipoDoc');
             if (inputTipoDoc && datosDB.tipoDocumento) {
-                // Buscar la opción que coincida
                 for (let i = 0; i < inputTipoDoc.options.length; i++) {
                     if (inputTipoDoc.options[i].value === datosDB.tipoDocumento || 
                         inputTipoDoc.options[i].text === datosDB.tipoDocumento) {
@@ -245,27 +354,37 @@ async function cargarDatosUsuario() {
                 inputEmail.value = datosDB.email || datosUsuario.email;
             }
             
-            // Actualizar información lateral (sidebar del perfil)
+            // Información lateral
             const infoValues = document.querySelectorAll('.info-value');
             if (infoValues.length >= 2) {
-                if (datosDB.institucion) infoValues[0].textContent = datosDB.institucion;
+                const institucion = datosDB.institucion || datosDB.institucionNombre;
+                if (institucion) infoValues[0].textContent = institucion;
                 if (datosDB.grado || datosDB.nivel) infoValues[1].textContent = datosDB.grado || datosDB.nivel;
+            }
+            
+            // Campos de institución (solo visible para tipo institucion)
+            if (datosDB.tipoUsuario === 'institucion') {
+                const seccion = document.getElementById('seccionInstitucion');
+                if (seccion) seccion.style.display = 'block';
+                
+                const camposInst = {
+                    'inputInstNombre': datosDB.institucionNombre,
+                    'inputInstNit': datosDB.institucionNit,
+                    'inputInstTelefono': datosDB.institucionTelefono,
+                    'inputInstDireccion': datosDB.institucionDireccion,
+                    'inputInstCiudad': datosDB.institucionCiudad,
+                    'inputInstDepartamento': datosDB.institucionDepartamento
+                };
+                
+                for (const [id, valor] of Object.entries(camposInst)) {
+                    const input = document.getElementById(id);
+                    if (input && valor) input.value = valor;
+                }
             }
         }
     } catch (error) {
         console.error('Error al cargar datos del usuario:', error);
     }
-}
-
-// Función auxiliar para abreviar tipo de documento
-function obtenerAbreviaturaTipoDoc(tipoDoc) {
-    const abreviaturas = {
-        'Cédula de identidad': 'CI',
-        'Cédula de ciudadanía': 'CC',
-        'Pasaporte': 'PA',
-        'Tarjeta de identidad': 'TI'
-    };
-    return abreviaturas[tipoDoc] || tipoDoc;
 }
 
 // ==========================================
@@ -289,7 +408,6 @@ if (perfilForm) {
     perfilForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Confirmar antes de actualizar
         if (!confirm('¿Estás seguro? Los datos serán actualizados en la base de datos.')) {
             return;
         }
@@ -309,7 +427,6 @@ if (perfilForm) {
             let userId = documentoIdUsuario;
             let datosActualesDB = null;
             
-            // Si no tenemos el ID del documento, buscarlo
             if (!userId) {
                 const q = query(collection(db, 'usuarios'), where('email', '==', datosUsuario.email));
                 const resultado = await getDocs(q);
@@ -323,7 +440,6 @@ if (perfilForm) {
                 userId = resultado.docs[0].id;
                 datosActualesDB = resultado.docs[0].data();
             } else {
-                // Obtener datos actuales para verificar contraseña
                 const q = query(collection(db, 'usuarios'), where('email', '==', datosUsuario.email));
                 const resultado = await getDocs(q);
                 if (!resultado.empty) {
@@ -331,7 +447,6 @@ if (perfilForm) {
                 }
             }
             
-            // Recopilar datos del formulario
             const nombres = document.getElementById('inputNombres').value.trim();
             const apellidos = document.getElementById('inputApellidos').value.trim();
             const nombreCompleto = `${nombres} ${apellidos}`.trim();
@@ -345,7 +460,6 @@ if (perfilForm) {
             const nuevaContrasena = document.getElementById('inputNewPassword').value;
             const confirmarContrasena = document.getElementById('inputConfirmPassword').value;
             
-            // Validar campos obligatorios
             if (!nombres || !apellidos) {
                 hideLoading();
                 showErrorNotification('Error', 'Los nombres y apellidos son obligatorios.');
@@ -358,7 +472,6 @@ if (perfilForm) {
                 return;
             }
             
-            // Preparar datos para actualizar
             const datosActualizar = {
                 nombre: nombreCompleto,
                 nombreCompleto: nombreCompleto,
@@ -372,30 +485,40 @@ if (perfilForm) {
                 email: email
             };
             
-            // Si se intenta cambiar la contraseña
+            // Agregar campos de institución si la sección está visible
+            const seccionInst = document.getElementById('seccionInstitucion');
+            if (seccionInst && seccionInst.style.display !== 'none') {
+                const obtenerValorInst = (id) => {
+                    const el = document.getElementById(id);
+                    return el ? el.value.trim() : '';
+                };
+                datosActualizar.institucionNombre = obtenerValorInst('inputInstNombre');
+                datosActualizar.institucionNit = obtenerValorInst('inputInstNit');
+                datosActualizar.institucionTelefono = obtenerValorInst('inputInstTelefono');
+                datosActualizar.institucionDireccion = obtenerValorInst('inputInstDireccion');
+                datosActualizar.institucionCiudad = obtenerValorInst('inputInstCiudad');
+                datosActualizar.institucionDepartamento = obtenerValorInst('inputInstDepartamento');
+            }
+            
             if (contrasenaActual || nuevaContrasena || confirmarContrasena) {
-                // Validar que todos los campos de contraseña estén llenos
                 if (!contrasenaActual || !nuevaContrasena || !confirmarContrasena) {
                     hideLoading();
                     showErrorNotification('Error', 'Por favor completa todos los campos de contraseña.');
                     return;
                 }
                 
-                // Validar que las contraseñas nuevas coincidan
                 if (nuevaContrasena !== confirmarContrasena) {
                     hideLoading();
                     showErrorNotification('Error', 'Las contraseñas nuevas no coinciden.');
                     return;
                 }
                 
-                // Validar longitud mínima
                 if (nuevaContrasena.length < 6) {
                     hideLoading();
                     showErrorNotification('Error', 'La nueva contraseña debe tener al menos 6 caracteres.');
                     return;
                 }
                 
-                // Verificar contraseña actual
                 if (datosActualesDB) {
                     const hashContrasenaActual = await hashPassword(contrasenaActual);
                     if (hashContrasenaActual !== datosActualesDB.password) {
@@ -405,17 +528,15 @@ if (perfilForm) {
                     }
                 }
                 
-                // Agregar nueva contraseña encriptada
                 const hashNuevaContrasena = await hashPassword(nuevaContrasena);
                 datosActualizar.password = hashNuevaContrasena;
             }
             
-            // Actualizar en Firebase
             const referenciaDoc = doc(db, 'usuarios', userId);
             await updateDoc(referenciaDoc, datosActualizar);
             
-            // Actualizar localStorage con la sesión actualizada
             const sesionActualizada = {
+                ...datosUsuario,
                 userId: userId,
                 email: email,
                 nombre: nombreCompleto,
@@ -429,12 +550,9 @@ if (perfilForm) {
                 '¡Perfil actualizado!',
                 'Tus datos han sido actualizados correctamente en la base de datos.',
                 () => {
-                    // Limpiar campos de contraseña
                     document.getElementById('inputCurrentPassword').value = '';
                     document.getElementById('inputNewPassword').value = '';
                     document.getElementById('inputConfirmPassword').value = '';
-                    
-                    // Recargar datos para reflejar los cambios
                     cargarDatosUsuario();
                 }
             );
@@ -483,7 +601,31 @@ togglePasswordButtons.forEach(button => {
 });
 
 // ==========================================
+// ENLACE DINÁMICO AL DASHBOARD SEGÚN ROL
+// ==========================================
+
+function configurarEnlaceDashboard() {
+    const sesion = localStorage.getItem('userSession');
+    if (!sesion) return;
+    
+    const datos = JSON.parse(sesion);
+    const tipo = datos.tipoUsuario || 'estudiante';
+    const linkDashboard = document.getElementById('linkDashboard');
+    
+    if (linkDashboard) {
+        const rutas = {
+            'estudiante': 'dashboard-estudiante.html',
+            'acudiente': 'dashboard-acudiente.html',
+            'institucion': 'dashboard-institucion.html',
+            'profesor': 'dashboard-profesor.html'
+        };
+        linkDashboard.href = rutas[tipo] || 'dashboard-estudiante.html';
+    }
+}
+
+// ==========================================
 // CARGAR DATOS AL INICIAR
 // ==========================================
 
+configurarEnlaceDashboard();
 cargarDatosUsuario();

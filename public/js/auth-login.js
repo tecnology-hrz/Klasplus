@@ -84,11 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 '¡Bienvenido de nuevo!',
                 'Has iniciado sesión correctamente en Klasplus.',
                 () => {
-                    // Redirigir según el tipo de usuario
-                    if (userData.tipoUsuario === 'estudiante' || userData.tipoUsuario === 'acudiente') {
+                    if (userData.tipoUsuario === 'estudiante') {
                         window.location.href = 'dashboard-estudiante.html';
+                    } else if (userData.tipoUsuario === 'acudiente') {
+                        window.location.href = 'dashboard-acudiente.html';
                     } else if (userData.tipoUsuario === 'institucion') {
-                        window.location.href = 'dashboard-admin.html';
+                        window.location.href = 'dashboard-institucion.html';
                     } else if (userData.tipoUsuario === 'profesor') {
                         window.location.href = 'dashboard-profesor.html';
                     } else {

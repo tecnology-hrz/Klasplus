@@ -194,13 +194,33 @@ function checkUserSession() {
     if (userSession) {
         const userData = JSON.parse(userSession);
         
-        // Ocultar botones de auth y mostrar menú de usuario
         authButtons.style.display = 'none';
         userDropdown.style.display = 'flex';
         
-        // Actualizar nombre y rol del usuario
         document.getElementById('userName').textContent = userData.nombre || 'Usuario';
         document.getElementById('userRole').textContent = userData.tipoUsuario || 'Estudiante';
+        
+        // Enlace dinámico al dashboard según tipo de usuario
+        const linkDashboard = document.getElementById('linkDashboard');
+        if (linkDashboard) {
+            const rutasDashboard = {
+                'estudiante': 'dashboard-estudiante.html',
+                'acudiente': 'dashboard-acudiente.html',
+                'institucion': 'dashboard-institucion.html',
+                'profesor': 'dashboard-profesor.html'
+            };
+            linkDashboard.href = rutasDashboard[userData.tipoUsuario] || 'dashboard-estudiante.html';
+        }
+        
+        if (userData.fotoPerfil) {
+            const headerImg = document.getElementById('headerAvatarImg');
+            const headerPlaceholder = document.querySelector('#headerAvatarContainer .avatar-placeholder');
+            if (headerImg) {
+                headerImg.src = userData.fotoPerfil;
+                headerImg.style.display = 'block';
+                if (headerPlaceholder) headerPlaceholder.style.display = 'none';
+            }
+        }
     } else {
         // Mostrar botones de auth y ocultar menú de usuario
         authButtons.style.display = 'flex';

@@ -1,7 +1,6 @@
 import { db, collection, addDoc, query, where, getDocs } from './firebase-config.js';
 import { showSuccessNotification, showErrorNotification, showLoading, hideLoading } from './notifications.js';
 
-// Función para encriptar contraseña (simple hash)
 const hashPassword = async (password) => {
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
@@ -10,7 +9,6 @@ const hashPassword = async (password) => {
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 };
 
-// Obtener el tipo de usuario desde la URL
 const getTipoUsuario = () => {
     const path = window.location.pathname;
     if (path.includes('acudiente')) return 'acudiente';
@@ -19,36 +17,27 @@ const getTipoUsuario = () => {
     return 'desconocido';
 };
 
-// Manejar el registro
 document.addEventListener('DOMContentLoaded', () => {
     const registroForm = document.querySelector('.registro-form');
     
-    // Solo ejecutar si existe el formulario de registro
-    if (!registroForm) {
-        return;
-    }
+    if (!registroForm) return;
     
     registroForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        // Mostrar loading
         showLoading();
         
-        // Obtener email y contraseña
-        const emailInput = registroForm.querySelector('input[type="email"]');
-        const passwordInput = registroForm.querySelector('input[type="password"]');
+        const obtenerCampo = (nombre) => {
+            const elemento = registroForm.querySelector(`[name="${nombre}"]`);
+            return elemento ? elemento.value.trim() : '';
+        };
         
-        if (!emailInput || !passwordInput) {
-            hideLoading();
-            return;
-        }
-        
-        const email = emailInput.value;
-        const password = passwordInput.value;
+        const email = obtenerCampo('email');
+        const password = obtenerCampo('password');
+        const nombres = obtenerCampo('nombres');
+        const apellidos = obtenerCampo('apellidos');
         const tipoUsuario = getTipoUsuario();
         
         try {
-            // Verificar si el email ya existe
             const q = query(collection(db, 'usuarios'), where('email', '==', email));
             const querySnapshot = await getDocs(q);
             
@@ -61,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            // Validar contraseña
             if (password.length < 6) {
                 hideLoading();
                 showErrorNotification(
@@ -71,65 +59,62 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            // Encriptar contraseña
             const hashedPassword = await hashPassword(password);
+            const nombreCompleto = `${nombres} ${apellidos}`.trim();
             
-            // Recopilar datos del formulario
             const userData = {
                 email: email,
                 password: hashedPassword,
                 tipoUsuario: tipoUsuario,
-                fechaRegistro: new Date().toISOString()
+                fechaRegistro: new Date().toISOString(),
+                nombres: nombres,
+                apellidos: apellidos,
+                nombre: nombreCompleto,
+                nombreCompleto: nombreCompleto,
+                telefono: obtenerCampo('telefono'),
+                tipoDocumento: obtenerCampo('tipoDocumento'),
+                numeroDocumento: obtenerCampo('numeroDocumento'),
+                documento: obtenerCampo('numeroDocumento'),
+                genero: obtenerCampo('genero')
             };
             
-            // Obtener todos los campos del formulario
-            const inputs = registroForm.querySelectorAll('input:not([type="password"]):not([type="checkbox"]):not([type="email"])');
-            const selects = registroForm.querySelectorAll('select');
+            if (tipoUsuario === 'institucion') {
+                userData.institucionNombre = obtenerCampo('institucionNombre');
+                userData.institucionTelefono = obtenerCampo('institucionTelefono');
+                userData.institucionNit = obtenerCampo('institucionNit');
+                userData.institucionDireccion = obtenerCampo('institucionDireccion');
+                userData.institucionCiudad = obtenerCampo('institucionCiudad');
+                userData.institucionDepartamento = obtenerCampo('institucionDepartamento');
+            }
             
-            inputs.forEach(input => {
-                if (input.value && input.placeholder) {
-                    let fieldName = input.placeholder
-                        .replace('Por favor ingresar tu ', '')
-                        .replace('Por favor ingresa tu ', '')
-                        .replace('Por favor ingresar ', '')
-                        .toLowerCase()
-                        .replace(/ /g, '_');
-                    userData[fieldName] = input.value;
-                }
-            });
-            
-            selects.forEach(select => {
-                if (select.value) {
-                    let fieldName = select.options[0].text
-                        .replace('Selecciona tu ', '')
-                        .toLowerCase()
-                        .replace(/ /g, '_');
-                    userData[fieldName] = select.value;
-                }
-            });
-            
-            // Guardar en Firestore
             const docRef = await addDoc(collection(db, 'usuarios'), userData);
             
-            console.log('Usuario registrado con ID:', docRef.id);
-            
-            // Guardar sesión
+            // Guardar sesión en sessionStorage
             sessionStorage.setItem('userEmail', email);
             sessionStorage.setItem('userId', docRef.id);
             sessionStorage.setItem('tipoUsuario', tipoUsuario);
             
+            // Guardar sesión en localStorage para el perfil y campus
+            const userSession = {
+                userId: docRef.id,
+                email: email,
+                nombre: nombreCompleto,
+                tipoUsuario: tipoUsuario
+            };
+            localStorage.setItem('userSession', JSON.stringify(userSession));
+            
             hideLoading();
             
-            // Mostrar notificación de éxito
             showSuccessNotification(
                 '¡Registro exitoso!',
                 'Bienvenido a Klasplus. Tu cuenta ha sido creada correctamente.',
                 () => {
-                    // Redirigir según el tipo de usuario
-                    if (tipoUsuario === 'estudiante' || tipoUsuario === 'acudiente') {
+                    if (tipoUsuario === 'estudiante') {
                         window.location.href = 'dashboard-estudiante.html';
+                    } else if (tipoUsuario === 'acudiente') {
+                        window.location.href = 'dashboard-acudiente.html';
                     } else if (tipoUsuario === 'institucion') {
-                        window.location.href = 'dashboard-admin.html';
+                        window.location.href = 'dashboard-institucion.html';
                     } else {
                         window.location.href = 'campus.html';
                     }

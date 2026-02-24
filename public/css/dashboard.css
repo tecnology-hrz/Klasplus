@@ -199,10 +199,17 @@ body {
     flex-shrink: 0;
 }
 
-.user-avatar-default svg {
+.user-avatar-default svg.avatar-placeholder {
     width: 24px;
     height: 24px;
     stroke: #9ca3af;
+}
+
+.user-avatar-default .avatar-img-small {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .user-details {
