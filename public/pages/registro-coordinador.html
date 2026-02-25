@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Coordinador - Klasplus</title>
+    <link rel="icon" type="image/webp" href="../img/icon2.webp">
+    <link rel="stylesheet" href="../css/registro.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="../../index.html" class="logo">
+                <img src="../img/logo-text.webp" alt="Klasplus Logo" class="logo-full" id="logoFull">
+                <img src="../img/icon.webp" alt="Klasplus Icon" class="logo-icon" id="logoIcon" style="display: none;">
+            </a>
+            <button class="menu-toggle" id="menuToggle">
+                <svg class="icon-hamburger" id="iconHamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon-arrow" id="iconArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+        <div class="header-buttons">
+            <button class="btn-login">Iniciar sesión</button>
+            <button class="btn-register" onclick="window.location.href='lista-usuarios.html'">Regístrate</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="campus.html" class="nav-item">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Inicio</span>
+            </a>
+            <a href="campus.html" class="nav-item">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Cursos</span>
+            </a>
+            <a href="campus.html" class="nav-item">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>Material de Apoyo</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <p>Copyright © Todos los derechos reservados Klasplus 2026</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="registro-layout">
+            <!-- Columna Izquierda - Información -->
+            <div class="info-column">
+                <div class="info-card">
+                    <h1>¿Eres coordinador?</h1>
+                    <p>Únete a nuestro equipo de coordinadores y ayuda a gestionar la seguridad y el aprendizaje de los estudiantes. Regístrate y accede a todas las herramientas de gestión.</p>
+                    <div class="info-image">
+                        <img src="../img/institucion.webp" alt="Coordinador">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha - Formulario -->
+            <div class="form-column">
+                <div class="form-card">
+                    <h2 class="section-title">Información Personal</h2>
+                    
+                    <form class="registro-form">
+                        <div class="form-group">
+                            <label>Nombres</label>
+                            <input type="text" name="nombres" placeholder="Por favor ingresar tu nombre" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Apellidos</label>
+                            <input type="text" name="apellidos" placeholder="Por favor ingresar tu apellido" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Teléfono/Whatsapp</label>
+                            <input type="tel" name="telefono" placeholder="Por favor ingresar tu número de teléfono" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo de documento</label>
+                            <select name="tipoDocumento" required>
+                                <option value="">Selecciona tu tipo de documento</option>
+                                <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                                <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+                                <option value="Cédula de identidad">Cédula de identidad</option>
+                                <option value="Pasaporte">Pasaporte</option>
+                                <option value="PEP">PEP</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Número de documento</label>
+                            <input type="text" name="numeroDocumento" placeholder="Por favor ingresar tu número de documento" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sexo</label>
+                            <select name="genero" required>
+                                <option value="">Selecciona tu sexo</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Sin Especificar</option>
+                            </select>
+                        </div>
+
+                        <h2 class="section-title">Información de Seguridad</h2>
+
+                        <div class="form-group">
+                            <label>Correo Electrónico</label>
+                            <input type="email" name="email" placeholder="Por favor ingresar tu correo electrónico" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" name="password" placeholder="Por favor ingresa tu contraseña" required>
+                        </div>
+
+                        <h2 class="section-title">Información Académica</h2>
+
+                        <div class="form-group">
+                            <label>Institución</label>
+                            <select name="institucion" id="selectInstitucion" required>
+                                <option value="">Selecciona una institución</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="terminos" required>
+                            <label for="terminos">
+                                Autorizo Expresamente a <strong>Klasplus</strong> para utilizar mi información personal en trámite de esta petición. 
+                                <a href="#">Políticas de tratamiento de datos personales</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            FINALIZAR REGISTRO
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Inicio de Sesión -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <h2>¡Bienvenid@ de vuelta!</h2>
+                <p>Que bueno verte de nuevo.</p>
+            </div>
+            
+            <form class="login-form">
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Contraseña *</label>
+                    <div class="password-input">
+                        <input type="password" id="passwordInput" placeholder="Ingresa tu contraseña" required>
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">Iniciar sesión</button>
+                
+                <div class="modal-footer">
+                    <p>¿Aún no tienes cuenta? <a href="lista-usuarios.html" class="link-register">Regístrate</a></p>
+                    <a href="#" class="link-forgot">Olvidé mi contraseña</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenedor de notificaciones -->
+    <div id="notification-container"></div>
+
+    <script src="../js/registro.js"></script>
+    <script type="module" src="../js/auth-registro.js"></script>
+    <script type="module" src="../js/auth-login.js"></script>
+    <script type="module" src="../js/notifications.js"></script>
+</body>
+</html>

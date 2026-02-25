@@ -1,6 +1,6 @@
 import { db, collection, getDocs, query, where } from './firebase-config.js';
 import { doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { showSuccessNotification, showErrorNotification, showLoading, hideLoading } from './notifications.js';
+import { showSuccessNotification, showErrorNotification, showLoading, hideLoading, showConfirm } from './notifications.js';
 
 const IMGBB_API_KEY = 'cecb7463734f9b0b470426456e4be69d';
 
@@ -62,9 +62,10 @@ document.addEventListener('click', (e) => {
 
 const logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
+    logoutBtn.addEventListener('click', async (e) => {
         e.preventDefault();
-        if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+        const confirmado = await showConfirm('Cerrar sesión', '¿Estás seguro de que deseas cerrar sesión?');
+        if (confirmado) {
             localStorage.removeItem('userSession');
             sessionStorage.clear();
             window.location.href = '../../index.html';
@@ -104,6 +105,36 @@ tabButtons.forEach(button => {
 // VARIABLE GLOBAL PARA EL ID DEL DOCUMENTO
 // ==========================================
 let documentoIdUsuario = null;
+
+// ==========================================
+// CARGAR INSTITUCIONES DESDE FIREBASE
+// ==========================================
+async function cargarInstituciones() {
+    try {
+        const q = query(collection(db, 'usuarios'), where('tipoUsuario', '==', 'institucion'));
+        const resultado = await getDocs(q);
+        
+        const selectInstitucion = document.getElementById('inputInstitucion');
+        if (!selectInstitucion) return;
+        
+        // Limpiar opciones existentes excepto la primera
+        selectInstitucion.innerHTML = '<option value="">Selecciona una institución</option>';
+        
+        resultado.forEach(doc => {
+            const datos = doc.data();
+            const nombreInstitucion = datos.institucionNombre || datos.nombre || datos.nombreCompleto;
+            
+            if (nombreInstitucion) {
+                const option = document.createElement('option');
+                option.value = nombreInstitucion;
+                option.textContent = nombreInstitucion;
+                selectInstitucion.appendChild(option);
+            }
+        });
+    } catch (error) {
+        console.error('Error al cargar instituciones:', error);
+    }
+}
 
 // ==========================================
 // FUNCIONES DE AVATAR
@@ -362,6 +393,33 @@ async function cargarDatosUsuario() {
                 if (datosDB.grado || datosDB.nivel) infoValues[1].textContent = datosDB.grado || datosDB.nivel;
             }
             
+            // Campos de estudiante (solo visible para tipo estudiante)
+            if (datosDB.tipoUsuario === 'estudiante') {
+                const seccion = document.getElementById('seccionEstudiante');
+                if (seccion) seccion.style.display = 'block';
+                
+                // Cargar instituciones disponibles
+                await cargarInstituciones();
+                
+                // Seleccionar la institución actual si existe
+                const inputInstitucion = document.getElementById('inputInstitucion');
+                if (inputInstitucion && datosDB.institucion) {
+                    inputInstitucion.value = datosDB.institucion;
+                }
+                
+                // Cargar grado/nivel
+                const inputGrado = document.getElementById('inputGrado');
+                if (inputGrado && datosDB.grado) {
+                    // Buscar y seleccionar el grado
+                    for (let i = 0; i < inputGrado.options.length; i++) {
+                        if (inputGrado.options[i].value === datosDB.grado) {
+                            inputGrado.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
+            
             // Campos de institución (solo visible para tipo institucion)
             if (datosDB.tipoUsuario === 'institucion') {
                 const seccion = document.getElementById('seccionInstitucion');
@@ -408,7 +466,8 @@ if (perfilForm) {
     perfilForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        if (!confirm('¿Estás seguro? Los datos serán actualizados en la base de datos.')) {
+        const confirmado = await showConfirm('Actualizar perfil', '¿Estás seguro? Los datos serán actualizados en la base de datos.');
+        if (!confirmado) {
             return;
         }
         
@@ -484,6 +543,20 @@ if (perfilForm) {
                 fechaNacimiento: fechaNacimiento,
                 email: email
             };
+            
+            // Agregar campos de estudiante si la sección está visible
+            const seccionEst = document.getElementById('seccionEstudiante');
+            if (seccionEst && seccionEst.style.display !== 'none') {
+                const inputInstitucion = document.getElementById('inputInstitucion');
+                const inputGrado = document.getElementById('inputGrado');
+                
+                if (inputInstitucion) {
+                    datosActualizar.institucion = inputInstitucion.value;
+                }
+                if (inputGrado) {
+                    datosActualizar.grado = inputGrado.value;
+                }
+            }
             
             // Agregar campos de institución si la sección está visible
             const seccionInst = document.getElementById('seccionInstitucion');
@@ -624,8 +697,284 @@ function configurarEnlaceDashboard() {
 }
 
 // ==========================================
+// GENERAR MENÚ LATERAL DINÁMICO SEGÚN TIPO DE USUARIO
+// ==========================================
+
+function generarMenuLateral() {
+    const sesion = localStorage.getItem('userSession');
+    if (!sesion) return;
+    
+    const datos = JSON.parse(sesion);
+    const tipo = datos.tipoUsuario || 'estudiante';
+    
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    if (!sidebarNav) return;
+    
+    // Limpiar el menú actual
+    sidebarNav.innerHTML = '';
+    
+    // Menú común: Dashboard
+    const dashboardLink = document.createElement('a');
+    dashboardLink.href = '#';
+    dashboardLink.className = 'nav-item';
+    dashboardLink.id = 'linkDashboard';
+    dashboardLink.innerHTML = `
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Dashboard</span>
+    `;
+    sidebarNav.appendChild(dashboardLink);
+    
+    // Menú específico según tipo de usuario
+    if (tipo === 'estudiante') {
+        // Menú para estudiante
+        const cursosExpandible = document.createElement('div');
+        cursosExpandible.className = 'nav-item expandable';
+        cursosExpandible.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Mis Cursos</span>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
+        sidebarNav.appendChild(cursosExpandible);
+        
+        const submenu = document.createElement('div');
+        submenu.className = 'submenu';
+        submenu.innerHTML = `
+            <a href="#" class="submenu-item">Cursos inscritos</a>
+            <a href="#" class="submenu-item">Explorar cursos</a>
+        `;
+        sidebarNav.appendChild(submenu);
+        
+    } else if (tipo === 'acudiente') {
+        // Menú para acudiente
+        const estudiantesExpandible = document.createElement('div');
+        estudiantesExpandible.className = 'nav-item expandable';
+        estudiantesExpandible.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Mis Estudiantes</span>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
+        sidebarNav.appendChild(estudiantesExpandible);
+        
+        const submenu = document.createElement('div');
+        submenu.className = 'submenu';
+        submenu.innerHTML = `
+            <a href="#" class="submenu-item">Estudiantes a cargo</a>
+            <a href="#" class="submenu-item">Progreso académico</a>
+        `;
+        sidebarNav.appendChild(submenu);
+        
+        // Material de Apoyo
+        const materialLink = document.createElement('a');
+        materialLink.href = '#';
+        materialLink.className = 'nav-item';
+        materialLink.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            <span>Material de Apoyo</span>
+        `;
+        sidebarNav.appendChild(materialLink);
+        
+    } else if (tipo === 'institucion') {
+        // Menú para institución
+        const cursosExpandible = document.createElement('div');
+        cursosExpandible.className = 'nav-item expandable';
+        cursosExpandible.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Cursos</span>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
+        sidebarNav.appendChild(cursosExpandible);
+        
+        const submenuCursos = document.createElement('div');
+        submenuCursos.className = 'submenu';
+        submenuCursos.innerHTML = `
+            <a href="#" class="submenu-item">Lista de cursos</a>
+        `;
+        sidebarNav.appendChild(submenuCursos);
+        
+        // Gestión de Usuarios (expandible)
+        const gestionExpandible = document.createElement('div');
+        gestionExpandible.className = 'nav-item expandable';
+        gestionExpandible.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Gestión de Usuarios</span>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
+        sidebarNav.appendChild(gestionExpandible);
+        
+        const submenuGestion = document.createElement('div');
+        submenuGestion.className = 'submenu';
+        submenuGestion.innerHTML = `
+            <a href="gestion-usuarios-institucion.html" class="submenu-item">Estudiantes</a>
+            <a href="#" class="submenu-item">Brigada</a>
+            <a href="#" class="submenu-item">Coordinadores</a>
+        `;
+        sidebarNav.appendChild(submenuGestion);
+        
+    } else if (tipo === 'profesor') {
+        // Menú para profesor
+        const cursosExpandible = document.createElement('div');
+        cursosExpandible.className = 'nav-item expandable';
+        cursosExpandible.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Mis Cursos</span>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
+        sidebarNav.appendChild(cursosExpandible);
+        
+        const submenu = document.createElement('div');
+        submenu.className = 'submenu';
+        submenu.innerHTML = `
+            <a href="#" class="submenu-item">Cursos asignados</a>
+            <a href="#" class="submenu-item">Crear curso</a>
+        `;
+        sidebarNav.appendChild(submenu);
+        
+        // Estudiantes
+        const estudiantesLink = document.createElement('a');
+        estudiantesLink.href = '#';
+        estudiantesLink.className = 'nav-item';
+        estudiantesLink.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Estudiantes</span>
+        `;
+        sidebarNav.appendChild(estudiantesLink);
+        
+        // Calificaciones
+        const calificacionesLink = document.createElement('a');
+        calificacionesLink.href = '#';
+        calificacionesLink.className = 'nav-item';
+        calificacionesLink.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            <span>Calificaciones</span>
+        `;
+        sidebarNav.appendChild(calificacionesLink);
+    }
+    
+    // Mi Perfil (común para todos)
+    const perfilLink = document.createElement('a');
+    perfilLink.href = 'perfil.html';
+    perfilLink.className = 'nav-item active';
+    perfilLink.innerHTML = `
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Mi Perfil</span>
+    `;
+    sidebarNav.appendChild(perfilLink);
+    
+    // Certificados (solo para estudiante)
+    if (tipo === 'estudiante') {
+        const certificadosLink = document.createElement('a');
+        certificadosLink.href = '#';
+        certificadosLink.className = 'nav-item';
+        certificadosLink.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <span>Certificados</span>
+        `;
+        sidebarNav.appendChild(certificadosLink);
+        
+        // Material de Apoyo
+        const materialLink = document.createElement('a');
+        materialLink.href = '#';
+        materialLink.className = 'nav-item';
+        materialLink.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            <span>Material de Apoyo</span>
+        `;
+        sidebarNav.appendChild(materialLink);
+    }
+    
+    // Reconfigurar eventos después de generar el menú
+    configurarEventosMenu();
+    configurarEnlaceDashboard();
+}
+
+// ==========================================
+// CONFIGURAR EVENTOS DEL MENÚ
+// ==========================================
+
+function configurarEventosMenu() {
+    // Eventos para items expandibles
+    document.querySelectorAll('.nav-item.expandable').forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('active');
+            item.nextElementSibling.classList.toggle('show');
+        });
+    });
+    
+    // Eventos para cerrar sidebar en móvil
+    document.querySelectorAll('.sidebar .nav-item:not(.expandable)').forEach(enlace => {
+        enlace.addEventListener('click', (e) => {
+            if (enlace.querySelector('span') && enlace.querySelector('span').textContent === 'Certificados') {
+                e.preventDefault();
+                showErrorNotification('En desarrollo', 'Esta sección estará disponible próximamente');
+                return;
+            }
+            
+            if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+                toggleSidebar();
+            }
+        });
+    });
+}
+
+// ==========================================
 // CARGAR DATOS AL INICIAR
 // ==========================================
 
-configurarEnlaceDashboard();
+generarMenuLateral();
 cargarDatosUsuario();

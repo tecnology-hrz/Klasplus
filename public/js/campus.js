@@ -1,3 +1,5 @@
+import { showConfirm } from './notifications.js';
+
 // Toggle sidebar
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.getElementById('sidebar');
@@ -249,9 +251,10 @@ document.addEventListener('click', (e) => {
 // Cerrar sesión
 const logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
+    logoutBtn.addEventListener('click', async (e) => {
         e.preventDefault();
-        if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+        const confirmado = await showConfirm('Cerrar sesión', '¿Estás seguro de que deseas cerrar sesión?');
+        if (confirmado) {
             localStorage.removeItem('userSession');
             window.location.reload();
         }

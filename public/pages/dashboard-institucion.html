@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Institución - Klasplus</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -38,7 +39,6 @@
                 </div>
                 <div class="submenu">
                     <a href="#" class="submenu-item">Lista de cursos</a>
-                    <a href="#" class="submenu-item">Nuevo curso</a>
                 </div>
                 
                 <a href="#" class="nav-item">
@@ -48,18 +48,26 @@
                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
-                    <span>Usuarios</span>
+                    <span>Estudiantes</span>
                 </a>
 
-                <a href="#" class="nav-item">
+                <div class="nav-item expandable">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="10" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M19 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
-                    <span>Reportes</span>
-                </a>
+                    <span>Gestión de Usuarios</span>
+                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="submenu">
+                    <a href="gestion-usuarios-institucion.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
+                    <a href="gestion-usuarios-institucion.html?tipo=brigada" class="submenu-item">Brigada</a>
+                    <a href="gestion-usuarios-institucion.html?tipo=coordinadores" class="submenu-item">Coordinadores</a>
+                </div>
 
                 <a href="perfil.html" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -67,14 +75,6 @@
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                     <span>Mi Perfil</span>
-                </a>
-
-                <a href="#" class="nav-item">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                    <span>Configuración</span>
                 </a>
             </nav>
             
@@ -118,13 +118,6 @@
                         </a>
                         <a href="#" class="dropdown-item">
                             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                            </svg>
-                            Reportes
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                                 <line x1="12" y1="17" x2="12.01" y2="17"></line>
@@ -157,7 +150,7 @@
                         <div class="stat-chart">
                             <svg viewBox="0 0 200 200" class="donut-chart">
                                 <circle cx="100" cy="100" r="80" fill="none" stroke="#e5e7eb" stroke-width="30"></circle>
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#3b82f6" stroke-width="30" 
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="#06b6d4" stroke-width="30" 
                                         stroke-dasharray="0 503" transform="rotate(-90 100 100)"></circle>
                             </svg>
                             <div class="chart-center">
@@ -167,7 +160,7 @@
                         <div class="stat-legend">
                             <div class="legend-item">
                                 <span class="legend-color" style="background: #3b82f6;"></span>
-                                <span class="legend-label">Profesores</span>
+                                <span class="legend-label">Coordinadores</span>
                                 <span class="legend-value">0</span>
                             </div>
                             <div class="legend-item">
@@ -218,104 +211,10 @@
     <!-- Overlay para sidebar móvil -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <script type="module">
-        import { db, collection, getDocs, query, where } from '../js/firebase-config.js';
+    <!-- Contenedor de notificaciones -->
+    <div id="notification-container"></div>
 
-        const userDropdown = document.getElementById('userDropdown');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const sidebar = document.querySelector('.sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-
-        userDropdown.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!userDropdown.contains(e.target)) {
-                dropdownMenu.classList.remove('show');
-            }
-        });
-
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-                localStorage.removeItem('userSession');
-                sessionStorage.clear();
-                window.location.href = '../../index.html';
-            }
-        });
-
-        const toggleSidebar = () => {
-            sidebar.classList.toggle('active');
-            sidebarOverlay.classList.toggle('active');
-            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
-        };
-
-        document.querySelector('.menu-toggle').addEventListener('click', toggleSidebar);
-        sidebarOverlay.addEventListener('click', toggleSidebar);
-
-        document.querySelectorAll('.sidebar .nav-item:not(.expandable)').forEach(enlace => {
-            enlace.addEventListener('click', () => {
-                if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
-                    toggleSidebar();
-                }
-            });
-        });
-
-        document.querySelectorAll('.nav-item.expandable').forEach(item => {
-            item.addEventListener('click', () => {
-                item.classList.toggle('active');
-                item.nextElementSibling.classList.toggle('show');
-            });
-        });
-
-        async function cargarDatosUsuario() {
-            const sesionUsuario = localStorage.getItem('userSession');
-            
-            if (!sesionUsuario) {
-                window.location.href = '../../index.html';
-                return;
-            }
-            
-            const datosUsuario = JSON.parse(sesionUsuario);
-            
-            try {
-                const q = query(collection(db, 'usuarios'), where('email', '==', datosUsuario.email));
-                const resultado = await getDocs(q);
-                
-                if (!resultado.empty) {
-                    const datosDB = resultado.docs[0].data();
-                    
-                    const nombreCompleto = datosDB.nombre || datosDB.nombreCompleto || 'Usuario';
-                    const tipoUsuario = datosDB.tipoUsuario || 'Institución';
-                    
-                    const nombreElemento = document.querySelector('.user-name');
-                    const rolElemento = document.querySelector('.user-role');
-                    
-                    if (nombreElemento) nombreElemento.textContent = nombreCompleto;
-                    if (rolElemento) rolElemento.textContent = tipoUsuario.charAt(0).toUpperCase() + tipoUsuario.slice(1);
-                    
-                    const fotoPerfil = datosDB.fotoPerfil;
-                    if (fotoPerfil) {
-                        const headerImg = document.getElementById('headerAvatarImg');
-                        const headerPlaceholder = document.querySelector('#headerAvatarContainer .avatar-placeholder');
-                        if (headerImg) {
-                            headerImg.src = fotoPerfil;
-                            headerImg.style.display = 'block';
-                            if (headerPlaceholder) headerPlaceholder.style.display = 'none';
-                        }
-                        const sesion = JSON.parse(sesionUsuario);
-                        sesion.fotoPerfil = fotoPerfil;
-                        localStorage.setItem('userSession', JSON.stringify(sesion));
-                    }
-                }
-            } catch (error) {
-                console.error('Error al cargar datos del usuario:', error);
-            }
-        }
-
-        cargarDatosUsuario();
-    </script>
+    <script type="module" src="../js/dashboard-institucion.js"></script>
+    <script type="module" src="../js/notifications.js"></script>
 </body>
 </html>

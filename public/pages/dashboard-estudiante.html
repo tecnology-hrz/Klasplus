@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Estudiante - Klasplus</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -214,6 +215,7 @@
 
     <script type="module">
         import { db, collection, getDocs, query, where } from '../js/firebase-config.js';
+        import { showConfirm } from '../js/notifications.js';
 
         // Toggle del menú desplegable de usuario
         const userDropdown = document.getElementById('userDropdown');
@@ -234,9 +236,10 @@
         });
 
         // Cerrar sesión
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
             e.preventDefault();
-            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+            const confirmado = await showConfirm('Cerrar sesión', '¿Estás seguro de que deseas cerrar sesión?');
+            if (confirmado) {
                 localStorage.removeItem('userSession');
                 sessionStorage.clear();
                 window.location.href = '../../index.html';

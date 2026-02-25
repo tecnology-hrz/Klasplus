@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 10001;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -67,6 +67,14 @@
     stroke: #dc3545;
 }
 
+.notification-icon.warning {
+    background: #fff3cd;
+}
+
+.notification-icon.warning svg {
+    stroke: #ffc107;
+}
+
 .notification-title {
     color: #2c3e50;
     font-size: 26px;
@@ -114,6 +122,29 @@
     background: #c82333;
 }
 
+/* Botones de confirmación */
+.notification-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.notification-button.cancel {
+    background: #6c757d;
+}
+
+.notification-button.cancel:hover {
+    background: #5a6268;
+}
+
+.notification-button.confirm {
+    background: #0088cc;
+}
+
+.notification-button.confirm:hover {
+    background: #0077b3;
+}
+
 /* Loading spinner */
 .loading-overlay {
     position: fixed;
@@ -125,7 +156,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9998;
+    z-index: 10002;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;

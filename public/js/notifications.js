@@ -17,6 +17,25 @@ const createNotificationHTML = () => {
                 </div>
             </div>
 
+            <!-- Confirmación -->
+            <div class="notification-overlay" id="confirmOverlay">
+                <div class="notification-box">
+                    <div class="notification-icon warning" id="confirmIcon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h2 class="notification-title" id="confirmTitle">Confirmar</h2>
+                    <p class="notification-message" id="confirmMessage">¿Estás seguro?</p>
+                    <div class="notification-buttons">
+                        <button class="notification-button cancel" id="confirmCancelButton">Cancelar</button>
+                        <button class="notification-button confirm" id="confirmAcceptButton">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Loading -->
             <div class="loading-overlay" id="loadingOverlay">
                 <div class="loading-spinner"></div>
@@ -120,4 +139,41 @@ export const hideLoading = () => {
     if (loading) {
         loading.classList.remove('active');
     }
+};
+
+// Mostrar confirmación personalizada
+export const showConfirm = (title, message) => {
+    return new Promise((resolve) => {
+        createNotificationHTML();
+        
+        const overlay = document.getElementById('confirmOverlay');
+        const titleEl = document.getElementById('confirmTitle');
+        const messageEl = document.getElementById('confirmMessage');
+        const cancelBtn = document.getElementById('confirmCancelButton');
+        const acceptBtn = document.getElementById('confirmAcceptButton');
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+
+        // Mostrar overlay
+        overlay.classList.add('active');
+
+        // Manejadores de eventos
+        const handleCancel = () => {
+            overlay.classList.remove('active');
+            cancelBtn.removeEventListener('click', handleCancel);
+            acceptBtn.removeEventListener('click', handleAccept);
+            resolve(false);
+        };
+
+        const handleAccept = () => {
+            overlay.classList.remove('active');
+            cancelBtn.removeEventListener('click', handleCancel);
+            acceptBtn.removeEventListener('click', handleAccept);
+            resolve(true);
+        };
+
+        cancelBtn.addEventListener('click', handleCancel);
+        acceptBtn.addEventListener('click', handleAccept);
+    });
 };

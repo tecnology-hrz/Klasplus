@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios - Klasplus</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/gestion-usuarios.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <a href="campus.html">
+                    <img src="../img/logo.webp" alt="Klasplus" class="logo">
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard-institucion.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                
+                <div class="nav-item expandable">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <span>Cursos</span>
+                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="submenu">
+                    <a href="#" class="submenu-item">Lista de cursos</a>
+                </div>
+                
+                <div class="nav-item expandable active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="10" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M19 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Gestión de Usuarios</span>
+                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="submenu show">
+                    <a href="gestion-usuarios-institucion.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
+                    <a href="gestion-usuarios-institucion.html?tipo=brigada" class="submenu-item">Brigada</a>
+                    <a href="gestion-usuarios-institucion.html?tipo=coordinadores" class="submenu-item">Coordinadores</a>
+                </div>
+
+                <a href="perfil.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Mi Perfil</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>Copyright © Todos los derechos reservados Klasplus 2026</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <button class="menu-toggle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="user-info" id="userDropdown">
+                    <div class="user-avatar-default" id="headerAvatarContainer">
+                        <svg class="avatar-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <img class="avatar-img-small" id="headerAvatarImg" src="" alt="Avatar" style="display: none;">
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">Cargando...</span>
+                        <span class="user-role">...</span>
+                    </div>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                    
+                    <div class="user-dropdown-menu" id="dropdownMenu">
+                        <a href="perfil.html" class="dropdown-item">
+                            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Mi perfil
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                            Centro de ayuda
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout" id="logoutBtn">
+                            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                            Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <div class="usuarios-content">
+                <div class="usuarios-header">
+                    <h1 id="tituloSeccion">Gestión de Estudiantes</h1>
+                    <div class="usuarios-actions">
+                        <button class="btn-crear-coordinador" id="btnCrearCoordinador" style="display: none;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Crear Coordinador
+                        </button>
+                        <select id="filtroGrado" class="filtro-grado">
+                            <option value="">Todos los grados</option>
+                            <option value="1°">1°</option>
+                            <option value="2°">2°</option>
+                            <option value="3°">3°</option>
+                            <option value="4°">4°</option>
+                            <option value="5°">5°</option>
+                            <option value="6°">6°</option>
+                            <option value="7°">7°</option>
+                            <option value="8°">8°</option>
+                            <option value="9°">9°</option>
+                            <option value="10°">10°</option>
+                            <option value="11°">11°</option>
+                        </select>
+                        <div class="search-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <input type="text" id="searchInput" placeholder="Buscar por nombre o documento...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="usuarios-stats">
+                    <div class="stat-box">
+                        <span class="stat-number" id="totalUsuarios">0</span>
+                        <span class="stat-label">Total</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number" id="usuariosActivos">0</span>
+                        <span class="stat-label">Activos</span>
+                    </div>
+                </div>
+
+                <div class="usuarios-table-container">
+                    <table class="usuarios-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Documento</th>
+                                <th>Email</th>
+                                <th>Grado</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuariosTableBody">
+                            <tr>
+                                <td colspan="6" class="loading-row">Cargando usuarios...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay para sidebar móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Modal para crear coordinador -->
+    <div class="modal-overlay" id="modalCrearCoordinador">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Crear Nuevo Coordinador</h2>
+                <button class="modal-close" id="btnCerrarModal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form id="formCrearCoordinador" class="modal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="coordNombre">Nombre Completo *</label>
+                        <input type="text" id="coordNombre" required placeholder="Nombre completo del coordinador">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="coordEmail">Correo Electrónico *</label>
+                        <input type="email" id="coordEmail" required placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="coordGrado">Grado Asignado *</label>
+                        <select id="coordGrado" required>
+                            <option value="">Seleccionar grado</option>
+                            <option value="1°">1°</option>
+                            <option value="2°">2°</option>
+                            <option value="3°">3°</option>
+                            <option value="4°">4°</option>
+                            <option value="5°">5°</option>
+                            <option value="6°">6°</option>
+                            <option value="7°">7°</option>
+                            <option value="8°">8°</option>
+                            <option value="9°">9°</option>
+                            <option value="10°">10°</option>
+                            <option value="11°">11°</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="coordPassword">Contraseña *</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="coordPassword" required placeholder="Mínimo 6 caracteres">
+                            <button type="button" class="toggle-password-btn" data-target="coordPassword">
+                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="coordPasswordConfirm">Confirmar Contraseña *</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="coordPasswordConfirm" required placeholder="Repetir contraseña">
+                            <button type="button" class="toggle-password-btn" data-target="coordPasswordConfirm">
+                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar" id="btnCancelar">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Crear Coordinador</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenedor de notificaciones -->
+    <div id="notification-container"></div>
+
+    <script type="module" src="../js/gestion-usuarios-institucion.js"></script>
+    <script type="module" src="../js/notifications.js"></script>
+</body>
+</html>
