@@ -90,6 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.location.href = 'dashboard-acudiente.html';
                     } else if (userData.tipoUsuario === 'institucion') {
                         window.location.href = 'dashboard-institucion.html';
+                    } else if (userData.tipoUsuario === 'coordinador') {
+                        window.location.href = 'dashboard-coordinador.html';
                     } else if (userData.tipoUsuario === 'profesor') {
                         window.location.href = 'dashboard-profesor.html';
                     } else {

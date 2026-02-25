@@ -5,6 +5,7 @@ import { showConfirm } from './notifications.js';
 // VARIABLES GLOBALES
 // ==========================================
 let nombreInstitucion = '';
+let gradoCoordinador = '';
 
 // ==========================================
 // SIDEBAR Y MENÚ MÓVIL
@@ -100,14 +101,23 @@ async function cargarDatosUsuario() {
         if (!resultado.empty) {
             const datosDB = resultado.docs[0].data();
             
-            nombreInstitucion = datosDB.institucionNombre || datosDB.nombre || datosDB.nombreCompleto || 'Institución';
-            const tipoUsuario = datosDB.tipoUsuario || 'Institución';
+            nombreInstitucion = datosDB.institucion || '';
+            gradoCoordinador = datosDB.grado || '';
+            
+            const nombreCompleto = datosDB.nombre || datosDB.nombreCompleto || 'Coordinador';
+            const tipoUsuario = datosDB.tipoUsuario || 'Coordinador';
             
             const nombreElemento = document.querySelector('.user-name');
             const rolElemento = document.querySelector('.user-role');
             
-            if (nombreElemento) nombreElemento.textContent = nombreInstitucion;
+            if (nombreElemento) nombreElemento.textContent = nombreCompleto;
             if (rolElemento) rolElemento.textContent = tipoUsuario.charAt(0).toUpperCase() + tipoUsuario.slice(1);
+            
+            // Mostrar el grado del coordinador
+            const gradoElement = document.getElementById('gradoCoordinador');
+            if (gradoElement && gradoCoordinador) {
+                gradoElement.textContent = `Grado ${gradoCoordinador}`;
+            }
             
             const fotoPerfil = datosDB.fotoPerfil;
             if (fotoPerfil) {
@@ -123,7 +133,7 @@ async function cargarDatosUsuario() {
                 localStorage.setItem('userSession', JSON.stringify(sesion));
             }
             
-            // Cargar estadísticas después de obtener el nombre de la institución
+            // Cargar estadísticas después de obtener los datos
             await cargarEstadisticas();
         }
     } catch (error) {
@@ -140,24 +150,26 @@ async function cargarEstadisticas() {
         const usuariosSnapshot = await getDocs(collection(db, 'usuarios'));
         
         let totalEstudiantes = 0;
-        let totalCoordinadores = 0;
+        let estudiantesEnBrigada = 0;
         
         usuariosSnapshot.forEach(doc => {
             const datos = doc.data();
             const institucionUsuario = datos.institucion || datos.institucionNombre;
+            const gradoUsuario = datos.grado;
             
-            // Solo contar usuarios de esta institución
-            if (institucionUsuario === nombreInstitucion) {
-                if (datos.tipoUsuario === 'estudiante') {
-                    totalEstudiantes++;
-                } else if (datos.tipoUsuario === 'coordinador') {
-                    totalCoordinadores++;
+            // Solo contar estudiantes de esta institución y del grado del coordinador
+            if (institucionUsuario === nombreInstitucion && 
+                gradoUsuario === gradoCoordinador && 
+                datos.tipoUsuario === 'estudiante') {
+                totalEstudiantes++;
+                if (datos.enBrigada) {
+                    estudiantesEnBrigada++;
                 }
             }
         });
         
         // Actualizar el gráfico de dona
-        actualizarGraficoEstudiantes(totalEstudiantes, totalCoordinadores);
+        actualizarGraficoEstudiantes(totalEstudiantes, estudiantesEnBrigada);
         
         // Por ahora, cursos e inscripciones en 0 (se implementarán después)
         const cursosActivos = 0;
@@ -178,9 +190,8 @@ async function cargarEstadisticas() {
 // ==========================================
 // ACTUALIZAR GRÁFICO DE DONA
 // ==========================================
-function actualizarGraficoEstudiantes(estudiantes, coordinadores) {
-    const total = estudiantes + coordinadores;
-    const porcentaje = total > 0 ? Math.round((estudiantes / total) * 100) : 0;
+function actualizarGraficoEstudiantes(totalEstudiantes, enBrigada) {
+    const porcentaje = totalEstudiantes > 0 ? Math.round((enBrigada / totalEstudiantes) * 100) : 0;
     
     // Actualizar el círculo del gráfico
     const circulo = document.querySelector('.donut-chart circle:last-child');
@@ -200,20 +211,13 @@ function actualizarGraficoEstudiantes(estudiantes, coordinadores) {
     // Actualizar la leyenda
     const legendItems = document.querySelectorAll('.legend-item');
     if (legendItems.length >= 2) {
-        // Cambiar "Profesores" por "Coordinadores"
-        legendItems[0].querySelector('.legend-label').textContent = 'Coordinadores';
-        legendItems[0].querySelector('.legend-value').textContent = coordinadores;
-        legendItems[0].querySelector('.legend-color').style.background = '#3b82f6';
+        legendItems[0].querySelector('.legend-label').textContent = 'Estudiantes';
+        legendItems[0].querySelector('.legend-value').textContent = totalEstudiantes;
+        legendItems[0].querySelector('.legend-color').style.background = '#06b6d4';
         
-        legendItems[1].querySelector('.legend-label').textContent = 'Estudiantes';
-        legendItems[1].querySelector('.legend-value').textContent = estudiantes;
-        legendItems[1].querySelector('.legend-color').style.background = '#06b6d4';
-    }
-    
-    // Actualizar el título de la tarjeta
-    const statHeader = document.querySelector('.stat-card .stat-header h3');
-    if (statHeader) {
-        statHeader.textContent = 'Total Usuarios';
+        legendItems[1].querySelector('.legend-label').textContent = 'En Brigada';
+        legendItems[1].querySelector('.legend-value').textContent = enBrigada;
+        legendItems[1].querySelector('.legend-color').style.background = '#10b981';
     }
 }
 

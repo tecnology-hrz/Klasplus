@@ -209,6 +209,7 @@ function checkUserSession() {
                 'estudiante': 'dashboard-estudiante.html',
                 'acudiente': 'dashboard-acudiente.html',
                 'institucion': 'dashboard-institucion.html',
+                'coordinador': 'dashboard-coordinador.html',
                 'profesor': 'dashboard-profesor.html'
             };
             linkDashboard.href = rutasDashboard[userData.tipoUsuario] || 'dashboard-estudiante.html';

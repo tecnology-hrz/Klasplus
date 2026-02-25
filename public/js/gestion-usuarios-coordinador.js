@@ -4,6 +4,7 @@ import { showConfirm, showErrorNotification, showSuccessNotification, showLoadin
 let usuariosData = [];
 let tipoUsuario = 'estudiantes';
 let nombreInstitucion = '';
+let gradoCoordinador = '';
 let gradoSeleccionado = '';
 
 const sidebar = document.querySelector('.sidebar');
@@ -66,22 +67,11 @@ function obtenerTipoUsuario() {
     return tipo;
 }
 
-// Mostrar/ocultar botón según el tipo de usuario
-function actualizarBotonCrear() {
-    const btnCrearCoordinador = document.getElementById('btnCrearCoordinador');
-    if (tipoUsuario === 'coordinadores' && btnCrearCoordinador) {
-        btnCrearCoordinador.style.display = 'flex';
-    } else if (btnCrearCoordinador) {
-        btnCrearCoordinador.style.display = 'none';
-    }
-}
-
 function actualizarTitulo() {
     const titulo = document.getElementById('tituloSeccion');
     const titulos = {
         'estudiantes': 'Gestión de Estudiantes',
-        'brigada': 'Gestión de Brigada',
-        'coordinadores': 'Gestión de Coordinadores'
+        'brigada': 'Gestión de Brigada'
     };
     
     if (titulo) {
@@ -95,17 +85,11 @@ function actualizarTitulo() {
         }
     });
     
-    // Actualizar botón de crear coordinador
-    actualizarBotonCrear();
-    
     // Mostrar/ocultar filtro de grado según la sección
     const filtroGrado = document.getElementById('filtroGrado');
     if (filtroGrado) {
-        if (tipoUsuario === 'estudiantes' || tipoUsuario === 'brigada') {
-            filtroGrado.style.display = 'block';
-        } else {
-            filtroGrado.style.display = 'none';
-        }
+        // Para coordinadores, el filtro de grado no es necesario ya que solo ven su grado
+        filtroGrado.style.display = 'none';
     }
 }
 
@@ -126,21 +110,22 @@ async function cargarDatosUsuario() {
         if (!resultado.empty) {
             const datosDB = resultado.docs[0].data();
             
-            if (datosDB.tipoUsuario !== 'institucion') {
-                showErrorNotification('Acceso denegado', 'Solo las instituciones pueden acceder a esta sección.');
+            if (datosDB.tipoUsuario !== 'coordinador') {
+                showErrorNotification('Acceso denegado', 'Solo los coordinadores pueden acceder a esta sección.');
                 setTimeout(() => {
                     window.location.href = 'campus.html';
                 }, 2000);
                 return;
             }
             
-            nombreInstitucion = datosDB.institucionNombre || datosDB.nombre || datosDB.nombreCompleto;
+            nombreInstitucion = datosDB.institucion || datosDB.institucionNombre || datosDB.nombre || datosDB.nombreCompleto;
+            gradoCoordinador = datosDB.grado || '';
             
             const nombreElemento = document.querySelector('.user-name');
             const rolElemento = document.querySelector('.user-role');
             
             if (nombreElemento) nombreElemento.textContent = datosDB.nombre || datosDB.nombreCompleto || 'Usuario';
-            if (rolElemento) rolElemento.textContent = 'Institución';
+            if (rolElemento) rolElemento.textContent = 'Coordinador';
             
             const fotoPerfil = datosDB.fotoPerfil;
             if (fotoPerfil) {
@@ -164,8 +149,8 @@ async function cargarDatosUsuario() {
 async function cargarUsuarios() {
     const tableBody = document.getElementById('usuariosTableBody');
     
-    if (!nombreInstitucion) {
-        tableBody.innerHTML = '<tr><td colspan="6" class="empty-row">No se pudo identificar la institución</td></tr>';
+    if (!nombreInstitucion || !gradoCoordinador) {
+        tableBody.innerHTML = '<tr><td colspan="6" class="empty-row">No se pudo identificar la institución o el grado</td></tr>';
         return;
     }
     
@@ -176,7 +161,8 @@ async function cargarUsuarios() {
             const q = query(
                 collection(db, 'usuarios'),
                 where('tipoUsuario', '==', 'estudiante'),
-                where('institucion', '==', nombreInstitucion)
+                where('institucion', '==', nombreInstitucion),
+                where('grado', '==', gradoCoordinador)
             );
             
             const resultado = await getDocs(q);
@@ -197,27 +183,8 @@ async function cargarUsuarios() {
                 collection(db, 'usuarios'),
                 where('tipoUsuario', '==', 'estudiante'),
                 where('institucion', '==', nombreInstitucion),
+                where('grado', '==', gradoCoordinador),
                 where('enBrigada', '==', true)
-            );
-            
-            const resultado = await getDocs(q);
-            usuariosData = [];
-            
-            resultado.forEach(doc => {
-                usuariosData.push({
-                    id: doc.id,
-                    ...doc.data()
-                });
-            });
-            
-            renderizarUsuarios(usuariosData);
-            actualizarEstadisticas(usuariosData);
-            
-        } else if (tipoUsuario === 'coordinadores') {
-            const q = query(
-                collection(db, 'usuarios'),
-                where('tipoUsuario', '==', 'coordinador'),
-                where('institucion', '==', nombreInstitucion)
             );
             
             const resultado = await getDocs(q);
@@ -258,9 +225,7 @@ function renderizarUsuarios(usuarios) {
     if (usuariosFiltrados.length === 0) {
         let mensaje = tipoUsuario === 'brigada' 
             ? 'No hay estudiantes asignados a la brigada' 
-            : tipoUsuario === 'coordinadores'
-            ? 'No hay coordinadores registrados en esta institución'
-            : 'No hay estudiantes registrados en esta institución';
+            : 'No hay estudiantes registrados en este grado';
         
         if (gradoSeleccionado) {
             mensaje = `No hay estudiantes de ${gradoSeleccionado} grado`;
@@ -316,23 +281,6 @@ function renderizarUsuarios(usuarios) {
                         <path d="M18 6L6 18M6 6l12 12"></path>
                     </svg>
                     <span>Quitar</span>
-                </button>
-            `;
-        } else if (tipoUsuario === 'coordinadores') {
-            accionesHTML = `
-                <button class="btn-action btn-edit" onclick="editarCoordinador('${usuario.id}')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                    </svg>
-                    <span>Editar</span>
-                </button>
-                <button class="btn-action btn-delete" onclick="eliminarCoordinador('${usuario.id}', '${nombre}')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
-                    <span>Eliminar</span>
                 </button>
             `;
         }

@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Usuarios - Klasplus</title>
+    <title>Dashboard Coordinador - Klasplus</title>
     <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/gestion-usuarios.css">
     <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body>
@@ -19,7 +17,7 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href="dashboard-institucion.html" class="nav-item">
+                <a href="#" class="nav-item active">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
@@ -53,8 +51,8 @@
                     </svg>
                     <span>Material de Apoyo</span>
                 </a>
-                
-                <div class="nav-item expandable active">
+
+                <div class="nav-item expandable">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="10" cy="7" r="4"></circle>
@@ -66,10 +64,9 @@
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
-                <div class="submenu show">
-                    <a href="gestion-usuarios-institucion.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
-                    <a href="gestion-usuarios-institucion.html?tipo=brigada" class="submenu-item">Brigada</a>
-                    <a href="gestion-usuarios-institucion.html?tipo=coordinadores" class="submenu-item">Coordinadores</a>
+                <div class="submenu">
+                    <a href="gestion-usuarios-coordinador.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
+                    <a href="gestion-usuarios-coordinador.html?tipo=brigada" class="submenu-item">Brigada</a>
                 </div>
 
                 <a href="perfil.html" class="nav-item">
@@ -140,70 +137,72 @@
                 </div>
             </header>
 
-            <div class="usuarios-content" id="usuariosContent">
-                <div class="usuarios-header">
-                    <h1 id="tituloSeccion">Gestión de Estudiantes</h1>
-                    <div class="usuarios-actions">
-                        <button class="btn-crear-coordinador" id="btnCrearCoordinador" style="display: none;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
+            <div class="dashboard-content" id="dashboardContent">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3>Estudiantes de mi Grado</h3>
+                            <select class="stat-filter">
+                                <option>Este Mes</option>
+                                <option>Esta Semana</option>
+                            </select>
+                        </div>
+                        <div class="stat-chart">
+                            <svg viewBox="0 0 200 200" class="donut-chart">
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="#e5e7eb" stroke-width="30"></circle>
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="#06b6d4" stroke-width="30" 
+                                        stroke-dasharray="0 503" transform="rotate(-90 100 100)"></circle>
                             </svg>
-                            Crear Coordinador
-                        </button>
-                        <select id="filtroGrado" class="filtro-grado">
-                            <option value="">Todos los grados</option>
-                            <option value="1°">1°</option>
-                            <option value="2°">2°</option>
-                            <option value="3°">3°</option>
-                            <option value="4°">4°</option>
-                            <option value="5°">5°</option>
-                            <option value="6°">6°</option>
-                            <option value="7°">7°</option>
-                            <option value="8°">8°</option>
-                            <option value="9°">9°</option>
-                            <option value="10°">10°</option>
-                            <option value="11°">11°</option>
-                        </select>
-                        <div class="search-box">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.35-4.35"></path>
-                            </svg>
-                            <input type="text" id="searchInput" placeholder="Buscar por nombre o documento...">
+                            <div class="chart-center">
+                                <span class="chart-percentage">0%</span>
+                            </div>
+                        </div>
+                        <div class="stat-legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #06b6d4;"></span>
+                                <span class="legend-label">Estudiantes</span>
+                                <span class="legend-value">0</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #10b981;"></span>
+                                <span class="legend-label">En Brigada</span>
+                                <span class="legend-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-small">
+                        <h4>Cursos Activos</h4>
+                        <div class="stat-value">
+                            <span class="value-number">0</span>
+                            <span class="value-trend neutral">→</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-small">
+                        <h4>Inscripciones</h4>
+                        <div class="stat-value">
+                            <span class="value-number">0</span>
+                            <span class="value-trend neutral">→</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card-small">
+                        <h4>Mi Grado</h4>
+                        <div class="stat-comparison">
+                            <span class="comparison-label" id="gradoCoordinador">Cargando...</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="usuarios-stats">
-                    <div class="stat-box">
-                        <span class="stat-number" id="totalUsuarios">0</span>
-                        <span class="stat-label">Total</span>
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Actividad del Sistema</h3>
+                        <div class="chart-tabs">
+                            <button class="chart-tab active">Mensual</button>
+                            <button class="chart-tab">Semanal</button>
+                        </div>
                     </div>
-                    <div class="stat-box">
-                        <span class="stat-number" id="usuariosActivos">0</span>
-                        <span class="stat-label">Activos</span>
-                    </div>
-                </div>
-
-                <div class="usuarios-table-container">
-                    <table class="usuarios-table">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Documento</th>
-                                <th>Email</th>
-                                <th>Grado</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usuariosTableBody">
-                            <tr>
-                                <td colspan="6" class="loading-row">Cargando usuarios...</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
@@ -243,86 +242,10 @@
     <!-- Overlay para sidebar móvil -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <!-- Modal para crear coordinador -->
-    <div class="modal-overlay" id="modalCrearCoordinador">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Crear Nuevo Coordinador</h2>
-                <button class="modal-close" id="btnCerrarModal">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            <form id="formCrearCoordinador" class="modal-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="coordNombre">Nombre Completo *</label>
-                        <input type="text" id="coordNombre" required placeholder="Nombre completo del coordinador">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="coordEmail">Correo Electrónico *</label>
-                        <input type="email" id="coordEmail" required placeholder="correo@ejemplo.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="coordGrado">Grado Asignado *</label>
-                        <select id="coordGrado" required>
-                            <option value="">Seleccionar grado</option>
-                            <option value="1°">1°</option>
-                            <option value="2°">2°</option>
-                            <option value="3°">3°</option>
-                            <option value="4°">4°</option>
-                            <option value="5°">5°</option>
-                            <option value="6°">6°</option>
-                            <option value="7°">7°</option>
-                            <option value="8°">8°</option>
-                            <option value="9°">9°</option>
-                            <option value="10°">10°</option>
-                            <option value="11°">11°</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="coordPassword">Contraseña *</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="coordPassword" required placeholder="Mínimo 6 caracteres">
-                            <button type="button" class="toggle-password-btn" data-target="coordPassword">
-                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="coordPasswordConfirm">Confirmar Contraseña *</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="coordPasswordConfirm" required placeholder="Repetir contraseña">
-                            <button type="button" class="toggle-password-btn" data-target="coordPasswordConfirm">
-                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancelar" id="btnCancelar">Cancelar</button>
-                    <button type="submit" class="btn-guardar">Crear Coordinador</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Contenedor de notificaciones -->
     <div id="notification-container"></div>
 
-    <script type="module" src="../js/gestion-usuarios-institucion.js"></script>
+    <script type="module" src="../js/dashboard-coordinador.js"></script>
     <script type="module" src="../js/notifications.js"></script>
 </body>
 </html>
