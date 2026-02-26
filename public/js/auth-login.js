@@ -82,23 +82,27 @@ document.addEventListener('DOMContentLoaded', () => {
             // Mostrar notificación de éxito
             showSuccessNotification(
                 '¡Bienvenido de nuevo!',
-                'Has iniciado sesión correctamente en Klasplus.',
-                () => {
-                    if (userData.tipoUsuario === 'estudiante') {
-                        window.location.href = 'dashboard-estudiante.html';
-                    } else if (userData.tipoUsuario === 'acudiente') {
-                        window.location.href = 'dashboard-acudiente.html';
-                    } else if (userData.tipoUsuario === 'institucion') {
-                        window.location.href = 'dashboard-institucion.html';
-                    } else if (userData.tipoUsuario === 'coordinador') {
-                        window.location.href = 'dashboard-coordinador.html';
-                    } else if (userData.tipoUsuario === 'profesor') {
-                        window.location.href = 'dashboard-profesor.html';
-                    } else {
-                        window.location.href = 'campus.html';
-                    }
-                }
+                'Has iniciado sesión correctamente en Klasplus.'
             );
+            
+            // Redirigir automáticamente después de 1.5 segundos
+            setTimeout(() => {
+                if (userData.tipoUsuario === 'estudiante') {
+                    window.location.href = 'dashboard-estudiante.html';
+                } else if (userData.tipoUsuario === 'acudiente') {
+                    window.location.href = 'dashboard-acudiente.html';
+                } else if (userData.tipoUsuario === 'institucion') {
+                    window.location.href = 'dashboard-institucion.html';
+                } else if (userData.tipoUsuario === 'coordinador') {
+                    window.location.href = 'dashboard-coordinador.html';
+                } else if (userData.tipoUsuario === 'profesor') {
+                    window.location.href = 'dashboard-profesor.html';
+                } else if (userData.tipoUsuario === 'admin') {
+                    window.location.href = 'dashboard-admin.html';
+                } else {
+                    window.location.href = 'campus.html';
+                }
+            }, 1500);
             
         } catch (error) {
             console.error('Error en el inicio de sesión:', error);

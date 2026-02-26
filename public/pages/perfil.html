@@ -215,6 +215,17 @@
 
                             <div class="info-item">
                                 <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <div>
+                                    <p class="info-label">JORNADA</p>
+                                    <p class="info-value" id="infoJornada">Sin jornada</p>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
@@ -334,6 +345,97 @@
                                                 <option value="9°">9°</option>
                                                 <option value="10°">10°</option>
                                                 <option value="11°">11°</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Jornada</label>
+                                            <select id="inputJornada">
+                                                <option value="">Selecciona tu jornada</option>
+                                                <option value="Mañana">Mañana</option>
+                                                <option value="Tarde">Tarde</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="seccionAcudiente" style="display: none;">
+                                    <h2 class="section-title">Información del Estudiante a Cargo</h2>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Institución del estudiante</label>
+                                            <select id="inputInstitucionAcudiente">
+                                                <option value="">Selecciona una institución</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Grado del estudiante</label>
+                                            <select id="inputGradoAcudiente">
+                                                <option value="">Selecciona un grado</option>
+                                                <option value="1°">1°</option>
+                                                <option value="2°">2°</option>
+                                                <option value="3°">3°</option>
+                                                <option value="4°">4°</option>
+                                                <option value="5°">5°</option>
+                                                <option value="6°">6°</option>
+                                                <option value="7°">7°</option>
+                                                <option value="8°">8°</option>
+                                                <option value="9°">9°</option>
+                                                <option value="10°">10°</option>
+                                                <option value="11°">11°</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Jornada del estudiante</label>
+                                            <select id="inputJornadaAcudiente">
+                                                <option value="">Selecciona la jornada</option>
+                                                <option value="Mañana">Mañana</option>
+                                                <option value="Tarde">Tarde</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="seccionCoordinadorProfesor" style="display: none;">
+                                    <h2 class="section-title">Información Académica</h2>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Institución</label>
+                                            <input type="text" placeholder="Tu institución" id="inputInstitucionCP" readonly style="background: #f0f0f0; cursor: not-allowed;">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Grado asignado</label>
+                                            <select id="inputGradoCP">
+                                                <option value="">Todos los grados</option>
+                                                <option value="1°">1°</option>
+                                                <option value="2°">2°</option>
+                                                <option value="3°">3°</option>
+                                                <option value="4°">4°</option>
+                                                <option value="5°">5°</option>
+                                                <option value="6°">6°</option>
+                                                <option value="7°">7°</option>
+                                                <option value="8°">8°</option>
+                                                <option value="9°">9°</option>
+                                                <option value="10°">10°</option>
+                                                <option value="11°">11°</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Jornada</label>
+                                            <select id="inputJornadaCP">
+                                                <option value="">Todas las jornadas</option>
+                                                <option value="Mañana">Mañana</option>
+                                                <option value="Tarde">Tarde</option>
                                             </select>
                                         </div>
                                     </div>

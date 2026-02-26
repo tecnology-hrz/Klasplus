@@ -5,6 +5,7 @@ let usuariosData = [];
 let tipoUsuario = 'estudiantes';
 let nombreInstitucion = '';
 let gradoProfesor = '';
+let jornadaSeleccionada = '';
 
 const sidebar = document.querySelector('.sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -215,25 +216,38 @@ async function cargarUsuarios() {
 function renderizarUsuarios(usuarios) {
     const tableBody = document.getElementById('usuariosTableBody');
     
-    if (usuarios.length === 0) {
+    // Filtrar por jornada si hay una seleccionada
+    let usuariosFiltrados = usuarios;
+    if (jornadaSeleccionada) {
+        usuariosFiltrados = usuariosFiltrados.filter(u => u.jornada === jornadaSeleccionada);
+    }
+    
+    if (usuariosFiltrados.length === 0) {
         let mensaje = tipoUsuario === 'brigada' 
             ? `No hay estudiantes de ${gradoProfesor} grado en la brigada` 
             : `No hay estudiantes registrados en ${gradoProfesor} grado`;
         
-        tableBody.innerHTML = `<tr><td colspan="6" class="empty-row">${mensaje}</td></tr>`;
-        actualizarEstadisticas(usuarios);
+        if (jornadaSeleccionada) {
+            mensaje = tipoUsuario === 'brigada'
+                ? `No hay estudiantes de ${gradoProfesor} grado - jornada ${jornadaSeleccionada} en la brigada`
+                : `No hay estudiantes de ${gradoProfesor} grado - jornada ${jornadaSeleccionada}`;
+        }
+        
+        tableBody.innerHTML = `<tr><td colspan="7" class="empty-row">${mensaje}</td></tr>`;
+        actualizarEstadisticas(usuariosFiltrados);
         return;
     }
     
     tableBody.innerHTML = '';
     
-    usuarios.forEach(usuario => {
+    usuariosFiltrados.forEach(usuario => {
         const row = document.createElement('tr');
         
         const nombre = usuario.nombre || usuario.nombreCompleto || 'Sin nombre';
         const documento = usuario.numeroDocumento || usuario.documento || 'N/A';
         const email = usuario.email || 'N/A';
         const gradoUsuario = usuario.grado || 'N/A';
+        const jornadaUsuario = usuario.jornada || 'N/A';
         const estado = 'Activo';
         const enBrigada = usuario.enBrigada || false;
         
@@ -288,6 +302,7 @@ function renderizarUsuarios(usuarios) {
             <td>${documento}</td>
             <td>${email}</td>
             <td><span class="badge badge-info">${gradoUsuario}</span></td>
+            <td><span class="badge badge-warning">${jornadaUsuario}</span></td>
             <td><span class="badge badge-success">${estado}</span></td>
             <td>${accionesHTML}</td>
         `;
@@ -295,7 +310,7 @@ function renderizarUsuarios(usuarios) {
         tableBody.appendChild(row);
     });
     
-    actualizarEstadisticas(usuarios);
+    actualizarEstadisticas(usuariosFiltrados);
 }
 
 function actualizarEstadisticas(usuarios) {
@@ -323,6 +338,15 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
     
     renderizarUsuarios(usuariosFiltrados);
 });
+
+// Filtro por jornada
+const filtroJornadaEl = document.getElementById('filtroJornada');
+if (filtroJornadaEl) {
+    filtroJornadaEl.addEventListener('change', (e) => {
+        jornadaSeleccionada = e.target.value;
+        renderizarUsuarios(usuariosData);
+    });
+}
 
 tipoUsuario = obtenerTipoUsuario();
 actualizarTitulo();

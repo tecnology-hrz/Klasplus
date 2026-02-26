@@ -116,6 +116,15 @@ body {
     background: #5a6268;
 }
 
+/* Texto de botones responsive */
+.btn-text-short {
+    display: none;
+}
+
+.btn-text-full {
+    display: inline;
+}
+
 /* Sidebar */
 .sidebar {
     position: fixed;
@@ -337,6 +346,14 @@ body {
         padding: 12px 24px;
         font-size: 14px;
         border-radius: 24px;
+    }
+    
+    .btn-text-short {
+        display: inline;
+    }
+    
+    .btn-text-full {
+        display: none;
     }
 
     .hero-content {

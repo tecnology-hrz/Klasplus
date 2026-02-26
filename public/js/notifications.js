@@ -50,6 +50,51 @@ const createNotificationHTML = () => {
     }
 };
 
+// Mostrar notificación genérica
+export const showNotification = (message, type = 'success') => {
+    if (type === 'success') {
+        showSuccessNotification('Éxito', message);
+    } else if (type === 'error') {
+        showErrorNotification('Error', message);
+    } else if (type === 'info') {
+        showInfoNotification('Información', message);
+    }
+};
+
+// Mostrar notificación de información
+export const showInfoNotification = (title, message) => {
+    createNotificationHTML();
+    
+    const overlay = document.getElementById('notificationOverlay');
+    const icon = document.getElementById('notificationIcon');
+    const svg = document.getElementById('notificationSvg');
+    const titleEl = document.getElementById('notificationTitle');
+    const messageEl = document.getElementById('notificationMessage');
+    const button = document.getElementById('notificationButton');
+
+    // Configurar como info
+    icon.className = 'notification-icon info';
+    button.className = 'notification-button info';
+    
+    // Icono de info
+    svg.innerHTML = `
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+    `;
+
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+
+    // Mostrar
+    overlay.classList.add('active');
+
+    // Reset callback
+    button.onclick = () => {
+        hideNotification();
+    };
+};
+
 // Mostrar notificación de éxito
 export const showSuccessNotification = (title, message, callback) => {
     createNotificationHTML();

@@ -109,12 +109,12 @@ let documentoIdUsuario = null;
 // ==========================================
 // CARGAR INSTITUCIONES DESDE FIREBASE
 // ==========================================
-async function cargarInstituciones() {
+async function cargarInstituciones(selectId = 'inputInstitucion') {
     try {
         const q = query(collection(db, 'usuarios'), where('tipoUsuario', '==', 'institucion'));
         const resultado = await getDocs(q);
         
-        const selectInstitucion = document.getElementById('inputInstitucion');
+        const selectInstitucion = document.getElementById(selectId);
         if (!selectInstitucion) return;
         
         // Limpiar opciones existentes excepto la primera
@@ -393,6 +393,12 @@ async function cargarDatosUsuario() {
                 if (datosDB.grado || datosDB.nivel) infoValues[1].textContent = datosDB.grado || datosDB.nivel;
             }
             
+            // Mostrar jornada en la barra lateral
+            const infoJornada = document.getElementById('infoJornada');
+            if (infoJornada) {
+                infoJornada.textContent = datosDB.jornada || 'Sin jornada';
+            }
+            
             // Campos de estudiante (solo visible para tipo estudiante)
             if (datosDB.tipoUsuario === 'estudiante') {
                 const seccion = document.getElementById('seccionEstudiante');
@@ -410,13 +416,79 @@ async function cargarDatosUsuario() {
                 // Cargar grado/nivel
                 const inputGrado = document.getElementById('inputGrado');
                 if (inputGrado && datosDB.grado) {
-                    // Buscar y seleccionar el grado
                     for (let i = 0; i < inputGrado.options.length; i++) {
                         if (inputGrado.options[i].value === datosDB.grado) {
                             inputGrado.selectedIndex = i;
                             break;
                         }
                     }
+                }
+                
+                // Cargar jornada del estudiante
+                const inputJornada = document.getElementById('inputJornada');
+                if (inputJornada && datosDB.jornada) {
+                    inputJornada.value = datosDB.jornada;
+                }
+            }
+            
+            // Campos de acudiente (solo visible para tipo acudiente)
+            if (datosDB.tipoUsuario === 'acudiente') {
+                const seccion = document.getElementById('seccionAcudiente');
+                if (seccion) seccion.style.display = 'block';
+                
+                // Cargar instituciones disponibles
+                await cargarInstituciones('inputInstitucionAcudiente');
+                
+                // Seleccionar la institución actual si existe
+                const inputInstitucion = document.getElementById('inputInstitucionAcudiente');
+                if (inputInstitucion && datosDB.institucion) {
+                    inputInstitucion.value = datosDB.institucion;
+                }
+                
+                // Cargar grado del estudiante a cargo
+                const inputGrado = document.getElementById('inputGradoAcudiente');
+                if (inputGrado && datosDB.grado) {
+                    for (let i = 0; i < inputGrado.options.length; i++) {
+                        if (inputGrado.options[i].value === datosDB.grado) {
+                            inputGrado.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+                
+                // Cargar jornada del estudiante a cargo
+                const inputJornada = document.getElementById('inputJornadaAcudiente');
+                if (inputJornada && datosDB.jornada) {
+                    inputJornada.value = datosDB.jornada;
+                }
+            }
+            
+            // Campos de coordinador o profesor
+            if (datosDB.tipoUsuario === 'coordinador' || datosDB.tipoUsuario === 'profesor') {
+                const seccion = document.getElementById('seccionCoordinadorProfesor');
+                if (seccion) seccion.style.display = 'block';
+                
+                // Mostrar institución (solo lectura)
+                const inputInstCP = document.getElementById('inputInstitucionCP');
+                if (inputInstCP) {
+                    inputInstCP.value = datosDB.institucion || '';
+                }
+                
+                // Cargar grado asignado
+                const inputGradoCP = document.getElementById('inputGradoCP');
+                if (inputGradoCP && datosDB.grado) {
+                    for (let i = 0; i < inputGradoCP.options.length; i++) {
+                        if (inputGradoCP.options[i].value === datosDB.grado) {
+                            inputGradoCP.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+                
+                // Cargar jornada
+                const inputJornadaCP = document.getElementById('inputJornadaCP');
+                if (inputJornadaCP && datosDB.jornada) {
+                    inputJornadaCP.value = datosDB.jornada;
                 }
             }
             
@@ -549,12 +621,48 @@ if (perfilForm) {
             if (seccionEst && seccionEst.style.display !== 'none') {
                 const inputInstitucion = document.getElementById('inputInstitucion');
                 const inputGrado = document.getElementById('inputGrado');
+                const inputJornada = document.getElementById('inputJornada');
                 
                 if (inputInstitucion) {
                     datosActualizar.institucion = inputInstitucion.value;
                 }
                 if (inputGrado) {
                     datosActualizar.grado = inputGrado.value;
+                }
+                if (inputJornada) {
+                    datosActualizar.jornada = inputJornada.value;
+                }
+            }
+            
+            // Agregar campos de acudiente si la sección está visible
+            const seccionAcud = document.getElementById('seccionAcudiente');
+            if (seccionAcud && seccionAcud.style.display !== 'none') {
+                const inputInstitucion = document.getElementById('inputInstitucionAcudiente');
+                const inputGrado = document.getElementById('inputGradoAcudiente');
+                const inputJornada = document.getElementById('inputJornadaAcudiente');
+                
+                if (inputInstitucion) {
+                    datosActualizar.institucion = inputInstitucion.value;
+                }
+                if (inputGrado) {
+                    datosActualizar.grado = inputGrado.value;
+                }
+                if (inputJornada) {
+                    datosActualizar.jornada = inputJornada.value;
+                }
+            }
+            
+            // Agregar campos de coordinador/profesor si la sección está visible
+            const seccionCP = document.getElementById('seccionCoordinadorProfesor');
+            if (seccionCP && seccionCP.style.display !== 'none') {
+                const inputGradoCP = document.getElementById('inputGradoCP');
+                const inputJornadaCP = document.getElementById('inputJornadaCP');
+                
+                if (inputGradoCP) {
+                    datosActualizar.grado = inputGradoCP.value;
+                }
+                if (inputJornadaCP) {
+                    datosActualizar.jornada = inputJornadaCP.value;
                 }
             }
             
@@ -691,7 +799,8 @@ function configurarEnlaceDashboard() {
             'acudiente': 'dashboard-acudiente.html',
             'institucion': 'dashboard-institucion.html',
             'coordinador': 'dashboard-coordinador.html',
-            'profesor': 'dashboard-profesor.html'
+            'profesor': 'dashboard-profesor.html',
+            'admin': 'dashboard-admin.html'
         };
         linkDashboard.href = rutas[tipo] || 'dashboard-estudiante.html';
     }
@@ -792,7 +901,8 @@ function generarMenuLateral() {
         const submenu = document.createElement('div');
         submenu.className = 'submenu';
         submenu.innerHTML = `
-            <a href="#" class="submenu-item">Estudiantes a cargo</a>
+            <a href="gestion-usuarios-acudiente.html" class="submenu-item">Gestionar estudiantes</a>
+            <a href="gestion-usuarios-acudiente.html?vista=acargo" class="submenu-item">Estudiantes a cargo</a>
             <a href="#" class="submenu-item">Progreso académico</a>
         `;
         sidebarNav.appendChild(submenu);
@@ -1005,6 +1115,75 @@ function generarMenuLateral() {
         submenuGestion.innerHTML = `
             <a href="gestion-usuarios-profesor.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
             <a href="gestion-usuarios-profesor.html?tipo=brigada" class="submenu-item">Brigada</a>
+        `;
+        sidebarNav.appendChild(submenuGestion);
+        
+    } else if (tipo === 'admin') {
+        // Menú para administrador
+        const cursosExpandible = document.createElement('div');
+        cursosExpandible.className = 'nav-item expandable';
+        cursosExpandible.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Cursos</span>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
+        sidebarNav.appendChild(cursosExpandible);
+        
+        const submenuCursos = document.createElement('div');
+        submenuCursos.className = 'submenu';
+        submenuCursos.innerHTML = `
+            <a href="#" class="submenu-item">Lista de cursos</a>
+            <a href="#" class="submenu-item">Nuevo curso</a>
+        `;
+        sidebarNav.appendChild(submenuCursos);
+        
+        // Material de Apoyo
+        const materialLink = document.createElement('a');
+        materialLink.href = '#';
+        materialLink.className = 'nav-item';
+        materialLink.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>Material de Apoyo</span>
+        `;
+        sidebarNav.appendChild(materialLink);
+        
+        // Gestión de Usuarios (expandible)
+        const gestionExpandible = document.createElement('div');
+        gestionExpandible.className = 'nav-item expandable';
+        gestionExpandible.innerHTML = `
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Gestión de Usuarios</span>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        `;
+        sidebarNav.appendChild(gestionExpandible);
+        
+        const submenuGestion = document.createElement('div');
+        submenuGestion.className = 'submenu';
+        submenuGestion.innerHTML = `
+            <a href="dashboard-admin.html" class="submenu-item">Todos los usuarios</a>
+            <a href="dashboard-admin.html" class="submenu-item">Instituciones</a>
+            <a href="dashboard-admin.html" class="submenu-item">Coordinadores</a>
+            <a href="dashboard-admin.html" class="submenu-item">Profesores</a>
+            <a href="dashboard-admin.html" class="submenu-item">Estudiantes</a>
+            <a href="dashboard-admin.html" class="submenu-item">Acudientes</a>
         `;
         sidebarNav.appendChild(submenuGestion);
     }

@@ -200,6 +200,28 @@
                     </div>
                 </div>
 
+                <!-- Información del Estudiante -->
+                <div class="stats-grid" style="margin-top: 20px;">
+                    <div class="stat-card-small">
+                        <h4>Mi Jornada</h4>
+                        <div class="stat-value">
+                            <span class="value-number" id="jornadaEstudiante" style="font-size: 1.2rem;">Cargando...</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-small">
+                        <h4>Mi Grado</h4>
+                        <div class="stat-value">
+                            <span class="value-number" id="gradoEstudiante" style="font-size: 1.2rem;">Cargando...</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-small">
+                        <h4>Estado Brigada</h4>
+                        <div class="stat-value">
+                            <span class="value-number" id="estadoBrigada" style="font-size: 1.2rem;">Cargando...</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="chart-container">
                     <div class="chart-header">
                         <h3>Mi Rendimiento Académico</h3>
@@ -335,6 +357,26 @@
                     
                     if (nombreElemento) nombreElemento.textContent = nombreCompleto;
                     if (rolElemento) rolElemento.textContent = tipoUsuario.charAt(0).toUpperCase() + tipoUsuario.slice(1);
+                    
+                    // Mostrar jornada del estudiante
+                    const jornadaElement = document.getElementById('jornadaEstudiante');
+                    if (jornadaElement) {
+                        const jornada = datosDB.jornada || 'No asignada';
+                        jornadaElement.textContent = jornada;
+                    }
+                    
+                    // Mostrar grado del estudiante
+                    const gradoElement = document.getElementById('gradoEstudiante');
+                    if (gradoElement) {
+                        const grado = datosDB.grado || 'No asignado';
+                        gradoElement.textContent = grado;
+                    }
+                    
+                    // Mostrar estado de brigada
+                    const brigadaElement = document.getElementById('estadoBrigada');
+                    if (brigadaElement) {
+                        brigadaElement.textContent = datosDB.enBrigada ? 'En Brigada ✅' : 'No en Brigada';
+                    }
                     
                     // Cargar foto de perfil
                     const fotoPerfil = datosDB.fotoPerfil;

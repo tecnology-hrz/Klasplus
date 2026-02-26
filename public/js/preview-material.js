@@ -188,7 +188,8 @@ function checkUserSession() {
                 'acudiente': 'dashboard-acudiente.html',
                 'institucion': 'dashboard-institucion.html',
                 'coordinador': 'dashboard-coordinador.html',
-                'profesor': 'dashboard-profesor.html'
+                'profesor': 'dashboard-profesor.html',
+                'admin': 'dashboard-admin.html'
             };
             linkDashboard.href = rutasDashboard[userData.tipoUsuario] || 'dashboard-estudiante.html';
         }

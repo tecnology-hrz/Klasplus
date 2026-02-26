@@ -155,6 +155,10 @@ async function cargarEstadisticas() {
         
         let totalEstudiantes = 0;
         let estudiantesEnBrigada = 0;
+        let estudiantesMañana = 0;
+        let estudiantesTarde = 0;
+        let brigadaMañana = 0;
+        let brigadaTarde = 0;
         
         usuariosSnapshot.forEach(doc => {
             const datos = doc.data();
@@ -171,6 +175,16 @@ async function cargarEstadisticas() {
                 }
                 
                 totalEstudiantes++;
+                
+                // Contar por jornada
+                if (datos.jornada === 'Mañana') {
+                    estudiantesMañana++;
+                    if (datos.enBrigada) brigadaMañana++;
+                } else if (datos.jornada === 'Tarde') {
+                    estudiantesTarde++;
+                    if (datos.enBrigada) brigadaTarde++;
+                }
+                
                 if (datos.enBrigada) {
                     estudiantesEnBrigada++;
                 }
@@ -180,15 +194,29 @@ async function cargarEstadisticas() {
         // Actualizar el gráfico de dona
         actualizarGraficoEstudiantes(totalEstudiantes, estudiantesEnBrigada);
         
+        // Actualizar estadísticas por jornada
+        const elMañana = document.getElementById('estudiantesMañana');
+        const elTarde = document.getElementById('estudiantesTarde');
+        const elBrigadaMañana = document.getElementById('brigadaMañana');
+        const elBrigadaTarde = document.getElementById('brigadaTarde');
+        
+        if (elMañana) elMañana.textContent = estudiantesMañana;
+        if (elTarde) elTarde.textContent = estudiantesTarde;
+        if (elBrigadaMañana) elBrigadaMañana.textContent = brigadaMañana;
+        if (elBrigadaTarde) elBrigadaTarde.textContent = brigadaTarde;
+        
         // Por ahora, cursos e inscripciones en 0 (se implementarán después)
         const cursosActivos = 0;
         const inscripciones = 0;
         
-        // Actualizar las tarjetas pequeñas
-        const statCards = document.querySelectorAll('.stat-card-small');
-        if (statCards.length >= 2) {
-            statCards[0].querySelector('.value-number').textContent = cursosActivos;
-            statCards[1].querySelector('.value-number').textContent = inscripciones;
+        // Actualizar las tarjetas pequeñas (primeras 2 del primer grid)
+        const primerGrid = document.querySelector('.stats-grid');
+        if (primerGrid) {
+            const statCards = primerGrid.querySelectorAll('.stat-card-small');
+            if (statCards.length >= 2) {
+                statCards[0].querySelector('.value-number').textContent = cursosActivos;
+                statCards[1].querySelector('.value-number').textContent = inscripciones;
+            }
         }
         
     } catch (error) {

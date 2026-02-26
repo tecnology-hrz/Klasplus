@@ -14,25 +14,21 @@ let sidebarCollapsed = false;
 // Función para actualizar el estado del sidebar según el tamaño de pantalla
 function updateSidebarState() {
     if (window.innerWidth <= 1024) {
-        // En móvil/tablet, el sidebar se oculta completamente
         sidebar.style.transform = 'translateX(-100%)';
         mainContent.style.marginLeft = '0';
         sidebar.classList.remove('collapsed');
         mainContent.classList.remove('expanded');
         header.classList.remove('sidebar-collapsed');
-        // Mostrar logo completo y hamburguesa en móvil
         logoFull.style.display = 'block';
         logoIcon.style.display = 'none';
         iconHamburger.style.display = 'block';
         iconArrow.style.display = 'none';
     } else {
-        // En desktop, el sidebar está visible
         sidebar.style.transform = 'translateX(0)';
         if (sidebarCollapsed) {
             sidebar.classList.add('collapsed');
             mainContent.classList.add('expanded');
             header.classList.add('sidebar-collapsed');
-            // Mostrar logo icon y flecha cuando está colapsado
             logoFull.style.display = 'none';
             logoIcon.style.display = 'block';
             iconHamburger.style.display = 'none';
@@ -41,7 +37,6 @@ function updateSidebarState() {
             sidebar.classList.remove('collapsed');
             mainContent.classList.remove('expanded');
             header.classList.remove('sidebar-collapsed');
-            // Mostrar logo completo y hamburguesa cuando está expandido
             logoFull.style.display = 'block';
             logoIcon.style.display = 'none';
             iconHamburger.style.display = 'block';
@@ -50,30 +45,24 @@ function updateSidebarState() {
     }
 }
 
-// Inicializar estado al cargar
 updateSidebarState();
-
-// Actualizar al cambiar tamaño de ventana
 window.addEventListener('resize', updateSidebarState);
 
 menuToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     
     if (window.innerWidth <= 1024) {
-        // En móvil/tablet, toggle show/hide
         if (sidebar.style.transform === 'translateX(-100%)' || sidebar.style.transform === '') {
             sidebar.style.transform = 'translateX(0)';
         } else {
             sidebar.style.transform = 'translateX(-100%)';
         }
     } else {
-        // En desktop, toggle collapse/expand
         sidebarCollapsed = !sidebarCollapsed;
         if (sidebarCollapsed) {
             sidebar.classList.add('collapsed');
             mainContent.classList.add('expanded');
             header.classList.add('sidebar-collapsed');
-            // Cambiar a logo icon y flecha
             logoFull.style.display = 'none';
             logoIcon.style.display = 'block';
             iconHamburger.style.display = 'none';
@@ -82,7 +71,6 @@ menuToggle.addEventListener('click', (e) => {
             sidebar.classList.remove('collapsed');
             mainContent.classList.remove('expanded');
             header.classList.remove('sidebar-collapsed');
-            // Cambiar a logo completo y hamburguesa
             logoFull.style.display = 'block';
             logoIcon.style.display = 'none';
             iconHamburger.style.display = 'block';
@@ -91,7 +79,7 @@ menuToggle.addEventListener('click', (e) => {
     }
 });
 
-// Cerrar sidebar al hacer clic fuera de él en pantallas pequeñas
+// Cerrar sidebar al hacer clic fuera
 document.addEventListener('click', (e) => {
     if (window.innerWidth <= 1024) {
         if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
@@ -100,113 +88,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Animación suave al cargar
-window.addEventListener('load', () => {
-    const heroContent = document.querySelector('.hero-content');
-    heroContent.style.opacity = '0';
-    heroContent.style.transform = 'translateY(100px)';
-    
-    setTimeout(() => {
-        heroContent.style.transition = 'all 0.8s ease';
-        heroContent.style.opacity = '1';
-        heroContent.style.transform = 'translateY(0)';
-    }, 100);
-});
-
-// Cambiar entre secciones
-const navItems = document.querySelectorAll('.nav-item');
-const inicioSection = document.getElementById('inicioSection');
-const cursosSection = document.getElementById('cursosSection');
-const materialApoyoSection = document.getElementById('materialApoyoSection');
-
-// Función para mostrar una sección específica
-function mostrarSeccion(indice) {
-    // Remover active de todos los items
-    navItems.forEach(nav => nav.classList.remove('active'));
-    
-    // Agregar active al item correspondiente
-    if (navItems[indice]) {
-        navItems[indice].classList.add('active');
-    }
-    
-    // Mostrar la sección correspondiente
-    if (indice === 0) {
-        inicioSection.style.display = 'block';
-        cursosSection.style.display = 'none';
-        materialApoyoSection.style.display = 'none';
-    } else if (indice === 1) {
-        inicioSection.style.display = 'none';
-        cursosSection.style.display = 'block';
-        materialApoyoSection.style.display = 'none';
-    } else if (indice === 2) {
-        inicioSection.style.display = 'none';
-        cursosSection.style.display = 'none';
-        materialApoyoSection.style.display = 'block';
-    }
-}
-
-navItems.forEach((item, index) => {
-    item.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        mostrarSeccion(index);
-        
-        // Cerrar sidebar en móvil después de seleccionar
-        if (window.innerWidth <= 1024) {
-            sidebar.style.transform = 'translateX(-100%)';
-        }
-    });
-});
-
-// Leer hash de la URL para navegar a la sección correcta
-function navegarPorHash() {
-    const hash = window.location.hash;
-    if (hash === '#cursos') {
-        mostrarSeccion(1);
-    } else if (hash === '#material') {
-        mostrarSeccion(2);
-    } else if (hash === '#inicio') {
-        mostrarSeccion(0);
-    }
-}
-
-// Ejecutar al cargar la página
-navegarPorHash();
-
-// Modal de inicio de sesión
-const loginModal = document.getElementById('loginModal');
-const btnLogin = document.querySelector('.btn-login');
-const closeModal = document.getElementById('closeModal');
-const togglePassword = document.getElementById('togglePassword');
-const passwordInput = document.getElementById('passwordInput');
-
-// Abrir modal
-btnLogin.addEventListener('click', () => {
-    loginModal.classList.add('active');
-});
-
-// Cerrar modal
-closeModal.addEventListener('click', () => {
-    loginModal.classList.remove('active');
-});
-
-// Cerrar modal al hacer clic fuera
-loginModal.addEventListener('click', (e) => {
-    if (e.target === loginModal) {
-        loginModal.classList.remove('active');
-    }
-});
-
-// Toggle mostrar/ocultar contraseña
-togglePassword.addEventListener('click', () => {
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-    } else {
-        passwordInput.type = 'password';
-    }
-});
-
-// Verificar si el usuario está logueado
+// Verificar sesión de usuario
 function checkUserSession() {
     const userSession = localStorage.getItem('userSession');
     const authButtons = document.getElementById('authButtons');
@@ -215,13 +97,12 @@ function checkUserSession() {
     if (userSession) {
         const userData = JSON.parse(userSession);
         
-        authButtons.style.display = 'none';
+        if (authButtons) authButtons.style.display = 'none';
         userDropdown.style.display = 'flex';
         
         document.getElementById('userName').textContent = userData.nombre || 'Usuario';
         document.getElementById('userRole').textContent = userData.tipoUsuario || 'Estudiante';
         
-        // Enlace dinámico al dashboard según tipo de usuario
         const linkDashboard = document.getElementById('linkDashboard');
         if (linkDashboard) {
             const rutasDashboard = {
@@ -244,11 +125,81 @@ function checkUserSession() {
                 if (headerPlaceholder) headerPlaceholder.style.display = 'none';
             }
         }
+        
+        return true;
     } else {
         // Mostrar botones de auth y ocultar menú de usuario
-        authButtons.style.display = 'flex';
+        if (authButtons) authButtons.style.display = 'flex';
         userDropdown.style.display = 'none';
+        return false;
     }
+}
+
+// Modal de inicio de sesión
+const loginModal = document.getElementById('loginModal');
+const btnLogin = document.querySelector('.btn-login');
+const closeModal = document.getElementById('closeModal');
+const togglePassword = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('passwordInput');
+
+// Abrir modal
+if (btnLogin) {
+    btnLogin.addEventListener('click', () => {
+        loginModal.classList.add('active');
+    });
+}
+
+// Cerrar modal
+if (closeModal) {
+    closeModal.addEventListener('click', () => {
+        loginModal.classList.remove('active');
+    });
+}
+
+// Cerrar modal al hacer clic fuera
+if (loginModal) {
+    loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+            loginModal.classList.remove('active');
+        }
+    });
+}
+
+// Toggle mostrar/ocultar contraseña
+if (togglePassword && passwordInput) {
+    togglePassword.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
+}
+
+// Manejar inscripción al curso
+const btnInscripcion = document.getElementById('btnInscripcion');
+if (btnInscripcion) {
+    btnInscripcion.addEventListener('click', async () => {
+        const userSession = localStorage.getItem('userSession');
+        
+        if (!userSession) {
+            const { showAlert } = await import('./notifications.js');
+            await showAlert('Inicia sesión', 'Debes iniciar sesión para inscribirte al curso');
+            window.location.href = 'campus.html';
+            return;
+        }
+        
+        const userData = JSON.parse(userSession);
+        const { showSuccess, showAlert } = await import('./notifications.js');
+        
+        // Aquí puedes agregar la lógica para inscribir al usuario en el curso
+        // Por ahora solo mostramos un mensaje de éxito
+        await showSuccess('¡Inscripción exitosa!', `${userData.nombre}, te has inscrito correctamente al curso de Gestión y Prevención del Riesgo`);
+        
+        // Deshabilitar el botón después de inscribirse
+        btnInscripcion.disabled = true;
+        btnInscripcion.textContent = 'Ya estás inscrito';
+    });
 }
 
 // Toggle del menú desplegable de usuario
@@ -277,10 +228,114 @@ if (logoutBtn) {
         const confirmado = await showConfirm('Cerrar sesión', '¿Estás seguro de que deseas cerrar sesión?');
         if (confirmado) {
             localStorage.removeItem('userSession');
-            window.location.reload();
+            window.location.href = 'campus.html';
         }
     });
 }
 
-// Verificar sesión al cargar la página
+// Control del reproductor de video con Plyr
+const videoPlayer = document.getElementById('videoPlayer');
+
+if (videoPlayer) {
+    const player = new Plyr(videoPlayer, {
+        controls: [
+            'play-large',
+            'play',
+            'progress',
+            'current-time',
+            'mute',
+            'volume',
+            'captions',
+            'settings',
+            'pip',
+            'airplay',
+            'fullscreen'
+        ],
+        settings: ['captions', 'quality', 'speed'],
+        quality: {
+            default: 720,
+            options: [1080, 720, 480, 360]
+        },
+        speed: {
+            selected: 1,
+            options: [0.5, 0.75, 1, 1.25, 1.5, 2]
+        },
+        i18n: {
+            restart: 'Reiniciar',
+            rewind: 'Retroceder {seektime}s',
+            play: 'Reproducir',
+            pause: 'Pausar',
+            fastForward: 'Adelantar {seektime}s',
+            seek: 'Buscar',
+            seekLabel: '{currentTime} de {duration}',
+            played: 'Reproducido',
+            buffered: 'Almacenado',
+            currentTime: 'Tiempo actual',
+            duration: 'Duración',
+            volume: 'Volumen',
+            mute: 'Silenciar',
+            unmute: 'Activar sonido',
+            enableCaptions: 'Activar subtítulos',
+            disableCaptions: 'Desactivar subtítulos',
+            download: 'Descargar',
+            enterFullscreen: 'Pantalla completa',
+            exitFullscreen: 'Salir de pantalla completa',
+            frameTitle: 'Reproductor de {title}',
+            captions: 'Subtítulos',
+            settings: 'Configuración',
+            pip: 'Picture-in-Picture',
+            menuBack: 'Volver al menú anterior',
+            speed: 'Velocidad',
+            normal: 'Normal',
+            quality: 'Calidad',
+            loop: 'Repetir'
+        }
+    });
+
+    player.on('ready', () => {
+        console.log('Reproductor Plyr listo');
+    });
+
+    player.on('error', (event) => {
+        console.error('Error en el reproductor:', event);
+    });
+}
+
+// Animación de entrada
+window.addEventListener('load', () => {
+    const cursoContainer = document.querySelector('.curso-container');
+    if (cursoContainer) {
+        cursoContainer.style.opacity = '0';
+        cursoContainer.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            cursoContainer.style.transition = 'all 0.6s ease';
+            cursoContainer.style.opacity = '1';
+            cursoContainer.style.transform = 'translateY(0)';
+        }, 100);
+    }
+});
+
+// Funcionalidad de acordeón para los módulos
+const modulosItems = document.querySelectorAll('.modulo-item');
+
+modulosItems.forEach(item => {
+    const header = item.querySelector('.modulo-header');
+    
+    header.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Cerrar todos los módulos
+        modulosItems.forEach(otherItem => {
+            otherItem.classList.remove('active');
+        });
+        
+        // Si no estaba activo, abrirlo
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
+// Verificar sesión al cargar
 checkUserSession();

@@ -113,9 +113,24 @@ usuarioCards.forEach(card => {
             window.location.href = 'registro-estudiante.html';
         } else if (tipo === 'institucion') {
             window.location.href = 'registro-institucion.html';
+        } else if (tipo === 'admin') {
+            window.location.href = 'registro-admin.html';
         }
     });
 });
+
+// Hover effect para el enlace de administrador
+const adminLink = document.querySelector('a[href="registro-admin.html"]');
+if (adminLink) {
+    adminLink.addEventListener('mouseenter', function() {
+        this.style.background = '#0088cc';
+        this.style.color = 'white';
+    });
+    adminLink.addEventListener('mouseleave', function() {
+        this.style.background = 'transparent';
+        this.style.color = '#0088cc';
+    });
+}
 
 // Modal de inicio de sesión
 const loginModal = document.getElementById('loginModal');

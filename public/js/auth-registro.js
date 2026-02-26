@@ -75,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 tipoDocumento: obtenerCampo('tipoDocumento'),
                 numeroDocumento: obtenerCampo('numeroDocumento'),
                 documento: obtenerCampo('numeroDocumento'),
-                genero: obtenerCampo('genero')
+                genero: obtenerCampo('genero'),
+                jornada: obtenerCampo('jornada')
             };
             
             if (tipoUsuario === 'institucion') {

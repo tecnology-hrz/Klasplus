@@ -1,0 +1,769 @@
+/* Estilos específicos para la página de introducción al curso */
+
+.curso-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.breadcrumb a {
+    color: #0066cc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: #004999;
+}
+
+.breadcrumb span {
+    color: #999;
+}
+
+/* Header del Curso */
+.curso-header {
+    margin-bottom: 2rem;
+}
+
+.curso-header h1 {
+    font-size: 2rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Layout Principal */
+.curso-layout {
+    display: grid;
+    grid-template-columns: 1fr 450px;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Columna del Video */
+.video-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Columna de Módulos */
+.modulos-column {
+    position: sticky;
+    top: 2rem;
+}
+
+/* Sección de Video */
+.video-section {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    background: #000;
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Estilos para Plyr */
+.plyr {
+    border-radius: 0;
+}
+
+.plyr__video-wrapper {
+    background: #000;
+}
+
+.plyr--video {
+    border-radius: 0;
+}
+
+.plyr__control--overlaid {
+    background: rgba(0, 102, 204, 0.9);
+}
+
+.plyr__control--overlaid:hover {
+    background: rgba(0, 102, 204, 1);
+}
+
+.plyr__controls {
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+}
+
+.plyr__control:hover {
+    background: rgba(0, 102, 204, 0.9);
+}
+
+.plyr__menu__container .plyr__control[role='menuitemradio'][aria-checked='true']::before {
+    background: #0066cc;
+}
+
+/* Sección de Información */
+.info-card,
+.info-curso-card,
+.contenido-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Información del Curso */
+.info-curso-card h3 {
+    font-size: 1.2rem;
+    color: #0066cc;
+    margin: 0 0 1.5rem 0;
+    font-weight: 600;
+}
+
+.info-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.info-icon {
+    width: 24px;
+    height: 24px;
+    color: #0066cc;
+    flex-shrink: 0;
+}
+
+.info-text {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.info-label {
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: 0.95rem;
+    color: #1a1a1a;
+    font-weight: 400;
+}
+
+/* Botón de Inscripción */
+.btn-inscripcion {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background: #0066cc;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+}
+
+.btn-inscripcion:hover {
+    background: #004999;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
+}
+
+.btn-inscripcion svg {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-inscripcion:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Información del Profesor */
+.profesor-info {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.profesor-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.profesor-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profesor-detalles {
+    flex: 1;
+}
+
+.profesor-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0 0 0.25rem 0;
+}
+
+.profesor-nombre {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 0.25rem 0;
+}
+
+.profesor-cargo {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Descripción */
+.descripcion-content h3 {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+}
+
+.descripcion-content p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Contenido del Curso */
+.contenido-card h3 {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+}
+
+.modulos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.modulo-item {
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.modulo-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modulo-header:hover {
+    background: #e9ecef;
+}
+
+.modulo-item.active .modulo-header {
+    background: #e9ecef;
+}
+
+.modulo-numero {
+    width: 32px;
+    height: 32px;
+    background: #0066cc;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.modulo-header span {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+.icon-expand {
+    width: 20px;
+    height: 20px;
+    color: #666;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.modulo-item.active .icon-expand {
+    transform: rotate(180deg);
+}
+
+/* Contenido del Módulo */
+.modulo-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: #fff;
+}
+
+.modulo-item.active .modulo-content {
+    max-height: 2000px;
+    padding: 0.5rem 0;
+}
+
+/* Clases dentro del módulo */
+.clase-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    margin: 0 0.5rem;
+    border-left: 2px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.clase-item:hover {
+    background: #f8f9fa;
+    border-left-color: #0066cc;
+}
+
+.clase-icon {
+    width: 8px;
+    height: 8px;
+    background: #ccc;
+    border-radius: 50%;
+    margin-top: 0.5rem;
+    flex-shrink: 0;
+}
+
+.clase-info {
+    flex: 1;
+}
+
+.clase-duracion {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: #999;
+    margin-bottom: 0.25rem;
+}
+
+.clase-duracion svg {
+    width: 14px;
+    height: 14px;
+}
+
+.clase-nombre {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .curso-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .modulos-column {
+        position: static;
+        order: 2;
+    }
+    
+    .video-column {
+        order: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .curso-container {
+        padding: 1rem;
+    }
+    
+    .curso-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .breadcrumb {
+        font-size: 0.85rem;
+    }
+    
+    .info-card,
+    .info-curso-card,
+    .contenido-card {
+        padding: 1rem;
+    }
+    
+    .profesor-info {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .profesor-avatar {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .info-items {
+        gap: 0.75rem;
+    }
+    
+    .info-item {
+        gap: 0.5rem;
+    }
+    
+    .info-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .info-text {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .modulo-item {
+        padding: 0.75rem;
+    }
+    
+    .modulo-item span {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .curso-header h1 {
+        font-size: 1.25rem;
+    }
+    
+    .breadcrumb {
+        flex-wrap: wrap;
+    }
+}
+
+
+/* Botones de autenticación */
+.auth-buttons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.btn-login {
+    background: #0088cc;
+    color: white;
+    border: none;
+    padding: 15px 42px;
+    border-radius: 28px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background: #0077b3;
+}
+
+.btn-register {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 15px 42px;
+    border-radius: 28px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.btn-register:hover {
+    background: #5a6268;
+}
+
+/* Texto de botones responsive */
+.btn-text-short {
+    display: none;
+}
+
+.btn-text-full {
+    display: inline;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 50px 60px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #e0e0e0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.modal-close:hover {
+    background: #d0d0d0;
+}
+
+.modal-close svg {
+    width: 20px;
+    height: 20px;
+    stroke: #666;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.modal-header h2 {
+    color: #2c3e50;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.modal-header p {
+    color: #7a7a7a;
+    font-size: 16px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    color: #7a7a7a;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 15px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #0088cc;
+}
+
+.password-input {
+    position: relative;
+}
+
+.password-input input {
+    width: 100%;
+    padding-right: 50px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #f0f0f0;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.toggle-password:hover {
+    background: #e0e0e0;
+}
+
+.toggle-password svg {
+    width: 18px;
+    height: 18px;
+    stroke: #666;
+}
+
+.btn-submit {
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background: #16a34a;
+}
+
+.modal-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.modal-footer p {
+    color: #7a7a7a;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.link-register {
+    color: #2c3e50;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link-register:hover {
+    text-decoration: underline;
+}
+
+.link-forgot {
+    color: #7a7a7a;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.link-forgot:hover {
+    text-decoration: underline;
+}
+
+/* Responsive para botones */
+@media (max-width: 768px) {
+    .btn-login,
+    .btn-register {
+        padding: 12px 24px;
+        font-size: 14px;
+        border-radius: 24px;
+    }
+    
+    .btn-text-short {
+        display: inline;
+    }
+    
+    .btn-text-full {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-login,
+    .btn-register {
+        padding: 10px 18px;
+        font-size: 13px;
+        border-radius: 22px;
+    }
+}
+
+@media (max-width: 360px) {
+    .btn-login,
+    .btn-register {
+        padding: 7px 12px;
+        font-size: 11px;
+    }
+}

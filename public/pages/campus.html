@@ -31,7 +31,7 @@
         <div class="header-buttons">
             <!-- Botones para usuarios NO logueados -->
             <div class="auth-buttons" id="authButtons">
-                <button class="btn-login">Iniciar sesión</button>
+                <button class="btn-login"><span class="btn-text-full">Iniciar sesión</span><span class="btn-text-short">Iniciar</span></button>
                 <button class="btn-register" onclick="window.location.href='lista-usuarios.html'">Regístrate</button>
             </div>
             
@@ -68,28 +68,6 @@
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
                         Mi perfil
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                        </svg>
-                        Mi actividad
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                        </svg>
-                        Mis certificados
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                        </svg>
-                        Centro de ayuda
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item logout" id="logoutBtn">
@@ -171,14 +149,14 @@
             <!-- Grid de Cursos -->
             <div class="cursos-grid">
                 <!-- Curso 1 -->
-                <div class="curso-card">
+                <div class="curso-card" onclick="window.location.href='introduccion-curso.html'" style="cursor: pointer;">
                     <div class="curso-image">
                         <img src="../img/curso1.jpg" alt="Gestión y Prevención del Riesgo">
                     </div>
                     <div class="curso-info">
                         <h3>GESTIÓN Y PREVENCIÓN DEL RIESGO</h3>
                         <p class="instructor"><strong>Instructor:</strong> Katherine Volverás Pimiento</p>
-                        <button class="btn-ver-mas">VER MÁS</button>
+                        <button class="btn-ver-mas" onclick="event.stopPropagation(); window.location.href='introduccion-curso.html'">VER MÁS</button>
                     </div>
                 </div>
             </div>

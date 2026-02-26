@@ -6,6 +6,7 @@ let tipoUsuario = 'estudiantes';
 let nombreInstitucion = '';
 let gradoCoordinador = '';
 let gradoSeleccionado = '';
+let jornadaSeleccionada = '';
 
 const sidebar = document.querySelector('.sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -99,13 +100,21 @@ function actualizarTitulo() {
     // Actualizar botón de crear profesor
     actualizarBotonCrear();
     
-    // Mostrar/ocultar filtro de grado según la sección
+    // Mostrar/ocultar filtro de grado y jornada según la sección
     const filtroGrado = document.getElementById('filtroGrado');
+    const filtroJornada = document.getElementById('filtroJornada');
     if (filtroGrado) {
         if (tipoUsuario === 'estudiantes' || tipoUsuario === 'brigada') {
             filtroGrado.style.display = 'block';
         } else {
             filtroGrado.style.display = 'none';
+        }
+    }
+    if (filtroJornada) {
+        if (tipoUsuario === 'estudiantes' || tipoUsuario === 'brigada') {
+            filtroJornada.style.display = 'block';
+        } else {
+            filtroJornada.style.display = 'none';
         }
     }
 }
@@ -254,7 +263,11 @@ function renderizarUsuarios(usuarios) {
     // Filtrar por grado si hay uno seleccionado
     let usuariosFiltrados = usuarios;
     if (gradoSeleccionado) {
-        usuariosFiltrados = usuarios.filter(u => u.grado === gradoSeleccionado);
+        usuariosFiltrados = usuariosFiltrados.filter(u => u.grado === gradoSeleccionado);
+    }
+    // Filtrar por jornada si hay una seleccionada
+    if (jornadaSeleccionada) {
+        usuariosFiltrados = usuariosFiltrados.filter(u => u.jornada === jornadaSeleccionada);
     }
     
     if (usuariosFiltrados.length === 0) {
@@ -264,14 +277,18 @@ function renderizarUsuarios(usuarios) {
             ? 'No hay profesores registrados en esta institución'
             : 'No hay estudiantes registrados en esta institución';
         
-        if (gradoSeleccionado) {
-            mensaje = `No hay estudiantes de ${gradoSeleccionado} grado`;
+        if (gradoSeleccionado || jornadaSeleccionada) {
+            const filtroTexto = [
+                gradoSeleccionado ? `${gradoSeleccionado} grado` : '',
+                jornadaSeleccionada ? `jornada ${jornadaSeleccionada}` : ''
+            ].filter(Boolean).join(' - ');
+            mensaje = `No hay estudiantes de ${filtroTexto}`;
             if (tipoUsuario === 'brigada') {
-                mensaje = `No hay estudiantes de ${gradoSeleccionado} grado en la brigada`;
+                mensaje = `No hay estudiantes de ${filtroTexto} en la brigada`;
             }
         }
         
-        tableBody.innerHTML = `<tr><td colspan="6" class="empty-row">${mensaje}</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="7" class="empty-row">${mensaje}</td></tr>`;
         actualizarEstadisticas(usuariosFiltrados);
         return;
     }
@@ -286,6 +303,7 @@ function renderizarUsuarios(usuarios) {
         const documento = usuario.numeroDocumento || usuario.documento || 'N/A';
         const email = usuario.email || 'N/A';
         const gradoUsuario = usuario.grado || 'N/A';
+        const jornadaUsuario = usuario.jornada || 'N/A';
         const estado = 'Activo';
         const enBrigada = usuario.enBrigada || false;
         
@@ -357,6 +375,7 @@ function renderizarUsuarios(usuarios) {
             <td>${documento}</td>
             <td>${email}</td>
             <td><span class="badge badge-info">${gradoUsuario}</span></td>
+            <td><span class="badge badge-warning">${jornadaUsuario}</span></td>
             <td><span class="badge badge-success">${estado}</span></td>
             <td>${accionesHTML}</td>
         `;
@@ -398,6 +417,15 @@ document.getElementById('filtroGrado').addEventListener('change', (e) => {
     gradoSeleccionado = e.target.value;
     renderizarUsuarios(usuariosData);
 });
+
+// Filtro por jornada
+const filtroJornadaEl = document.getElementById('filtroJornada');
+if (filtroJornadaEl) {
+    filtroJornadaEl.addEventListener('change', (e) => {
+        jornadaSeleccionada = e.target.value;
+        renderizarUsuarios(usuariosData);
+    });
+}
 
 tipoUsuario = obtenerTipoUsuario();
 actualizarTitulo();

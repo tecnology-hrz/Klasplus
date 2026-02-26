@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Administrador - Klasplus</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/gestion-usuarios.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo-container">
-                <img src="../img/logo.webp" alt="Klasplus" class="logo">
+                <a href="campus.html">
+                    <img src="../img/logo.webp" alt="Klasplus" class="logo">
+                </a>
             </div>
             
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
+                <a href="#" class="nav-item active" id="dashboardNav">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
@@ -51,59 +55,38 @@
                     <span>Material de Apoyo</span>
                 </a>
                 
-                <a href="#" class="nav-item">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                        <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
-                    <span>Galería de archivos</span>
-                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </a>
-                
-                <a href="#" class="nav-item">
+                <div class="nav-item expandable">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                         <circle cx="9" cy="7" r="4"></circle>
                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
-                    <span>Usuarios</span>
-                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
+                    <span>Gestión de Usuarios</span>
+                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
-                </a>
+                </div>
+                <div class="submenu">
+                    <a href="#" class="submenu-item" data-tipo="todos">Todos los usuarios</a>
+                    <a href="#" class="submenu-item" data-tipo="institucion">Instituciones</a>
+                    <a href="#" class="submenu-item" data-tipo="coordinador">Coordinadores</a>
+                    <a href="#" class="submenu-item" data-tipo="profesor">Profesores</a>
+                    <a href="#" class="submenu-item" data-tipo="estudiante">Estudiantes</a>
+                    <a href="#" class="submenu-item" data-tipo="acudiente">Acudientes</a>
+                </div>
 
-                <a href="#" class="nav-item">
+                <a href="perfil.html" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span>Reportes</span>
-                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </a>
-
-                <a href="#" class="nav-item">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                    <span>Configuración</span>
-                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
+                    <span>Mi Perfil</span>
                 </a>
             </nav>
             
             <div class="sidebar-footer">
-                <p>Copyright © Todos los derechos reservados Comedica 2026</p>
+                <p>Copyright © Todos los derechos reservados Klasplus 2026</p>
             </div>
         </aside>
 
@@ -118,17 +101,53 @@
                         <line x1="3" y1="18" x2="21" y2="18"></line>
                     </svg>
                 </button>
-                <div class="user-info">
-                    <img src="https://via.placeholder.com/40" alt="Usuario" class="user-avatar">
+                <div class="user-info" id="userDropdown">
+                    <div class="user-avatar-default" id="headerAvatarContainer">
+                        <svg class="avatar-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <img class="avatar-img-small" id="headerAvatarImg" src="" alt="Avatar" style="display: none;">
+                    </div>
                     <div class="user-details">
-                        <span class="user-name">Hernan Volveras</span>
-                        <span class="user-role">Administrador</span>
+                        <span class="user-name">Cargando...</span>
+                        <span class="user-role">...</span>
+                    </div>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                    
+                    <div class="user-dropdown-menu" id="dropdownMenu">
+                        <a href="perfil.html" class="dropdown-item">
+                            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            Mi perfil
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                            Centro de ayuda
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout" id="logoutBtn">
+                            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                            Cerrar sesión
+                        </a>
                     </div>
                 </div>
             </header>
 
             <!-- Dashboard Content -->
-            <div class="dashboard-content">
+            <div class="dashboard-content" id="dashboardContent">
                 <!-- Top Stats -->
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -144,29 +163,39 @@
                             <svg viewBox="0 0 200 200" class="donut-chart">
                                 <circle cx="100" cy="100" r="80" fill="none" stroke="#e5e7eb" stroke-width="30"></circle>
                                 <circle cx="100" cy="100" r="80" fill="none" stroke="#3b82f6" stroke-width="30" 
-                                        stroke-dasharray="352 503" transform="rotate(-90 100 100)"></circle>
+                                        stroke-dasharray="0 503" transform="rotate(-90 100 100)" id="chartProfesor"></circle>
                                 <circle cx="100" cy="100" r="80" fill="none" stroke="#06b6d4" stroke-width="30" 
-                                        stroke-dasharray="151 503" stroke-dashoffset="-352" transform="rotate(-90 100 100)"></circle>
+                                        stroke-dasharray="0 503" stroke-dashoffset="0" transform="rotate(-90 100 100)" id="chartEstudiante"></circle>
                             </svg>
                             <div class="chart-center">
-                                <span class="chart-percentage">70%</span>
+                                <span class="chart-percentage" id="totalUsuarios">0</span>
                             </div>
                         </div>
                         <div class="stat-legend">
                             <div class="legend-item">
                                 <span class="legend-color" style="background: #3b82f6;"></span>
-                                <span class="legend-label">Profesores</span>
-                                <span class="legend-value">1,245</span>
+                                <span class="legend-label">Instituciones</span>
+                                <span class="legend-value" id="totalInstituciones">0</span>
                             </div>
                             <div class="legend-item">
                                 <span class="legend-color" style="background: #06b6d4;"></span>
-                                <span class="legend-label">Estudiantes</span>
-                                <span class="legend-value">3,567</span>
+                                <span class="legend-label">Coordinadores</span>
+                                <span class="legend-value" id="totalCoordinadores">0</span>
                             </div>
                             <div class="legend-item">
                                 <span class="legend-color" style="background: #8b5cf6;"></span>
-                                <span class="legend-label">Coordinadores</span>
-                                <span class="legend-value">89</span>
+                                <span class="legend-label">Profesores</span>
+                                <span class="legend-value" id="totalProfesores">0</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #10b981;"></span>
+                                <span class="legend-label">Estudiantes</span>
+                                <span class="legend-value" id="totalEstudiantes">0</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #f59e0b;"></span>
+                                <span class="legend-label">Acudientes</span>
+                                <span class="legend-value" id="totalAcudientes">0</span>
                             </div>
                         </div>
                     </div>
@@ -174,48 +203,23 @@
                     <div class="stat-card-small">
                         <h4>Cursos Activos</h4>
                         <div class="stat-value">
-                            <span class="value-number">156</span>
-                            <span class="value-trend up">↑</span>
-                        </div>
-                        <div class="mini-chart">
-                            <svg viewBox="0 0 200 60" preserveAspectRatio="none">
-                                <polyline points="0,40 20,35 40,45 60,30 80,38 100,25 120,32 140,20 160,28 180,15 200,10" 
-                                          fill="none" stroke="#3b82f6" stroke-width="2"></polyline>
-                            </svg>
+                            <span class="value-number">0</span>
+                            <span class="value-trend neutral">→</span>
                         </div>
                     </div>
 
                     <div class="stat-card-small">
                         <h4>Inscripciones</h4>
                         <div class="stat-value">
-                            <span class="value-number">2,847</span>
-                            <span class="value-trend up">↑</span>
-                        </div>
-                        <div class="progress-ring">
-                            <svg viewBox="0 0 120 120">
-                                <circle cx="60" cy="60" r="50" fill="none" stroke="#e5e7eb" stroke-width="10"></circle>
-                                <circle cx="60" cy="60" r="50" fill="none" stroke="#3b82f6" stroke-width="10" 
-                                        stroke-dasharray="283 314" transform="rotate(-90 60 60)"></circle>
-                            </svg>
-                            <span class="ring-percentage">90%</span>
+                            <span class="value-number">0</span>
+                            <span class="value-trend neutral">→</span>
                         </div>
                     </div>
 
                     <div class="stat-card-small">
                         <h4>Crecimiento</h4>
-                        <select class="stat-filter-small">
-                            <option>Diario</option>
-                            <option>Semanal</option>
-                            <option>Mensual</option>
-                        </select>
                         <div class="stat-comparison">
-                            <span class="comparison-label">Aumento 35%</span>
-                        </div>
-                        <div class="wave-chart">
-                            <svg viewBox="0 0 200 60" preserveAspectRatio="none">
-                                <path d="M0,30 Q25,10 50,30 T100,30 T150,30 T200,30" 
-                                      fill="none" stroke="#3b82f6" stroke-width="2"></path>
-                            </svg>
+                            <span class="comparison-label">Sin datos aún</span>
                         </div>
                     </div>
                 </div>
@@ -227,146 +231,255 @@
                         <div class="chart-tabs">
                             <button class="chart-tab active">Mensual</button>
                             <button class="chart-tab">Semanal</button>
-                            <button class="chart-tab">Diario</button>
-                        </div>
-                    </div>
-                    <div class="chart-area">
-                        <svg viewBox="0 0 800 300" preserveAspectRatio="none">
-                            <defs>
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3" />
-                                    <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M0,200 Q100,150 200,180 T400,160 T600,120 T800,80" 
-                                  fill="url(#gradient)" stroke="#3b82f6" stroke-width="3"></path>
-                        </svg>
-                        <div class="chart-labels">
-                            <span>Enero</span><span>Febrero</span><span>Marzo</span><span>Abril</span>
-                            <span>Mayo</span><span>Junio</span><span>Julio</span><span>Agosto</span>
-                            <span>Septiembre</span><span>Octubre</span><span>Noviembre</span><span>Diciembre</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Recent Activity -->
-                <div class="activity-section">
-                    <div class="section-header">
-                        <h3>Actividad Reciente del Sistema</h3>
-                        <div class="carousel-controls">
-                            <button class="carousel-btn">‹</button>
-                            <div class="carousel-dots">
-                                <span class="dot active"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                                <span class="dot"></span>
-                            </div>
-                            <button class="carousel-btn">›</button>
-                            <button class="more-btn">⋮</button>
+            <!-- Gestión de Usuarios Section -->
+            <div class="usuarios-content" id="gestionUsuariosContent" style="display: none;">
+                <div class="usuarios-header">
+                    <h1 id="tituloGestion">Gestión de Usuarios</h1>
+                    <div class="usuarios-actions">
+                        <select class="filtro-grado" id="filtroRol">
+                            <option value="todos">Todos los roles</option>
+                            <option value="institucion">Instituciones</option>
+                            <option value="coordinador">Coordinadores</option>
+                            <option value="profesor">Profesores</option>
+                            <option value="estudiante">Estudiantes</option>
+                            <option value="acudiente">Acudientes</option>
+                        </select>
+                        <div class="search-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <input type="text" id="searchUsuarios" placeholder="Buscar usuarios...">
                         </div>
+                        <button class="btn-crear-coordinador" id="btnCrearUsuario">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            <span>Crear Usuario</span>
+                        </button>
                     </div>
-                    <div class="activity-grid">
-                        <div class="activity-card">
-                            <div class="activity-placeholder">400x200</div>
-                            <h4>Nuevo Curso Creado</h4>
-                            <p class="activity-location">Matemáticas Avanzadas</p>
-                            <p class="activity-description">El profesor Juan Pérez ha creado un nuevo curso de matemáticas para el semestre actual.</p>
-                            <div class="activity-meta">
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                    </svg>
-                                    45 estudiantes
-                                </span>
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                    Feb 18, 2026
-                                </span>
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>
-                                    10:30 AM
-                                </span>
-                            </div>
-                        </div>
+                </div>
 
-                        <div class="activity-card">
-                            <div class="activity-placeholder">400x200</div>
-                            <h4>Actualización de Sistema</h4>
-                            <p class="activity-location">Versión 2.5.0</p>
-                            <p class="activity-description">Se ha implementado la nueva funcionalidad de reportes avanzados y mejoras de seguridad.</p>
-                            <div class="activity-meta">
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12 16 16 12 12 8"></polyline>
-                                        <line x1="8" y1="12" x2="16" y2="12"></line>
-                                    </svg>
-                                    Sistema
-                                </span>
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                    Feb 17, 2026
-                                </span>
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>
-                                    02:15 AM
-                                </span>
-                            </div>
-                        </div>
+                <div class="usuarios-stats">
+                    <div class="stat-box">
+                        <span class="stat-number" id="statTotalUsuarios">0</span>
+                        <span class="stat-label">Total Usuarios</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number" id="statUsuariosFiltrados">0</span>
+                        <span class="stat-label" id="statLabelFiltrados">Usuarios Mostrados</span>
+                    </div>
+                </div>
 
-                        <div class="activity-card">
-                            <div class="activity-placeholder">400x200</div>
-                            <h4>Registro Masivo</h4>
-                            <p class="activity-location">Nuevos Estudiantes</p>
-                            <p class="activity-description">Se han registrado 127 nuevos estudiantes para el período académico 2026-1.</p>
-                            <div class="activity-meta">
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                    </svg>
-                                    127 usuarios
-                                </span>
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                    Feb 16, 2026
-                                </span>
-                                <span class="meta-item">
-                                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>
-                                    09:45 AM
-                                </span>
-                            </div>
+                <div class="usuarios-table-container">
+                    <table class="usuarios-table">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaUsuarios">
+                            <tr class="loading-row">
+                                <td colspan="5">Cargando usuarios...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Material de Apoyo Section -->
+            <div class="material-apoyo-section" id="materialApoyoSection" style="display: none;">
+                <!-- Contenedor Banner y Categorías -->
+                <div class="top-container">
+                    <!-- Banner Publicidad -->
+                    <div class="banner-publicidad">
+                        <img src="../img/banner-cursos.jpg" alt="Publicidad">
+                    </div>
+
+                    <!-- Sidebar Categorías -->
+                    <div class="categorias-sidebar">
+                        <h2>CATEGORÍAS</h2>
+                    </div>
+                </div>
+
+                <!-- Grid de Cursos -->
+                <div class="cursos-grid">
+                    <!-- Curso 2 -->
+                    <div class="curso-card" onclick="window.location.href='preview-material.html'" style="cursor: pointer;">
+                        <div class="curso-image">
+                            <img src="../img/curso2.jpg" alt="¡A Salvo en el Recreo / Descanso!">
+                        </div>
+                        <div class="curso-info">
+                            <h3>¡A SALVO EN EL RECREO / DESCANSO!</h3>
+                            <p class="instructor"><strong>Instructor:</strong> Jennifer Mora Echeverry</p>
+                            <button class="btn-ver-mas" onclick="event.stopPropagation(); window.location.href='preview-material.html'">VER MÁS</button>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
+
+    <!-- Overlay para sidebar móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Contenedor de notificaciones -->
+    <div id="notification-container"></div>
+
+    <!-- Modal Crear/Editar Usuario -->
+    <div class="modal-overlay" id="modalUsuario">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitulo">Crear Usuario</h2>
+                <button class="modal-close" id="closeModalUsuario">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form class="modal-form" id="formUsuario">
+                <input type="hidden" id="usuarioId" name="usuarioId">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tipo de Usuario *</label>
+                        <select id="tipoUsuario" name="tipoUsuario" required>
+                            <option value="">Selecciona el tipo</option>
+                            <option value="institucion">Institución</option>
+                            <option value="coordinador">Coordinador</option>
+                            <option value="profesor">Profesor</option>
+                            <option value="estudiante">Estudiante</option>
+                            <option value="acudiente">Acudiente</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado *</label>
+                        <select id="estado" name="estado" required>
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                            <option value="pendiente">Pendiente</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombres *</label>
+                        <input type="text" id="nombres" name="nombres" placeholder="Nombres" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos *</label>
+                        <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tipo de Documento *</label>
+                        <select id="tipoDocumento" name="tipoDocumento" required>
+                            <option value="">Selecciona</option>
+                            <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                            <option value="Cédula de extranjería">Cédula de extranjería</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="PEP">PEP</option>
+                            <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Número de Documento *</label>
+                        <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Correo Electrónico *</label>
+                        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono *</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Género *</label>
+                        <select id="genero" name="genero" required>
+                            <option value="">Selecciona</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Sin Especificar</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="gradoGroup" style="display: none;">
+                        <label>Grado</label>
+                        <select id="grado" name="grado">
+                            <option value="">Selecciona</option>
+                            <option value="Preescolar">Preescolar</option>
+                            <option value="1">1°</option>
+                            <option value="2">2°</option>
+                            <option value="3">3°</option>
+                            <option value="4">4°</option>
+                            <option value="5">5°</option>
+                            <option value="6">6°</option>
+                            <option value="7">7°</option>
+                            <option value="8">8°</option>
+                            <option value="9">9°</option>
+                            <option value="10">10°</option>
+                            <option value="11">11°</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row" id="passwordGroup">
+                    <div class="form-group">
+                        <label>Contraseña <span id="passwordRequired">*</span></label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="password" name="password" placeholder="Mínimo 6 caracteres" minlength="6">
+                            <button type="button" class="toggle-password-btn" id="togglePassword">
+                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Contraseña <span id="confirmPasswordRequired">*</span></label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirma la contraseña" minlength="6">
+                            <button type="button" class="toggle-password-btn" id="toggleConfirmPassword">
+                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar" id="btnCancelarModal">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Guardar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="../js/dashboard-admin.js"></script>
+    <script type="module" src="../js/notifications.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Usuarios - Klasplus</title>
+    <title>Gestión de Estudiantes - Klasplus</title>
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/gestion-usuarios.css">
     <link rel="stylesheet" href="../css/notifications.css">
@@ -18,7 +18,7 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href="dashboard-profesor.html" class="nav-item">
+                <a href="dashboard-acudiente.html" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
@@ -28,18 +28,22 @@
                     <span>Dashboard</span>
                 </a>
                 
-                <div class="nav-item expandable">
+                <div class="nav-item expandable active">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
-                    <span>Cursos</span>
+                    <span>Mis Estudiantes</span>
                     <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
-                <div class="submenu">
-                    <a href="#" class="submenu-item">Lista de cursos</a>
+                <div class="submenu show">
+                    <a href="gestion-usuarios-acudiente.html" class="submenu-item">Gestionar estudiantes</a>
+                    <a href="gestion-usuarios-acudiente.html?vista=acargo" class="submenu-item">Estudiantes a cargo</a>
+                    <a href="#" class="submenu-item">Progreso académico</a>
                 </div>
 
                 <a href="#" class="nav-item" id="materialApoyoNav">
@@ -52,23 +56,6 @@
                     </svg>
                     <span>Material de Apoyo</span>
                 </a>
-                
-                <div class="nav-item expandable active">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="10" cy="7" r="4"></circle>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M19 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
-                    <span>Gestión de Usuarios</span>
-                    <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="submenu show">
-                    <a href="gestion-usuarios-profesor.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
-                    <a href="gestion-usuarios-profesor.html?tipo=brigada" class="submenu-item">Brigada</a>
-                </div>
 
                 <a href="perfil.html" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -140,13 +127,8 @@
 
             <div class="usuarios-content" id="usuariosContent">
                 <div class="usuarios-header">
-                    <h1 id="tituloSeccion">Gestión de Estudiantes</h1>
+                    <h1>Gestión de Estudiantes a Cargo</h1>
                     <div class="usuarios-actions">
-                        <select id="filtroJornada" class="filtro-grado">
-                            <option value="">Todas las jornadas</option>
-                            <option value="Mañana">Mañana</option>
-                            <option value="Tarde">Tarde</option>
-                        </select>
                         <div class="search-box">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="11" cy="11" r="8"></circle>
@@ -157,36 +139,89 @@
                     </div>
                 </div>
 
+                <div class="info-message" id="infoMessage" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <p>Por favor, completa tu perfil con la institución, grado y jornada del estudiante que deseas gestionar.</p>
+                    <a href="perfil.html" class="btn-completar-perfil">Completar perfil</a>
+                </div>
+
                 <div class="usuarios-stats">
                     <div class="stat-box">
-                        <span class="stat-number" id="totalUsuarios">0</span>
-                        <span class="stat-label">Total</span>
+                        <span class="stat-number" id="totalEstudiantes">0</span>
+                        <span class="stat-label">Estudiantes disponibles</span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-number" id="usuariosActivos">0</span>
-                        <span class="stat-label">Activos</span>
+                        <span class="stat-number" id="estudiantesACargo">0</span>
+                        <span class="stat-label">A mi cargo</span>
                     </div>
                 </div>
 
-                <div class="usuarios-table-container">
-                    <table class="usuarios-table">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Documento</th>
-                                <th>Email</th>
-                                <th>Grado</th>
-                                <th>Jornada</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usuariosTableBody">
-                            <tr>
-                                <td colspan="7" class="loading-row">Cargando usuarios...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Sección: Estudiantes a mi cargo -->
+                <div class="seccion-estudiantes" id="seccionACargo" style="display: none;">
+                    <h2 class="seccion-titulo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Estudiantes a mi cargo
+                    </h2>
+                    <div class="usuarios-table-container">
+                        <table class="usuarios-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Documento</th>
+                                    <th>Email</th>
+                                    <th>Grado</th>
+                                    <th>Jornada</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="estudiantesACargoBody">
+                                <tr>
+                                    <td colspan="6" class="empty-row">No tienes estudiantes a cargo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Sección: Estudiantes disponibles -->
+                <div class="seccion-estudiantes seccion-disponibles">
+                    <h2 class="seccion-titulo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Estudiantes disponibles
+                    </h2>
+                    <div class="usuarios-table-container">
+                        <table class="usuarios-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Documento</th>
+                                    <th>Email</th>
+                                    <th>Grado</th>
+                                    <th>Jornada</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usuariosTableBody">
+                                <tr>
+                                    <td colspan="6" class="loading-row">Cargando estudiantes...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -208,14 +243,14 @@
                 <!-- Grid de Cursos -->
                 <div class="cursos-grid">
                     <!-- Curso 2 -->
-                    <div class="curso-card">
+                    <div class="curso-card" onclick="window.location.href='preview-material.html'" style="cursor: pointer;">
                         <div class="curso-image">
                             <img src="../img/curso2.jpg" alt="¡A Salvo en el Recreo / Descanso!">
                         </div>
                         <div class="curso-info">
                             <h3>¡A SALVO EN EL RECREO / DESCANSO!</h3>
                             <p class="instructor"><strong>Instructor:</strong> Jennifer Mora Echeverry</p>
-                            <button class="btn-ver-mas">VER MÁS</button>
+                            <button class="btn-ver-mas" onclick="event.stopPropagation(); window.location.href='preview-material.html'">VER MÁS</button>
                         </div>
                     </div>
                 </div>
@@ -229,7 +264,7 @@
     <!-- Contenedor de notificaciones -->
     <div id="notification-container"></div>
 
-    <script type="module" src="../js/gestion-usuarios-profesor.js"></script>
+    <script type="module" src="../js/gestion-usuarios-acudiente.js"></script>
     <script type="module" src="../js/notifications.js"></script>
 </body>
 </html>

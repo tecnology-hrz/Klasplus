@@ -982,3 +982,241 @@
     gap: 8px;
     flex-wrap: wrap;
 }
+
+/* Estilos para Acudiente */
+
+.seccion-estudiantes {
+    margin-bottom: 40px;
+}
+
+.seccion-titulo {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.seccion-titulo svg {
+    width: 24px;
+    height: 24px;
+    color: #0088cc;
+}
+
+.btn-agregar {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-agregar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.btn-agregar svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-quitar {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-quitar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.btn-quitar svg {
+    width: 16px;
+    height: 16px;
+}
+
+.info-message {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.info-message svg {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.info-message p {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.btn-completar-perfil {
+    background: white;
+    color: #667eea;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-completar-perfil:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .info-message {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .acciones-seleccion {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        justify-content: center;
+    }
+    
+    .btn-guardar-seleccion {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* Estilos adicionales para modal de usuario */
+.modal-form .password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.modal-form .password-input-wrapper input {
+    width: 100%;
+    padding-right: 48px;
+}
+
+.modal-form .toggle-password-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.modal-form .toggle-password-btn:hover {
+    opacity: 0.7;
+}
+
+.modal-form .eye-icon {
+    width: 20px;
+    height: 20px;
+    stroke: #6b7280;
+}
+
+/* Ajustes para el formulario de usuario */
+.modal-form .form-group label span {
+    color: #ef4444;
+}
+
+/* Animación suave para mostrar/ocultar campos */
+#gradoGroup {
+    transition: all 0.3s ease;
+}
+
+/* Mejorar apariencia de selects */
+.modal-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+/* Estilos para inputs con error */
+.modal-form input:invalid:not(:placeholder-shown),
+.modal-form select:invalid:not(:placeholder-shown) {
+    border-color: #ef4444;
+}
+
+.modal-form input:valid:not(:placeholder-shown),
+.modal-form select:valid:not(:placeholder-shown) {
+    border-color: #10b981;
+}
+
+/* Responsive para modal */
+@media (max-width: 640px) {
+    .modal-content {
+        width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+    
+    .modal-header {
+        padding: 20px;
+    }
+    
+    .modal-header h2 {
+        font-size: 18px;
+    }
+    
+    .modal-form {
+        padding: 20px;
+    }
+    
+    .modal-form .form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .modal-actions {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+    
+    .btn-cancelar,
+    .btn-guardar {
+        width: 100%;
+    }
+}
