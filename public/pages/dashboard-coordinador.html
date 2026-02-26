@@ -67,6 +67,7 @@
                 <div class="submenu">
                     <a href="gestion-usuarios-coordinador.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
                     <a href="gestion-usuarios-coordinador.html?tipo=brigada" class="submenu-item">Brigada</a>
+                    <a href="gestion-usuarios-coordinador.html?tipo=profesores" class="submenu-item">Profesores</a>
                 </div>
 
                 <a href="perfil.html" class="nav-item">
@@ -224,14 +225,14 @@
                 <!-- Grid de Cursos -->
                 <div class="cursos-grid">
                     <!-- Curso 2 -->
-                    <div class="curso-card">
+                    <div class="curso-card" onclick="window.location.href='preview-material.html'" style="cursor: pointer;">
                         <div class="curso-image">
                             <img src="../img/curso2.jpg" alt="¡A Salvo en el Recreo / Descanso!">
                         </div>
                         <div class="curso-info">
                             <h3>¡A SALVO EN EL RECREO / DESCANSO!</h3>
                             <p class="instructor"><strong>Instructor:</strong> Jennifer Mora Echeverry</p>
-                            <button class="btn-ver-mas">VER MÁS</button>
+                            <button class="btn-ver-mas" onclick="event.stopPropagation(); window.location.href='preview-material.html'">VER MÁS</button>
                         </div>
                     </div>
                 </div>

@@ -67,11 +67,22 @@ function obtenerTipoUsuario() {
     return tipo;
 }
 
+// Mostrar/ocultar botón según el tipo de usuario
+function actualizarBotonCrear() {
+    const btnCrearProfesor = document.getElementById('btnCrearProfesor');
+    if (tipoUsuario === 'profesores' && btnCrearProfesor) {
+        btnCrearProfesor.style.display = 'flex';
+    } else if (btnCrearProfesor) {
+        btnCrearProfesor.style.display = 'none';
+    }
+}
+
 function actualizarTitulo() {
     const titulo = document.getElementById('tituloSeccion');
     const titulos = {
         'estudiantes': 'Gestión de Estudiantes',
-        'brigada': 'Gestión de Brigada'
+        'brigada': 'Gestión de Brigada',
+        'profesores': 'Gestión de Profesores'
     };
     
     if (titulo) {
@@ -85,11 +96,17 @@ function actualizarTitulo() {
         }
     });
     
+    // Actualizar botón de crear profesor
+    actualizarBotonCrear();
+    
     // Mostrar/ocultar filtro de grado según la sección
     const filtroGrado = document.getElementById('filtroGrado');
     if (filtroGrado) {
-        // Para coordinadores, el filtro de grado no es necesario ya que solo ven su grado
-        filtroGrado.style.display = 'none';
+        if (tipoUsuario === 'estudiantes' || tipoUsuario === 'brigada') {
+            filtroGrado.style.display = 'block';
+        } else {
+            filtroGrado.style.display = 'none';
+        }
     }
 }
 
@@ -149,8 +166,8 @@ async function cargarDatosUsuario() {
 async function cargarUsuarios() {
     const tableBody = document.getElementById('usuariosTableBody');
     
-    if (!nombreInstitucion || !gradoCoordinador) {
-        tableBody.innerHTML = '<tr><td colspan="6" class="empty-row">No se pudo identificar la institución o el grado</td></tr>';
+    if (!nombreInstitucion) {
+        tableBody.innerHTML = '<tr><td colspan="6" class="empty-row">No se pudo identificar la institución</td></tr>';
         return;
     }
     
@@ -161,8 +178,7 @@ async function cargarUsuarios() {
             const q = query(
                 collection(db, 'usuarios'),
                 where('tipoUsuario', '==', 'estudiante'),
-                where('institucion', '==', nombreInstitucion),
-                where('grado', '==', gradoCoordinador)
+                where('institucion', '==', nombreInstitucion)
             );
             
             const resultado = await getDocs(q);
@@ -183,8 +199,27 @@ async function cargarUsuarios() {
                 collection(db, 'usuarios'),
                 where('tipoUsuario', '==', 'estudiante'),
                 where('institucion', '==', nombreInstitucion),
-                where('grado', '==', gradoCoordinador),
                 where('enBrigada', '==', true)
+            );
+            
+            const resultado = await getDocs(q);
+            usuariosData = [];
+            
+            resultado.forEach(doc => {
+                usuariosData.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
+            });
+            
+            renderizarUsuarios(usuariosData);
+            actualizarEstadisticas(usuariosData);
+            
+        } else if (tipoUsuario === 'profesores') {
+            const q = query(
+                collection(db, 'usuarios'),
+                where('tipoUsuario', '==', 'profesor'),
+                where('institucion', '==', nombreInstitucion)
             );
             
             const resultado = await getDocs(q);
@@ -225,7 +260,9 @@ function renderizarUsuarios(usuarios) {
     if (usuariosFiltrados.length === 0) {
         let mensaje = tipoUsuario === 'brigada' 
             ? 'No hay estudiantes asignados a la brigada' 
-            : 'No hay estudiantes registrados en este grado';
+            : tipoUsuario === 'profesores'
+            ? 'No hay profesores registrados en esta institución'
+            : 'No hay estudiantes registrados en esta institución';
         
         if (gradoSeleccionado) {
             mensaje = `No hay estudiantes de ${gradoSeleccionado} grado`;
@@ -281,6 +318,23 @@ function renderizarUsuarios(usuarios) {
                         <path d="M18 6L6 18M6 6l12 12"></path>
                     </svg>
                     <span>Quitar</span>
+                </button>
+            `;
+        } else if (tipoUsuario === 'profesores') {
+            accionesHTML = `
+                <button class="btn-action btn-edit" onclick="editarProfesor('${usuario.id}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                    <span>Editar</span>
+                </button>
+                <button class="btn-action btn-delete" onclick="eliminarProfesor('${usuario.id}', '${nombre}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span>Eliminar</span>
                 </button>
             `;
         }
@@ -396,6 +450,256 @@ window.quitarDeBrigada = async (userId, nombre) => {
 
 
 // ==========================================
+// MODAL CREAR PROFESOR
+// ==========================================
+
+const btnCrearProfesor = document.getElementById('btnCrearProfesor');
+const modalCrearProfesor = document.getElementById('modalCrearProfesor');
+const formCrearProfesor = document.getElementById('formCrearProfesor');
+
+// Abrir modal
+if (btnCrearProfesor) {
+    btnCrearProfesor.addEventListener('click', () => {
+        modalCrearProfesor.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    });
+}
+
+// Cerrar modal profesor
+function cerrarModalProfesor() {
+    if (modalCrearProfesor) {
+        modalCrearProfesor.classList.remove('show');
+    }
+    document.body.style.overflow = '';
+    if (formCrearProfesor) {
+        formCrearProfesor.reset();
+        delete formCrearProfesor.dataset.editandoId;
+    }
+    const modalHeader = document.querySelector('#modalCrearProfesor .modal-header h2');
+    const btnGuardar = document.querySelector('#modalCrearProfesor .btn-guardar');
+    if (modalHeader) modalHeader.textContent = 'Crear Nuevo Profesor';
+    if (btnGuardar) btnGuardar.textContent = 'Crear Profesor';
+}
+
+// Botones de cerrar modal profesor
+const btnCerrarModalProfesor = document.getElementById('btnCerrarModalProfesor');
+const btnCancelarProfesor = document.getElementById('btnCancelarProfesor');
+
+if (btnCerrarModalProfesor) {
+    btnCerrarModalProfesor.addEventListener('click', cerrarModalProfesor);
+}
+
+if (btnCancelarProfesor) {
+    btnCancelarProfesor.addEventListener('click', cerrarModalProfesor);
+}
+
+// Cerrar modal al hacer clic fuera
+if (modalCrearProfesor) {
+    modalCrearProfesor.addEventListener('click', (e) => {
+        if (e.target === modalCrearProfesor) {
+            cerrarModalProfesor();
+        }
+    });
+}
+
+// Enviar formulario profesor
+if (formCrearProfesor) {
+    formCrearProfesor.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const nombre = document.getElementById('profNombre').value.trim();
+        const email = document.getElementById('profEmail').value.trim();
+        const grado = document.getElementById('profGrado').value;
+        const password = document.getElementById('profPassword').value;
+        const passwordConfirm = document.getElementById('profPasswordConfirm').value;
+        
+        const editandoId = formCrearProfesor.dataset.editandoId;
+        
+        // Validaciones
+        if (!nombre || !email || !grado) {
+            showErrorNotification('Error', 'Por favor completa todos los campos obligatorios.');
+            return;
+        }
+        
+        // Validar formato de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showErrorNotification('Error', 'Por favor ingresa un correo electrónico válido.');
+            return;
+        }
+        
+        // Si hay contraseña, validar
+        if (password || passwordConfirm) {
+            if (password !== passwordConfirm) {
+                showErrorNotification('Error', 'Las contraseñas no coinciden.');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showErrorNotification('Error', 'La contraseña debe tener al menos 6 caracteres.');
+                return;
+            }
+        } else if (!editandoId) {
+            // Si es creación nueva, la contraseña es obligatoria
+            showErrorNotification('Error', 'La contraseña es obligatoria.');
+            return;
+        }
+        
+        showLoading();
+        
+        try {
+            if (editandoId) {
+                // EDITAR PROFESOR EXISTENTE
+                const profesorRef = doc(db, 'usuarios', editandoId);
+                
+                const datosActualizar = {
+                    nombre: nombre,
+                    nombreCompleto: nombre,
+                    email: email,
+                    grado: grado,
+                    fechaActualizacion: new Date().toISOString()
+                };
+                
+                // Si hay nueva contraseña, encriptarla y agregarla
+                if (password) {
+                    const hashedPassword = await hashPassword(password);
+                    datosActualizar.password = hashedPassword;
+                }
+                
+                await updateDoc(profesorRef, datosActualizar);
+                
+                hideLoading();
+                cerrarModalProfesor();
+                
+                showSuccessNotification(
+                    '¡Profesor actualizado!',
+                    `El profesor ${nombre} ha sido actualizado exitosamente.`,
+                    () => {
+                        cargarUsuarios();
+                    }
+                );
+                
+            } else {
+                // CREAR NUEVO PROFESOR
+                
+                // Verificar si el email ya existe
+                const qEmail = query(collection(db, 'usuarios'), where('email', '==', email));
+                const resultadoEmail = await getDocs(qEmail);
+                
+                if (!resultadoEmail.empty) {
+                    hideLoading();
+                    showErrorNotification('Error', 'Este correo electrónico ya está registrado.');
+                    return;
+                }
+                
+                // Encriptar contraseña
+                const hashedPassword = await hashPassword(password);
+                
+                // Crear profesor
+                const nuevoProfesor = {
+                    nombre: nombre,
+                    nombreCompleto: nombre,
+                    email: email,
+                    password: hashedPassword,
+                    grado: grado,
+                    tipoUsuario: 'profesor',
+                    institucion: nombreInstitucion,
+                    estado: 'activo',
+                    fechaCreacion: new Date().toISOString()
+                };
+                
+                await addDoc(collection(db, 'usuarios'), nuevoProfesor);
+                
+                hideLoading();
+                cerrarModalProfesor();
+                
+                showSuccessNotification(
+                    '¡Profesor creado!',
+                    `El profesor ${nombre} ha sido creado exitosamente.`,
+                    () => {
+                        cargarUsuarios();
+                    }
+                );
+            }
+            
+        } catch (error) {
+            console.error('Error al guardar profesor:', error);
+            hideLoading();
+            showErrorNotification('Error', 'No se pudo guardar el profesor. Intenta nuevamente.');
+        }
+    });
+}
+
+// ==========================================
+// EDITAR PROFESOR
+// ==========================================
+
+window.editarProfesor = async function(profesorId) {
+    try {
+        const profesor = usuariosData.find(u => u.id === profesorId);
+        
+        if (!profesor) {
+            showErrorNotification('Error', 'No se encontró el profesor.');
+            return;
+        }
+        
+        document.getElementById('profNombre').value = profesor.nombre || profesor.nombreCompleto || '';
+        document.getElementById('profEmail').value = profesor.email || '';
+        document.getElementById('profGrado').value = profesor.grado || '';
+        document.getElementById('profPassword').value = '';
+        document.getElementById('profPasswordConfirm').value = '';
+        
+        document.querySelector('#modalCrearProfesor .modal-header h2').textContent = 'Editar Profesor';
+        document.querySelector('#modalCrearProfesor .btn-guardar').textContent = 'Actualizar Profesor';
+        
+        formCrearProfesor.dataset.editandoId = profesorId;
+        
+        modalCrearProfesor.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        
+    } catch (error) {
+        console.error('Error al editar profesor:', error);
+        showErrorNotification('Error', 'No se pudo cargar los datos del profesor.');
+    }
+};
+
+// ==========================================
+// ELIMINAR PROFESOR
+// ==========================================
+
+window.eliminarProfesor = async function(profesorId, nombreProfesor) {
+    const confirmado = await showConfirm(
+        'Eliminar Profesor',
+        `¿Estás seguro de que deseas eliminar al profesor "${nombreProfesor}"? Esta acción no se puede deshacer.`
+    );
+    
+    if (!confirmado) return;
+    
+    showLoading();
+    
+    try {
+        const profesorRef = doc(db, 'usuarios', profesorId);
+        await deleteDoc(profesorRef);
+        
+        hideLoading();
+        
+        showSuccessNotification(
+            '¡Profesor eliminado!',
+            `El profesor "${nombreProfesor}" ha sido eliminado exitosamente.`,
+            () => {
+                cargarUsuarios();
+            }
+        );
+        
+    } catch (error) {
+        console.error('Error al eliminar profesor:', error);
+        hideLoading();
+        showErrorNotification('Error', 'No se pudo eliminar el profesor. Intenta nuevamente.');
+    }
+};
+
+
+// ==========================================
 // MODAL CREAR COORDINADOR
 // ==========================================
 
@@ -415,9 +719,13 @@ if (btnCrearCoordinador) {
 
 // Cerrar modal
 function cerrarModal() {
-    modalCrearCoordinador.classList.remove('show');
+    if (modalCrearCoordinador) {
+        modalCrearCoordinador.classList.remove('show');
+    }
     document.body.style.overflow = '';
-    formCrearCoordinador.reset();
+    if (formCrearCoordinador) {
+        formCrearCoordinador.reset();
+    }
 }
 
 if (btnCerrarModal) {
@@ -429,11 +737,13 @@ if (btnCancelar) {
 }
 
 // Cerrar modal al hacer clic fuera
-modalCrearCoordinador.addEventListener('click', (e) => {
-    if (e.target === modalCrearCoordinador) {
-        cerrarModal();
-    }
-});
+if (modalCrearCoordinador) {
+    modalCrearCoordinador.addEventListener('click', (e) => {
+        if (e.target === modalCrearCoordinador) {
+            cerrarModal();
+        }
+    });
+}
 
 // Toggle password visibility
 document.querySelectorAll('.toggle-password-btn').forEach(button => {

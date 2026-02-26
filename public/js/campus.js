@@ -119,33 +119,37 @@ const inicioSection = document.getElementById('inicioSection');
 const cursosSection = document.getElementById('cursosSection');
 const materialApoyoSection = document.getElementById('materialApoyoSection');
 
+// Función para mostrar una sección específica
+function mostrarSeccion(indice) {
+    // Remover active de todos los items
+    navItems.forEach(nav => nav.classList.remove('active'));
+    
+    // Agregar active al item correspondiente
+    if (navItems[indice]) {
+        navItems[indice].classList.add('active');
+    }
+    
+    // Mostrar la sección correspondiente
+    if (indice === 0) {
+        inicioSection.style.display = 'block';
+        cursosSection.style.display = 'none';
+        materialApoyoSection.style.display = 'none';
+    } else if (indice === 1) {
+        inicioSection.style.display = 'none';
+        cursosSection.style.display = 'block';
+        materialApoyoSection.style.display = 'none';
+    } else if (indice === 2) {
+        inicioSection.style.display = 'none';
+        cursosSection.style.display = 'none';
+        materialApoyoSection.style.display = 'block';
+    }
+}
+
 navItems.forEach((item, index) => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         
-        // Remover active de todos los items
-        navItems.forEach(nav => nav.classList.remove('active'));
-        
-        // Agregar active al item clickeado
-        item.classList.add('active');
-        
-        // Mostrar la sección correspondiente
-        if (index === 0) {
-            // Inicio
-            inicioSection.style.display = 'block';
-            cursosSection.style.display = 'none';
-            materialApoyoSection.style.display = 'none';
-        } else if (index === 1) {
-            // Cursos
-            inicioSection.style.display = 'none';
-            cursosSection.style.display = 'block';
-            materialApoyoSection.style.display = 'none';
-        } else if (index === 2) {
-            // Material de Apoyo
-            inicioSection.style.display = 'none';
-            cursosSection.style.display = 'none';
-            materialApoyoSection.style.display = 'block';
-        }
+        mostrarSeccion(index);
         
         // Cerrar sidebar en móvil después de seleccionar
         if (window.innerWidth <= 1024) {
@@ -153,6 +157,21 @@ navItems.forEach((item, index) => {
         }
     });
 });
+
+// Leer hash de la URL para navegar a la sección correcta
+function navegarPorHash() {
+    const hash = window.location.hash;
+    if (hash === '#cursos') {
+        mostrarSeccion(1);
+    } else if (hash === '#material') {
+        mostrarSeccion(2);
+    } else if (hash === '#inicio') {
+        mostrarSeccion(0);
+    }
+}
+
+// Ejecutar al cargar la página
+navegarPorHash();
 
 // Modal de inicio de sesión
 const loginModal = document.getElementById('loginModal');

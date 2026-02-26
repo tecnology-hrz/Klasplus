@@ -403,8 +403,8 @@ body {
     position: fixed;
     top: 0;
     left: -100%;
-    width: 85%;
-    max-width: 380px;
+    width: 280px;
+    max-width: 280px;
     height: 100vh;
     background-color: white;
     z-index: 1000;

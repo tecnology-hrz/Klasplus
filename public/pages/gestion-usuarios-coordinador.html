@@ -69,6 +69,7 @@
                 <div class="submenu show">
                     <a href="gestion-usuarios-coordinador.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
                     <a href="gestion-usuarios-coordinador.html?tipo=brigada" class="submenu-item">Brigada</a>
+                    <a href="gestion-usuarios-coordinador.html?tipo=profesores" class="submenu-item">Profesores</a>
                 </div>
 
                 <a href="perfil.html" class="nav-item">
@@ -143,12 +144,12 @@
                 <div class="usuarios-header">
                     <h1 id="tituloSeccion">Gestión de Estudiantes</h1>
                     <div class="usuarios-actions">
-                        <button class="btn-crear-coordinador" id="btnCrearCoordinador" style="display: none;">
+                        <button class="btn-crear-coordinador" id="btnCrearProfesor" style="display: none;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
-                            Crear Coordinador
+                            Crear Profesor
                         </button>
                         <select id="filtroGrado" class="filtro-grado">
                             <option value="">Todos los grados</option>
@@ -242,33 +243,33 @@
     <!-- Overlay para sidebar móvil -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <!-- Modal para crear coordinador -->
-    <div class="modal-overlay" id="modalCrearCoordinador">
+    <!-- Modal para crear profesor -->
+    <div class="modal-overlay" id="modalCrearProfesor">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Crear Nuevo Coordinador</h2>
-                <button class="modal-close" id="btnCerrarModal">
+                <h2>Crear Nuevo Profesor</h2>
+                <button class="modal-close" id="btnCerrarModalProfesor">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </button>
             </div>
-            <form id="formCrearCoordinador" class="modal-form">
+            <form id="formCrearProfesor" class="modal-form">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="coordNombre">Nombre Completo *</label>
-                        <input type="text" id="coordNombre" required placeholder="Nombre completo del coordinador">
+                        <label for="profNombre">Nombre Completo *</label>
+                        <input type="text" id="profNombre" required placeholder="Nombre completo del profesor">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="coordEmail">Correo Electrónico *</label>
-                        <input type="email" id="coordEmail" required placeholder="correo@ejemplo.com">
+                        <label for="profEmail">Correo Electrónico *</label>
+                        <input type="email" id="profEmail" required placeholder="correo@ejemplo.com">
                     </div>
                     <div class="form-group">
-                        <label for="coordGrado">Grado Asignado *</label>
-                        <select id="coordGrado" required>
+                        <label for="profGrado">Grado Asignado *</label>
+                        <select id="profGrado" required>
                             <option value="">Seleccionar grado</option>
                             <option value="1°">1°</option>
                             <option value="2°">2°</option>
@@ -286,10 +287,10 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="coordPassword">Contraseña *</label>
+                        <label for="profPassword">Contraseña *</label>
                         <div class="password-input-wrapper">
-                            <input type="password" id="coordPassword" required placeholder="Mínimo 6 caracteres">
-                            <button type="button" class="toggle-password-btn" data-target="coordPassword">
+                            <input type="password" id="profPassword" required placeholder="Mínimo 6 caracteres">
+                            <button type="button" class="toggle-password-btn" data-target="profPassword">
                                 <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
@@ -298,10 +299,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="coordPasswordConfirm">Confirmar Contraseña *</label>
+                        <label for="profPasswordConfirm">Confirmar Contraseña *</label>
                         <div class="password-input-wrapper">
-                            <input type="password" id="coordPasswordConfirm" required placeholder="Repetir contraseña">
-                            <button type="button" class="toggle-password-btn" data-target="coordPasswordConfirm">
+                            <input type="password" id="profPasswordConfirm" required placeholder="Repetir contraseña">
+                            <button type="button" class="toggle-password-btn" data-target="profPasswordConfirm">
                                 <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
@@ -311,8 +312,8 @@
                     </div>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn-cancelar" id="btnCancelar">Cancelar</button>
-                    <button type="submit" class="btn-guardar">Crear Coordinador</button>
+                    <button type="button" class="btn-cancelar" id="btnCancelarProfesor">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Crear Profesor</button>
                 </div>
             </form>
         </div>

@@ -939,6 +939,7 @@ function generarMenuLateral() {
         submenuGestion.innerHTML = `
             <a href="gestion-usuarios-coordinador.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
             <a href="gestion-usuarios-coordinador.html?tipo=brigada" class="submenu-item">Brigada</a>
+            <a href="gestion-usuarios-coordinador.html?tipo=profesores" class="submenu-item">Profesores</a>
         `;
         sidebarNav.appendChild(submenuGestion);
         
@@ -982,35 +983,30 @@ function generarMenuLateral() {
         `;
         sidebarNav.appendChild(materialLink);
         
-        // Estudiantes
-        const estudiantesLink = document.createElement('a');
-        estudiantesLink.href = '#';
-        estudiantesLink.className = 'nav-item';
-        estudiantesLink.innerHTML = `
+        // Gestión de Usuarios (expandible)
+        const gestionExpandible = document.createElement('div');
+        gestionExpandible.className = 'nav-item expandable';
+        gestionExpandible.innerHTML = `
             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="10" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M19 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
-            <span>Estudiantes</span>
+            <span>Gestión de Usuarios</span>
+            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
         `;
-        sidebarNav.appendChild(estudiantesLink);
+        sidebarNav.appendChild(gestionExpandible);
         
-        // Calificaciones
-        const calificacionesLink = document.createElement('a');
-        calificacionesLink.href = '#';
-        calificacionesLink.className = 'nav-item';
-        calificacionesLink.innerHTML = `
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-            </svg>
-            <span>Calificaciones</span>
+        const submenuGestion = document.createElement('div');
+        submenuGestion.className = 'submenu';
+        submenuGestion.innerHTML = `
+            <a href="gestion-usuarios-profesor.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
+            <a href="gestion-usuarios-profesor.html?tipo=brigada" class="submenu-item">Brigada</a>
         `;
-        sidebarNav.appendChild(calificacionesLink);
+        sidebarNav.appendChild(submenuGestion);
     }
     
     // Mi Perfil (común para todos)

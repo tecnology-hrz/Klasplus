@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Institución - Klasplus</title>
+    <title>Gestión de Usuarios - Klasplus</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/gestion-usuarios.css">
     <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body>
@@ -17,7 +18,7 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
+                <a href="dashboard-profesor.html" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
@@ -52,7 +53,7 @@
                     <span>Material de Apoyo</span>
                 </a>
                 
-                <div class="nav-item expandable">
+                <div class="nav-item expandable active">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="10" cy="7" r="4"></circle>
@@ -64,10 +65,9 @@
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
-                <div class="submenu">
-                    <a href="gestion-usuarios-institucion.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
-                    <a href="gestion-usuarios-institucion.html?tipo=brigada" class="submenu-item">Brigada</a>
-                    <a href="gestion-usuarios-institucion.html?tipo=coordinadores" class="submenu-item">Coordinadores</a>
+                <div class="submenu show">
+                    <a href="gestion-usuarios-profesor.html?tipo=estudiantes" class="submenu-item">Estudiantes</a>
+                    <a href="gestion-usuarios-profesor.html?tipo=brigada" class="submenu-item">Brigada</a>
                 </div>
 
                 <a href="perfil.html" class="nav-item">
@@ -138,72 +138,49 @@
                 </div>
             </header>
 
-            <div class="dashboard-content" id="dashboardContent">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <h3>Total Usuarios</h3>
-                            <select class="stat-filter">
-                                <option>Este Mes</option>
-                                <option>Esta Semana</option>
-                            </select>
-                        </div>
-                        <div class="stat-chart">
-                            <svg viewBox="0 0 200 200" class="donut-chart">
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#e5e7eb" stroke-width="30"></circle>
-                                <circle cx="100" cy="100" r="80" fill="none" stroke="#06b6d4" stroke-width="30" 
-                                        stroke-dasharray="0 503" transform="rotate(-90 100 100)"></circle>
+            <div class="usuarios-content" id="usuariosContent">
+                <div class="usuarios-header">
+                    <h1 id="tituloSeccion">Gestión de Estudiantes</h1>
+                    <div class="usuarios-actions">
+                        <div class="search-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
                             </svg>
-                            <div class="chart-center">
-                                <span class="chart-percentage">0%</span>
-                            </div>
-                        </div>
-                        <div class="stat-legend">
-                            <div class="legend-item">
-                                <span class="legend-color" style="background: #3b82f6;"></span>
-                                <span class="legend-label">Coordinadores</span>
-                                <span class="legend-value">0</span>
-                            </div>
-                            <div class="legend-item">
-                                <span class="legend-color" style="background: #06b6d4;"></span>
-                                <span class="legend-label">Estudiantes</span>
-                                <span class="legend-value">0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stat-card-small">
-                        <h4>Cursos Activos</h4>
-                        <div class="stat-value">
-                            <span class="value-number">0</span>
-                            <span class="value-trend neutral">→</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-card-small">
-                        <h4>Inscripciones</h4>
-                        <div class="stat-value">
-                            <span class="value-number">0</span>
-                            <span class="value-trend neutral">→</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-card-small">
-                        <h4>Crecimiento</h4>
-                        <div class="stat-comparison">
-                            <span class="comparison-label">Sin datos aún</span>
+                            <input type="text" id="searchInput" placeholder="Buscar por nombre o documento...">
                         </div>
                     </div>
                 </div>
 
-                <div class="chart-container">
-                    <div class="chart-header">
-                        <h3>Actividad del Sistema</h3>
-                        <div class="chart-tabs">
-                            <button class="chart-tab active">Mensual</button>
-                            <button class="chart-tab">Semanal</button>
-                        </div>
+                <div class="usuarios-stats">
+                    <div class="stat-box">
+                        <span class="stat-number" id="totalUsuarios">0</span>
+                        <span class="stat-label">Total</span>
                     </div>
+                    <div class="stat-box">
+                        <span class="stat-number" id="usuariosActivos">0</span>
+                        <span class="stat-label">Activos</span>
+                    </div>
+                </div>
+
+                <div class="usuarios-table-container">
+                    <table class="usuarios-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Documento</th>
+                                <th>Email</th>
+                                <th>Grado</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuariosTableBody">
+                            <tr>
+                                <td colspan="6" class="loading-row">Cargando usuarios...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -225,14 +202,14 @@
                 <!-- Grid de Cursos -->
                 <div class="cursos-grid">
                     <!-- Curso 2 -->
-                    <div class="curso-card" onclick="window.location.href='preview-material.html'" style="cursor: pointer;">
+                    <div class="curso-card">
                         <div class="curso-image">
                             <img src="../img/curso2.jpg" alt="¡A Salvo en el Recreo / Descanso!">
                         </div>
                         <div class="curso-info">
                             <h3>¡A SALVO EN EL RECREO / DESCANSO!</h3>
                             <p class="instructor"><strong>Instructor:</strong> Jennifer Mora Echeverry</p>
-                            <button class="btn-ver-mas" onclick="event.stopPropagation(); window.location.href='preview-material.html'">VER MÁS</button>
+                            <button class="btn-ver-mas">VER MÁS</button>
                         </div>
                     </div>
                 </div>
@@ -246,7 +223,7 @@
     <!-- Contenedor de notificaciones -->
     <div id="notification-container"></div>
 
-    <script type="module" src="../js/dashboard-institucion.js"></script>
+    <script type="module" src="../js/gestion-usuarios-profesor.js"></script>
     <script type="module" src="../js/notifications.js"></script>
 </body>
 </html>

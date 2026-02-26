@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material de Apoyo - Klasplus</title>
+    <link rel="icon" type="image/webp" href="../img/icon2.webp">
+    <link rel="stylesheet" href="../css/preview-material.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+    <!-- Plyr CSS -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="../../index.html" class="logo">
+                <img src="../img/logo-text.webp" alt="Klasplus Logo" class="logo-full" id="logoFull">
+                <img src="../img/icon.webp" alt="Klasplus Icon" class="logo-icon" id="logoIcon" style="display: none;">
+            </a>
+            <button class="menu-toggle" id="menuToggle">
+                <svg class="icon-hamburger" id="iconHamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="icon-arrow" id="iconArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+        <div class="header-buttons">
+            <!-- Botones para usuarios NO logueados -->
+            <div class="auth-buttons" id="authButtons">
+                <button class="btn-login" id="btnLoginModal">Iniciar sesión</button>
+                <button class="btn-register" onclick="window.location.href='lista-usuarios.html'">Regístrate</button>
+            </div>
+            
+            <!-- Menú de usuario logueado -->
+            <div class="user-info" id="userDropdown" style="display: none;">
+                <div class="user-avatar-default" id="headerAvatarContainer">
+                    <svg class="avatar-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <img class="avatar-img-small" id="headerAvatarImg" src="" alt="Avatar" style="display: none;">
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">Usuario</span>
+                    <span class="user-role" id="userRole">Estudiante</span>
+                </div>
+                <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+                
+                <div class="user-dropdown-menu" id="dropdownMenu">
+                    <a href="#" id="linkDashboard" class="dropdown-item">
+                        <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="perfil.html" class="dropdown-item">
+                        <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Mi perfil
+                    </a>
+                    <a href="campus.html" class="dropdown-item">
+                        <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        </svg>
+                        Campus
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item logout" id="logoutBtn">
+                        <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Cerrar sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="campus.html#inicio" class="nav-item">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Inicio</span>
+            </a>
+            <a href="campus.html#cursos" class="nav-item">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Cursos</span>
+            </a>
+            <a href="campus.html#material" class="nav-item active">
+                <div class="nav-indicator"></div>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>Material de Apoyo</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <p>Copyright © Todos los derechos reservados Klasplus 2026</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="material-section">
+            <h1 class="section-title">¡A Salvo en el Recreo / Descanso!</h1>
+            
+            <!-- Video de Introducción (arriba) -->
+            <div class="video-container intro-video">
+                <h2 class="video-title">Introducción al Material de Apoyo</h2>
+                <video id="videoIntro" playsinline controls data-poster="">
+                    <source src="../videos/Introducción-material-apoyo.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <!-- Cápsulas Educativas -->
+            <div class="capsulas-container">
+                <h2 class="capsulas-title">Cápsulas Educativas</h2>
+                <div class="capsulas-grid" id="capsulasGrid">
+                    <!-- Cápsula 1 -->
+                    <div class="capsula-card" data-video="../videos/Capsula 1 es mejore prevenir que lamentar.mp4">
+                        <div class="capsula-number">1</div>
+                        <div class="capsula-thumbnail">
+                            <video preload="metadata">
+                                <source src="../videos/Capsula 1 es mejore prevenir que lamentar.mp4#t=0.5" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <svg viewBox="0 0 24 24" fill="white">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3>Es mejor prevenir que lamentar</h3>
+                    </div>
+
+                    <!-- Cápsula 2 -->
+                    <div class="capsula-card" data-video="../videos/Capsula 2 como estar a salvo en el parque.mp4">
+                        <div class="capsula-number">2</div>
+                        <div class="capsula-thumbnail">
+                            <video preload="metadata">
+                                <source src="../videos/Capsula 2 como estar a salvo en el parque.mp4#t=0.5" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <svg viewBox="0 0 24 24" fill="white">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3>Cómo estar a salvo en el parque</h3>
+                    </div>
+
+                    <!-- Cápsula 3 -->
+                    <div class="capsula-card" data-video="../videos/Capsula 3 un descanso diferente.mp4">
+                        <div class="capsula-number">3</div>
+                        <div class="capsula-thumbnail">
+                            <video preload="metadata">
+                                <source src="../videos/Capsula 3 un descanso diferente.mp4#t=0.5" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <svg viewBox="0 0 24 24" fill="white">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3>Un descanso diferente</h3>
+                    </div>
+
+                    <!-- Cápsula 4 -->
+                    <div class="capsula-card" data-video="../videos/Capsula 4 que hacemos con los chicos mas grandes del cole.mp4">
+                        <div class="capsula-number">4</div>
+                        <div class="capsula-thumbnail">
+                            <video preload="metadata">
+                                <source src="../videos/Capsula 4 que hacemos con los chicos mas grandes del cole.mp4#t=0.5" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <svg viewBox="0 0 24 24" fill="white">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3>Qué hacemos con los chicos más grandes del cole</h3>
+                    </div>
+                </div>
+
+                <!-- Overlay de bloqueo para usuarios no logueados -->
+                <div class="locked-overlay" id="lockedOverlay" style="display: none;">
+                    <div class="locked-content">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <h3>Contenido Exclusivo</h3>
+                        <p>Inicia sesión para acceder a todas las cápsulas educativas</p>
+                        <button class="btn-login-required" id="btnLoginOverlay">Iniciar Sesión</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Video -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <button class="video-modal-close" id="closeVideoModal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <video id="modalVideo" playsinline controls>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <!-- Modal de Inicio de Sesión -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="modal-header">
+                <h2>¡Bienvenid@ de vuelta!</h2>
+                <p>Que bueno verte de nuevo.</p>
+            </div>
+            
+            <form class="login-form">
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Contraseña *</label>
+                    <div class="password-input">
+                        <input type="password" id="passwordInput" placeholder="Ingresa tu contraseña" required>
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">Iniciar sesión</button>
+                
+                <div class="modal-footer">
+                    <p>¿Aún no tienes cuenta? <a href="lista-usuarios.html" class="link-register">Regístrate</a></p>
+                    <a href="#" class="link-forgot">Olvidé mi contraseña</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Plyr JS -->
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+    <script type="module" src="../js/preview-material.js"></script>
+    <script type="module" src="../js/auth-login.js"></script>
+</body>
+</html>

@@ -283,6 +283,7 @@ function renderizarUsuarios(usuarios) {
         const nombre = usuario.nombre || usuario.nombreCompleto || 'Sin nombre';
         const documento = usuario.numeroDocumento || usuario.documento || 'N/A';
         const email = usuario.email || 'N/A';
+        const institucionUsuario = usuario.institucion || 'N/A';
         const gradoUsuario = usuario.grado || 'N/A';
         const estado = 'Activo';
         const enBrigada = usuario.enBrigada || false;
@@ -354,7 +355,7 @@ function renderizarUsuarios(usuarios) {
             </td>
             <td>${documento}</td>
             <td>${email}</td>
-            <td><span class="badge badge-info">${gradoUsuario}</span></td>
+            <td><span class="badge badge-info">${tipoUsuario === 'coordinadores' ? institucionUsuario : gradoUsuario}</span></td>
             <td><span class="badge badge-success">${estado}</span></td>
             <td>${accionesHTML}</td>
         `;
@@ -626,7 +627,6 @@ window.editarCoordinador = async function(coordinadorId) {
         // Llenar el formulario con los datos del coordinador
         document.getElementById('coordNombre').value = coordinador.nombre || coordinador.nombreCompleto || '';
         document.getElementById('coordEmail').value = coordinador.email || '';
-        document.getElementById('coordGrado').value = coordinador.grado || '';
         
         // Limpiar campos de contraseña
         document.getElementById('coordPassword').value = '';
@@ -700,14 +700,13 @@ if (formCrearCoordinador) {
         
         const nombre = document.getElementById('coordNombre').value.trim();
         const email = document.getElementById('coordEmail').value.trim();
-        const grado = document.getElementById('coordGrado').value;
         const password = document.getElementById('coordPassword').value;
         const passwordConfirm = document.getElementById('coordPasswordConfirm').value;
         
         const editandoId = formCrearCoordinador.dataset.editandoId;
         
         // Validaciones
-        if (!nombre || !email || !grado) {
+        if (!nombre || !email) {
             showErrorNotification('Error', 'Por favor completa todos los campos obligatorios.');
             return;
         }
@@ -747,7 +746,6 @@ if (formCrearCoordinador) {
                     nombre: nombre,
                     nombreCompleto: nombre,
                     email: email,
-                    grado: grado,
                     fechaActualizacion: new Date().toISOString()
                 };
                 
@@ -792,7 +790,6 @@ if (formCrearCoordinador) {
                     nombreCompleto: nombre,
                     email: email,
                     password: hashedPassword,
-                    grado: grado,
                     tipoUsuario: 'coordinador',
                     institucion: nombreInstitucion,
                     estado: 'activo',

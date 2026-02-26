@@ -5,7 +5,7 @@ import { showConfirm } from './notifications.js';
 // VARIABLES GLOBALES
 // ==========================================
 let nombreInstitucion = '';
-let gradoCoordinador = '';
+let gradoProfesor = '';
 
 // ==========================================
 // SIDEBAR Y MENÚ MÓVIL
@@ -102,10 +102,10 @@ async function cargarDatosUsuario() {
             const datosDB = resultado.docs[0].data();
             
             nombreInstitucion = datosDB.institucion || '';
-            gradoCoordinador = datosDB.grado || '';
+            gradoProfesor = datosDB.grado || '';
             
-            const nombreCompleto = datosDB.nombre || datosDB.nombreCompleto || 'Coordinador';
-            const tipoUsuario = datosDB.tipoUsuario || 'Coordinador';
+            const nombreCompleto = datosDB.nombre || datosDB.nombreCompleto || 'Profesor';
+            const tipoUsuario = datosDB.tipoUsuario || 'Profesor';
             
             const nombreElemento = document.querySelector('.user-name');
             const rolElemento = document.querySelector('.user-role');
@@ -113,11 +113,11 @@ async function cargarDatosUsuario() {
             if (nombreElemento) nombreElemento.textContent = nombreCompleto;
             if (rolElemento) rolElemento.textContent = tipoUsuario.charAt(0).toUpperCase() + tipoUsuario.slice(1);
             
-            // Mostrar el grado del coordinador (si existe)
-            const gradoElement = document.getElementById('gradoCoordinador');
+            // Mostrar el grado del profesor (si existe)
+            const gradoElement = document.getElementById('gradoProfesor');
             if (gradoElement) {
-                if (gradoCoordinador) {
-                    gradoElement.textContent = `Grado ${gradoCoordinador}`;
+                if (gradoProfesor) {
+                    gradoElement.textContent = `Grado ${gradoProfesor}`;
                 } else {
                     gradoElement.textContent = 'Todos los grados';
                 }
@@ -161,12 +161,12 @@ async function cargarEstadisticas() {
             const institucionUsuario = datos.institucion || datos.institucionNombre;
             const gradoUsuario = datos.grado;
             
-            // Contar estudiantes de esta institución (y del grado del coordinador si tiene uno asignado)
+            // Contar estudiantes de esta institución y del grado del profesor
             if (institucionUsuario === nombreInstitucion && 
                 datos.tipoUsuario === 'estudiante') {
                 
-                // Si el coordinador tiene un grado asignado, solo contar estudiantes de ese grado
-                if (gradoCoordinador && gradoUsuario !== gradoCoordinador) {
+                // Si el profesor tiene un grado asignado, solo contar estudiantes de ese grado
+                if (gradoProfesor && gradoUsuario !== gradoProfesor) {
                     return; // Saltar este estudiante
                 }
                 
